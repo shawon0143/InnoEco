@@ -6,7 +6,7 @@ function App() {
     <div className="App">
         <div className="row">
             <div className="col text-center">
-                <h1 className='text-primary'>InnoEco</h1>
+                <h1 className='text-primary'>InnoEco Homepage</h1>
             </div>
         </div>
     </div>
