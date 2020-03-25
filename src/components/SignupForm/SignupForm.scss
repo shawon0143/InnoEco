@@ -1,0 +1,30 @@
+.signupFormWrapper {
+  .inputElementsWrapper {
+    padding: 1.27143rem 1.25714rem !important;
+    -webkit-box-shadow: 0 4px 7px 0 rgba(38, 48, 77, 0.045);
+    box-shadow: 0 4px 7px 0 rgba(38, 48, 77, 0.045);
+    background-color: #fff !important;
+    border-radius: .25rem!important;
+    display: flex;
+    flex-wrap: wrap;
+    div {
+      flex: 0 50%;
+    }
+  }
+  .submitRow {
+    justify-content: flex-end;
+  }
+
+  .signinLink:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: 600px) {
+  .signupFormWrapper {
+    .inputElementsWrapper {
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+.Button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    outline: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 10px;
+    margin: 10px;
+    font-weight: bold;
+}
+
+.Button:first-of-type {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.Button:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.Success {
+    color: #5c9210;
+}
+
+.Danger {
+    background-color: #a61d37;
+    color: #ffffff;
+    line-height: 1.6;
+    padding: 0.4rem 1.78571rem !important;
+    font-size: 0.9rem !important;
+    -webkit-box-shadow: 0 6px 15px -6px rgba(166, 29, 55, 0.3);
+    box-shadow: 0 6px 15px -6px rgba(166, 29, 55, 0.3);
+    -webkit-transition: 0.2s ease;
+    -o-transition: 0.2s ease;
+    transition: 0.2s ease;
+    border-radius: 0.25rem !important;
+    font-weight: 300;
+}
+.Danger:hover {
+    background-color: #26304d !important;
+    text-decoration: none;
+}

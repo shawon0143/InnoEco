@@ -1,0 +1,39 @@
+.authContainer {
+    background-image: url(../../assets/images/svg-bg2.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+    margin-top: 63px;
+  .mainBoxWrapper {
+    padding-bottom: 9.28571rem !important;
+    padding-top: 7.14286rem !important;
+  }
+  .signInFormWrapper {
+    right: 0;
+    top: 0;
+    //position: absolute;
+  }
+  .circleIcon {
+    width: 4.0rem;
+    height: 4.0rem;
+    background-color: #f5f6fa !important;
+    color: #a61d37 !important;
+    -webkit-box-shadow: 0 6px 15px -6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 15px -6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+  }
+  .icon {
+    font-size: 24px;
+  }
+  .hiddenLine {
+    margin-top: 2.28571rem !important;
+    margin-bottom: 2.28571rem !important;
+  }
+}
+

@@ -1,5 +1,5 @@
-import { Auth } from '../store/types/auth';
-export const updateObject = (oldObject: Auth, updatedValues: any) => {
+
+export const updateObject = (oldObject: any, updatedValues: any) => {
     return {
         ...oldObject,
         ...updatedValues,

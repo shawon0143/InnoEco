@@ -1,0 +1,21 @@
+$theme-colors: (
+        "danger": #a61d37
+);
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
+@import url('https://fonts.googleapis.com/css?family=Barlow&display=swap');
+
+
+
+body {
+  font-weight: 400;
+  font-size: 0.9rem;
+  font-family: "Barlow", sans-serif;
+  line-height: 1.6;
+  color: #26304d;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -moz-font-feature-settings: "liga", "kern";
+  text-rendering: optimizelegibility;
+  background-color: #fff;
+}

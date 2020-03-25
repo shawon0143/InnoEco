@@ -1,0 +1,24 @@
+.loginFormWrapper {
+  .inputElementsWrapper {
+    padding: 2.37143rem 2.35714rem !important;
+    -webkit-box-shadow: 0 4px 7px 0 rgba(38, 48, 77, 0.045);
+    box-shadow: 0 4px 7px 0 rgba(38, 48, 77, 0.045);
+    background-color: #fff !important;
+    border-radius: .25rem!important;
+  }
+  .submitRow {
+    padding: 10px;
+  }
+  .forgotPasswordLink {
+    font-size: 0.8rem;
+  }
+  .forgotPasswordLink:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .createAccountLink:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+

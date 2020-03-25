@@ -1,15 +1,20 @@
+export interface Address {
+    "addressTitle"?: string;
+    "street": string;
+    "zipCode": string;
+    "city": string;
+    "country": string;
+}
 export interface Auth {
-    "address": string,
+    "address": Address[],
     "email": string,
     "firstName": string,
     "lastName": string,
     "password": string,
-    "role": [
-        {}
-    ],
-    "telephone": string,
-    "userId": string,
-    "verification": true,
-    error: string;
-    loading: boolean;
+    "role": string[],
+    "mobile": string,
+    "phone"?: string,
+    "isVerified": boolean,
+    "error": string;
+    "loading": boolean;
 }
