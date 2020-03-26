@@ -37,3 +37,12 @@
   }
 }
 
+@media (min-width: 600px) {
+  .signInFormWrapper {
+    position: absolute;
+  }
+  .hiddenLine {
+    display: none;
+  }
+}
+
