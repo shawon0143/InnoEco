@@ -77,15 +77,13 @@ export const callApi = (command: any, data: any, pathPara: any, cb: any) => {
     if (header) {
         para['headers'] = header;
     }
-    // console.log(para);
     axios(para)
         .then(res => {
-            // console.log(res);
             if (res.status === 200) {
                 callback(null, res.data, res.status);
             } else if (res.status === 400) {
                 callback(res.data, null, res.status);
-            } else if (res.status === 403) {
+            } else if (res.status === 401) {
                 console.log('not authorised');
                 // window.location.href = '#/logout';
                 // authLogout();

@@ -61,7 +61,7 @@ class LoginForm extends React.Component<Props, IState> {
                 },
                 valid: false,
                 touched: false,
-                autoFocus: true,
+                autoFocus: false,
                 placeholder: 'john@gmail.com'
             },
             password: {
