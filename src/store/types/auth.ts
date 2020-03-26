@@ -17,4 +17,5 @@ export interface Auth {
     "isVerified": boolean,
     "error": string;
     "loading": boolean;
+    "token": string
 }

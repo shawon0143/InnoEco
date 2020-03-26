@@ -3,15 +3,16 @@ import axios from 'axios';
 let baseUrl = 'https://innoeco-backend.herokuapp.com';
 
 export function getApiUrl() {
-    let urlParts =  window.location.href.split('/'),  // ["https://www.google.com/", "/order"]
-        host = urlParts[0] + '//' + urlParts[2];
+    // let urlParts =  window.location.href.split('/'),  // ["https://www.google.com/", "/order"]
+    //     host = urlParts[0] + '//' + urlParts[2];
+    //
+    // if (urlParts[2].substring(0,9) === 'localhost') {
+    //     return host;
+    // } else {
+    //     return baseUrl;
+    // }
 
-    if (urlParts[2].substring(0,9) === 'localhost') {
-        return host;
-    } else {
-        // @ts-ignore
-        return baseUrl;
-    }
+    return baseUrl;
 }
 
 export default getApiUrl();

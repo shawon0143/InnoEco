@@ -6,14 +6,15 @@ export interface AuthStart {
 
 export interface AuthSuccess {
     type: typeof actionTypes.AUTH_SUCCESS;
-    userName: string;
-    sessionToken: string;
-    userLevel: string;
+    token: string;
+    error: string;
+    loading: boolean;
 }
 
 export interface AuthFail {
     type: typeof actionTypes.AUTH_FAIL;
     error: string;
+    loading: boolean;
 }
 
 export interface AuthLogout {

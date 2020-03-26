@@ -15,6 +15,7 @@ const initialState: Auth = {
     isVerified: false,
     error: '',
     loading: false,
+    token: ''
 };
 
 const authStart = (state: Auth, action: any) => {

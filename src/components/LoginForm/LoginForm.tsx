@@ -1,8 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import Input from "../UI/Input/Input";
 import Button from "../UI/Button/Button";
 import {updateObject, checkValidity} from "../../shared/utility";
 import "./LoginForm.scss";
+import {AppState} from "../../store/configureStore";
+import {ThunkDispatch} from "redux-thunk";
+import {AuthActions} from "../../store/types/authActionTypes";
+import {Auth} from "../../store/types/auth";
+import * as actions from "../../store/actions/index";
 
 interface IProps {
     createAccountClicked: (formType: string) => void;
@@ -36,8 +42,9 @@ type IState = {
     },
     formIsValid: boolean
 }
+type Props = LinkDispatchProps & LinkStateProps & IProps;
 
-class LoginForm extends React.Component<IProps, IState> {
+class LoginForm extends React.Component<Props, IState> {
     state: Readonly<IState> = {
         // loginForm object is used for form definition  and form validation
         loginForm: {
@@ -79,6 +86,12 @@ class LoginForm extends React.Component<IProps, IState> {
 
     submitHandler = (event: any) => {
         event.preventDefault();
+        const formData: any = {};
+        for (let formElementIdentifier in this.state.loginForm) {
+            // @ts-ignore
+            formData[formElementIdentifier] = this.state.loginForm[formElementIdentifier].value;
+        }
+        this.props.onAuth(formData['userEmail'], formData['password']);
     };
 
     inputChangedHandler = (event: any, inputIdentifier: any) => {
@@ -149,8 +162,26 @@ class LoginForm extends React.Component<IProps, IState> {
             </form>
         );
     }
-
-
 };
 
-export default LoginForm;
+interface LinkStateProps {
+    error: Auth['error'];
+    loading: Auth['loading'];
+    token: Auth['token'];
+}
+
+interface LinkDispatchProps {
+    onAuth: (email: string, password: string) => void;
+}
+
+const mapStateToProps = (state: AppState): LinkStateProps => ({
+    error: state.auth.error,
+    loading: state.auth.loading,
+    token: state.auth.token
+});
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AuthActions>): LinkDispatchProps => ({
+    onAuth: (email: string, password: string) => {dispatch(actions.auth(email, password))},
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
