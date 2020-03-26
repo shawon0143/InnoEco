@@ -68,7 +68,7 @@ export const verifyMe = (verifyToken: string) => {
         callApi('verifyAccount', null, {token: verifyToken}, (err: any, result: any) => {
             if (err) {
                 console.log(err);
-                dispatch(verifyFail(err));
+                dispatch(verifyFail(err.message));
             } else {
                 console.log(result);
                 dispatch(verifySuccess());

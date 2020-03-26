@@ -12,7 +12,7 @@ const Auth: React.FC = () => {
         setShowForm(formType);
     };
     return (
-        <div className="authContainer">
+        <div className="authContainer topNavMargin">
             <div className="container mainBoxWrapper">
                 <div style={{ position: 'relative' }}>
                     <div className="row">
