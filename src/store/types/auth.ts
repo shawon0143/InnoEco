@@ -14,8 +14,9 @@ export interface Auth {
     "role": string[],
     "mobile": string,
     "phone"?: string,
-    "isVerified": boolean,
     "error": string;
     "loading": boolean;
-    "token": string
+    "token": string;
+    "verifyLoading": boolean;
+    "verifyError": string;
 }

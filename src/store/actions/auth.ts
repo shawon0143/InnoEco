@@ -31,10 +31,48 @@ export const auth = (email: string, password: string) => {
         callApi('login', data, null, (err: any, result: any) => {
            if (err) {
                console.log(err);
-               // dispatch(authSuccess())
+               dispatch(authFail(err))
            } else {
                console.log(result);
+               dispatch(authSuccess(result.token));
            }
+        });
+    }
+};
+
+export const verifyStart = (): AuthActions => {
+    return {
+        type: actionTypes.VERIFY_START
+    }
+};
+
+export const verifySuccess = (): AuthActions => {
+    return {
+        type: actionTypes.VERIFY_SUCCESS,
+        verifyError: '',
+        verifyLoading: false
+    }
+};
+
+export const verifyFail = (err: string): AuthActions => {
+    return {
+        type: actionTypes.VERIFY_FAIL,
+        verifyError: err,
+        verifyLoading: false
+    }
+};
+
+export const verifyMe = (verifyToken: string) => {
+    return (dispatch: Dispatch<AuthActions>) => {
+        dispatch(verifyStart());
+        callApi('verifyAccount', null, {token: verifyToken}, (err: any, result: any) => {
+            if (err) {
+                console.log(err);
+                dispatch(verifyFail(err));
+            } else {
+                console.log(result);
+                dispatch(verifySuccess());
+            }
         });
     }
 };

@@ -21,6 +21,29 @@ export interface AuthLogout {
     type: typeof actionTypes.AUTH_LOGOUT;
 }
 
-export type AuthActionTypes = AuthStart | AuthSuccess | AuthFail | AuthLogout;
+export interface VerifyStart {
+    type: typeof actionTypes.VERIFY_START;
+}
+
+export interface VerifySuccess {
+    type: typeof actionTypes.VERIFY_SUCCESS;
+    verifyError: string;
+    verifyLoading: boolean;
+}
+
+export interface VerifyFail {
+    type: typeof actionTypes.VERIFY_FAIL;
+    verifyError: string;
+    verifyLoading: boolean;
+}
+
+export type AuthActionTypes =
+    AuthStart
+    | AuthSuccess
+    | AuthFail
+    | AuthLogout
+    | VerifyStart
+    | VerifySuccess
+    | VerifyFail;
 
 export type AuthActions = AuthActionTypes;

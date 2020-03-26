@@ -87,6 +87,7 @@ export const callApi = (command: any, data: any, pathPara: any, cb: any) => {
                 console.log('not authorised');
                 // window.location.href = '#/logout';
                 // authLogout();
+                callback(res.data, null, res.status);
             } else if (res.status === 406) {
                 callback(res.data, null, res.status);
             } else if (res.status === 404) {

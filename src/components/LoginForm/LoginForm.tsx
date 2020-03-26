@@ -73,7 +73,7 @@ class LoginForm extends React.Component<Props, IState> {
                 value: '',
                 validation: {
                     required: true,
-                    minLength: 6
+                    minLength: 4
                 },
                 valid: false,
                 touched: false,
@@ -91,7 +91,7 @@ class LoginForm extends React.Component<Props, IState> {
             // @ts-ignore
             formData[formElementIdentifier] = this.state.loginForm[formElementIdentifier].value;
         }
-        this.props.onAuth(formData['userEmail'], formData['password']);
+        this.props.onAuth(formData['userEmail'].trim(), formData['password'].trim());
     };
 
     inputChangedHandler = (event: any, inputIdentifier: any) => {
@@ -122,6 +122,7 @@ class LoginForm extends React.Component<Props, IState> {
             <form onSubmit={this.submitHandler}>
                 <div className="loginFormWrapper">
                     <div className="inputElementsWrapper">
+                        {/* ====== email ========= */}
                         <Input
                             elementType={this.state.loginForm.userEmail.elementType}
                             elementConfig={this.state.loginForm.userEmail.elementConfig}
@@ -133,6 +134,7 @@ class LoginForm extends React.Component<Props, IState> {
                             autoFocus={this.state.loginForm.userEmail.autoFocus}
                             placeholder={this.state.loginForm.userEmail.placeholder}
                         />
+                        {/* ========== password ======= */}
                         <Input
                             elementType={this.state.loginForm.password.elementType}
                             elementConfig={this.state.loginForm.password.elementConfig}

@@ -8,6 +8,7 @@ import LoginFormInfo from "../../components/LoginFormInfo/LoginFormInfo";
 const Auth: React.FC = () => {
     const [showForm, setShowForm] = useState('login');
     const formViewChange = (formType: string) => {
+        window.scrollTo(0,0);
         setShowForm(formType);
     };
     return (

@@ -1,1 +1,4 @@
-export { authStart, auth } from './auth';
+export {
+    auth,
+    verifyMe
+} from './auth';
