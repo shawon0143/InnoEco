@@ -1,4 +1,6 @@
 export {
     auth,
-    verifyMe
+    signup,
+    verifyMe,
+    resetAuthFlags
 } from './auth';

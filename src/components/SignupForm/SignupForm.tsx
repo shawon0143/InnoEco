@@ -1,8 +1,16 @@
 import React from 'react';
+import { connect } from "react-redux";
 import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
 import { updateObject, checkValidity } from '../../shared/utility';
 import './SignupForm.scss';
+import {Auth} from "../../store/types/auth";
+import {AppState} from "../../store/configureStore";
+import {ThunkDispatch} from "redux-thunk";
+import {AuthActions} from "../../store/types/authActionTypes";
+import * as actions from "../../store/actions";
+import Spinner from "../UI/Spinner/Spinner";
+import Modal from "../UI/Modal/Modal";
 
 interface IProps {
     signinClicked: (formType: string) => void;
@@ -43,172 +51,188 @@ type IState = {
         email: input;
         password: input;
     },
-    formIsValid: boolean
+    formIsValid: boolean,
+    showModal: boolean
 };
 
-class SignupForm extends React.Component<IProps, IState> {
-    state: Readonly<IState> = {
-        signupForm: {
-            firstName: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    label: 'First Name*',
-                },
-                value: '',
-                validation: {
-                    required: true,
-                },
-                valid: false,
-                touched: false,
-                autoFocus: false,
-                placeholder: 'Sherlock'
+const initialState = {
+    signupForm: {
+        firstName: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'First Name*',
             },
-            lastName: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    label: 'Last Name*',
-                },
-                value: '',
-                validation: {
-                    required: true,
-                },
-                valid: false,
-                touched: false,
-                autoFocus: false,
-                placeholder: 'Holmes'
+            value: '',
+            validation: {
+                required: true,
             },
-            street: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    label: 'Street*',
-                },
-                value: '',
-                validation: {
-                    required: true,
-                },
-                valid: false,
-                touched: false,
-                autoFocus: false,
-                placeholder: '221b Baker street'
-            },
-            zipCode: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    label: 'Zip Code*',
-                },
-                value: '',
-                validation: {
-                    required: true,
-                },
-                valid: false,
-                touched: false,
-                autoFocus: false,
-                placeholder: 'NW1 6XE'
-            },
-            city: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    label: 'City*',
-                },
-                value: '',
-                validation: {
-                    required: true,
-                },
-                valid: false,
-                touched: false,
-                autoFocus: false,
-                placeholder: 'London'
-            },
-            country: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    label: 'Country*',
-                },
-                value: '',
-                validation: {
-                    required: true,
-                },
-                valid: false,
-                touched: false,
-                autoFocus: false,
-                placeholder: 'UK'
-            },
-            mobile: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    label: 'Mobile*',
-                },
-                value: '',
-                validation: {
-                    required: true,
-                    isNumeric: true
-                },
-                valid: false,
-                touched: false,
-                autoFocus: false,
-                placeholder: '12345678'
-            },
-            phone: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    label: 'Phone',
-                },
-                value: '',
-                validation: {
-                    isNumeric: true
-                },
-                valid: false,
-                touched: false,
-                autoFocus: false,
-                placeholder: '12345678'
-            },
-            email: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'email',
-                    label: 'Email*',
-                },
-                value: '',
-                validation: {
-                    required: true,
-                    isEmail: true
-                },
-                valid: false,
-                touched: false,
-                autoFocus: false,
-                placeholder: 'john@gmail.com'
-            },
-            password: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'password',
-                    label: 'Password*',
-                },
-                value: '',
-                validation: {
-                    required: true,
-                    minLength: 4,
-                    maxLength: 12
-                },
-                valid: false,
-                touched: false,
-                autoFocus: false,
-                placeholder: '*********'
-            }
+            valid: false,
+            touched: false,
+            autoFocus: false,
+            placeholder: 'Sherlock'
         },
-        formIsValid: false
-    };
+        lastName: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Last Name*',
+            },
+            value: '',
+            validation: {
+                required: true,
+            },
+            valid: false,
+            touched: false,
+            autoFocus: false,
+            placeholder: 'Holmes'
+        },
+        street: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Street*',
+            },
+            value: '',
+            validation: {
+                required: true,
+            },
+            valid: false,
+            touched: false,
+            autoFocus: false,
+            placeholder: '221b Baker street'
+        },
+        zipCode: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Zip Code*',
+            },
+            value: '',
+            validation: {
+                required: true,
+            },
+            valid: false,
+            touched: false,
+            autoFocus: false,
+            placeholder: 'NW1 6XE'
+        },
+        city: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'City*',
+            },
+            value: '',
+            validation: {
+                required: true,
+            },
+            valid: false,
+            touched: false,
+            autoFocus: false,
+            placeholder: 'London'
+        },
+        country: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Country*',
+            },
+            value: '',
+            validation: {
+                required: true,
+            },
+            valid: false,
+            touched: false,
+            autoFocus: false,
+            placeholder: 'UK'
+        },
+        mobile: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Mobile*',
+            },
+            value: '',
+            validation: {
+                required: true,
+                isNumeric: true
+            },
+            valid: false,
+            touched: false,
+            autoFocus: false,
+            placeholder: '12345678'
+        },
+        phone: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Phone',
+            },
+            value: '',
+            validation: {
+            },
+            valid: true,
+            touched: false,
+            autoFocus: false,
+            placeholder: '12345678'
+        },
+        email: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'email',
+                label: 'Email*',
+            },
+            value: '',
+            validation: {
+                required: true,
+                isEmail: true
+            },
+            valid: false,
+            touched: false,
+            autoFocus: false,
+            placeholder: 'john@gmail.com'
+        },
+        password: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'password',
+                label: 'Password*',
+            },
+            value: '',
+            validation: {
+                required: true,
+                minLength: 4,
+                maxLength: 12
+            },
+            valid: false,
+            touched: false,
+            autoFocus: false,
+            placeholder: '*********'
+        }
+    },
+    formIsValid: false,
+    showModal: false
+};
+
+type Props = LinkDispatchProps & LinkStateProps & IProps;
+
+class SignupForm extends React.Component<Props, IState> {
+    state: Readonly<IState> = initialState;
 
     submitHandler = (event: any) => {
         event.preventDefault();
+        const formData: any = {};
+        for (let formElementIdentifier in this.state.signupForm) {
+            // @ts-ignore
+            formData[formElementIdentifier] = this.state.signupForm[formElementIdentifier].value;
+        }
+        this.props.onSignup(formData);
+        this.setState({showModal: true});
+    };
+
+    resetForm = () => {
+        this.setState(initialState);
     };
 
     inputChangedHandler = (event: any, inputIdentifier: any) => {
@@ -219,9 +243,7 @@ class SignupForm extends React.Component<IProps, IState> {
             valid: checkValidity(event.target.value, this.state.signupForm[inputIdentifier].validation),
             touched: true
         });
-        const updatedSignupForm = updateObject(this.state.signupForm, {
-            [inputIdentifier]: updatedSignupFormElement
-        });
+        const updatedSignupForm = updateObject(this.state.signupForm, {[inputIdentifier]: updatedSignupFormElement});
         let formIsValid = true;
         for (let inputIdentifier in updatedSignupForm) {
             if (updatedSignupForm.hasOwnProperty(inputIdentifier)) {
@@ -360,7 +382,17 @@ class SignupForm extends React.Component<IProps, IState> {
                         />
                         <div/> {/* dont delete this */}
                         <div className="d-flex submitRow">
-                            <Button btnType="Danger" disabled={!this.state.formIsValid}>Signup</Button>
+                            <Button
+                                btnType="Danger"
+                                disabled={!this.state.formIsValid || this.props.signupLoading}
+                            >
+                                {this.props.signupLoading ? (
+                                    <div className="spinner-border spinner-border-sm text-light" role="status">
+                                        <span className="sr-only">Loading...</span>
+                                    </div>) : 'Create account'
+                                }
+                            </Button>
+
                         </div>
                     </div>
                     <div className="text-center pt-4">
@@ -370,13 +402,54 @@ class SignupForm extends React.Component<IProps, IState> {
                             </span>
                         </p>
                     </div>
-
                 </div>
+                {/* ================================ */}
+                <Modal show={this.state.showModal}
+                       modalClosed={() => {console.log('modal closed')}}
+                >
+                    <div>
+                        { this.props.signupLoading ? (<Spinner />) : (
+                            this.props.signupError !== '' ? (
+                                    <div className='signupResponseWrapper p-4'>
+                                        <i className='icons icon-exclamation'/>
+                                        <h6 className='m-4 text-center'>{this.props.signupError}</h6>
+                                        <button type="button" className="btn btn-dark btn-block" onClick={() => {this.resetForm()}}>OK</button>
+                                    </div>
+                                ) : (
+                                    <div className='signupResponseWrapper p-4'>
+                                        <i className='icons icon-envelope-letter'/>
+                                        <h6 className='m-4 text-center'>A verification email has been sent to your email. please verify.</h6>
+                                        <button type="button" className="btn btn-dark btn-block" onClick={() => {this.resetForm()}}>OK</button>
+                                    </div>
+                                )
+                        )}
+                    </div>
+                </Modal>
             </form>
         );
     }
 }
 
-export default SignupForm;
+interface LinkStateProps {
+    signupError: Auth['signupError'];
+    signupLoading: Auth['signupLoading'];
+    isSignupSuccessful: Auth['isSignupSuccessful'];
+}
+
+interface LinkDispatchProps {
+    onSignup: (data : {[index: string]:any}) => void;
+}
+
+const mapStateToProps = (state: AppState): LinkStateProps => ({
+    signupError: state.auth.signupError,
+    signupLoading: state.auth.signupLoading,
+    isSignupSuccessful: state.auth.isSignupSuccessful
+});
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AuthActions>): LinkDispatchProps => ({
+    onSignup: (data : {[index: string]:any}) => {dispatch(actions.signup(data))},
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);
 
 

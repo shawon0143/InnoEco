@@ -12,7 +12,7 @@ export function getApiUrl() {
     //     return baseUrl;
     // }
 
-    return baseUrl;
+    return baseUrl; // this will be deleted once we have same domain hosting for backend and frontend
 }
 
 export default getApiUrl();

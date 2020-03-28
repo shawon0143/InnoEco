@@ -4,19 +4,14 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../shared/utility';
 
 const initialState: Auth = {
-    address: [],
-    email: '',
-    firstName: '',
-    lastName: '',
-    password: '',
-    role: [],
-    phone: '',
-    mobile: '',
     error: '',
     loading: false,
     token: '',
     verifyLoading: false,
-    verifyError: ''
+    verifyError: '',
+    signupLoading: false,
+    signupError: '',
+    isSignupSuccessful: false
 };
 
 const authStart = (state: Auth, action: any) => {
@@ -44,8 +39,25 @@ const verifySuccess = (state: Auth, action: any) => {
 };
 
 const verifyFail = (state: Auth, action: any) => {
-    return updateObject(state, {verifyError: action.error, verifyLoading: false });
+    return updateObject(state, {verifyError: action.verifyError, verifyLoading: false });
 };
+
+const signupStart = (state: Auth, action: any) => {
+    return updateObject(state, {signupError: '', signupLoading: true});
+};
+
+const signupSuccess = (state: Auth, action: any) => {
+    return updateObject(state, {signupError: '', signupLoading: false, isSignupSuccessful: true});
+};
+
+const signupFail = (state: Auth, action: any) => {
+    return updateObject(state, {signupError: action.signupError, signupLoading: false});
+};
+
+const resetAuthFlags = (state: Auth, action: any) => {
+    return updateObject(state, {signupError: '', verifyError: '', isSignupSuccessful: false, loading: false, error: ''});
+};
+
 const reducer = (state = initialState, action: AuthActions): Auth => {
     switch (action.type) {
         case actionTypes.AUTH_START: return authStart(state, action);
@@ -54,6 +66,10 @@ const reducer = (state = initialState, action: AuthActions): Auth => {
         case actionTypes.VERIFY_START: return verifyStart(state, action);
         case actionTypes.VERIFY_SUCCESS: return verifySuccess(state, action);
         case actionTypes.VERIFY_FAIL: return verifyFail(state, action);
+        case actionTypes.SIGNUP_START: return signupStart(state, action);
+        case actionTypes.SIGNUP_SUCCESS: return signupSuccess(state, action);
+        case actionTypes.SIGNUP_FAIL: return signupFail(state, action);
+        case actionTypes.RESET_AUTH_FLAGS: return resetAuthFlags(state, action);
         default:
             return state;
     }

@@ -1,5 +1,5 @@
 import * as React from "react";
-const classes = require('./Backdrop.module.css');
+import './Backdrop.scss';
 
 interface IProps {
     clicked: () => void;
@@ -8,7 +8,7 @@ interface IProps {
 
 const backdrop: React.FC<IProps> = (props: IProps) =>
     props.show ? (
-        <div className={classes.Backdrop} onClick={props.clicked} />
+        <div className='Backdrop' onClick={props.clicked} />
     ) : null;
 
 export default backdrop;

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import Backdrop from "../Backdrop/Backdrop";
 
-const classes = require('./Modal.scss');
+import './Modal.scss';
 
 interface IProps {
     show: boolean;
@@ -25,7 +25,7 @@ class Modal extends React.Component<IProps> {
                     clicked={this.props.modalClosed}
                 />
                 <div
-                    className={classes.Modal}
+                    className='Modal'
                     style={{
                         transform: this.props.show
                             ? "translateY(0)"

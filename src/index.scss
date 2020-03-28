@@ -1,11 +1,13 @@
+// variables
+$darkBlue: #26304d;
+$cyan: #00BCD4;
+
 $theme-colors: (
         "danger": #a61d37
 );
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
 @import url('https://fonts.googleapis.com/css?family=Barlow&display=swap');
-
-
 
 body {
   font-weight: 400;

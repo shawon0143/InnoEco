@@ -37,6 +37,26 @@ export interface VerifyFail {
     verifyLoading: boolean;
 }
 
+export interface SignupStart {
+    type: typeof actionTypes.SIGNUP_START;
+}
+
+export interface SignupSuccess {
+    type: typeof actionTypes.SIGNUP_SUCCESS;
+    signupError: string;
+    signupLoading: boolean;
+}
+
+export interface SignupFail {
+    type: typeof actionTypes.SIGNUP_FAIL;
+    signupError: string;
+    signupLoading: boolean;
+}
+
+export interface ResetAuthFlags {
+    type: typeof actionTypes.RESET_AUTH_FLAGS;
+}
+
 export type AuthActionTypes =
     AuthStart
     | AuthSuccess
@@ -44,6 +64,10 @@ export type AuthActionTypes =
     | AuthLogout
     | VerifyStart
     | VerifySuccess
-    | VerifyFail;
+    | VerifyFail
+    | SignupStart
+    | SignupSuccess
+    | SignupFail
+    | ResetAuthFlags;
 
 export type AuthActions = AuthActionTypes;

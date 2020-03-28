@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {useDispatch} from "react-redux";
 import LoginForm from '../../components/LoginForm/LoginForm';
 import SignupForm from "../../components/SignupForm/SignupForm";
 
 import './Auth.scss';
 import LoginFormInfo from "../../components/LoginFormInfo/LoginFormInfo";
+import * as actions from "../../store/actions/index";
 
 const Auth: React.FC = () => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(actions.resetAuthFlags());
+    }, [dispatch]);
+
     const [showForm, setShowForm] = useState('login');
     const formViewChange = (formType: string) => {
         window.scrollTo(0,0);
         setShowForm(formType);
     };
+
     return (
         <div className="authContainer topNavMargin">
             <div className="container mainBoxWrapper">

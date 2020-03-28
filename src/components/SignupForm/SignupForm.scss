@@ -20,6 +20,17 @@
     text-decoration: underline;
   }
 }
+.signupResponseWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .icons {
+    font-size: 30px;
+    color: #00BCD4;
+  }
+}
+
 
 @media (max-width: 600px) {
   .signupFormWrapper {

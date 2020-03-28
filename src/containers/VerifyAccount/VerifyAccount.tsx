@@ -22,7 +22,7 @@ const VerifyAccount: React.FC<IProps> = (props: IProps) => {
     }, [dispatch, token]);
     return (
         <div className='topNavMargin'>
-            <div className="row">
+            <div className="row mt-5">
                 <div className="col text-center">
                     {verifyLoading ? (<Spinner animation="border" variant="secondary" />) : (
                         <div>
