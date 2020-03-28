@@ -42,47 +42,49 @@ type IState = {
     },
     formIsValid: boolean
 }
+
+const initialState = {
+    // loginForm object is used for form definition  and form validation
+    loginForm: {
+        userEmail: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'email',
+                label: 'Email',
+            },
+            value: '',
+            validation: {
+                required: true,
+                isEmail: true
+            },
+            valid: false,
+            touched: false,
+            autoFocus: false,
+            placeholder: 'john@gmail.com'
+        },
+        password: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'password',
+                label: 'Password',
+            },
+            value: '',
+            validation: {
+                required: true,
+                minLength: 4
+            },
+            valid: false,
+            touched: false,
+            autoFocus: false,
+            placeholder: '*********'
+        }
+    },
+    formIsValid: false
+};
 type Props = LinkDispatchProps & LinkStateProps & IProps;
 
 class LoginForm extends React.Component<Props, IState> {
-    state: Readonly<IState> = {
-        // loginForm object is used for form definition  and form validation
-        loginForm: {
-            userEmail: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'email',
-                    label: 'Email',
-                },
-                value: '',
-                validation: {
-                    required: true,
-                    isEmail: true
-                },
-                valid: false,
-                touched: false,
-                autoFocus: false,
-                placeholder: 'john@gmail.com'
-            },
-            password: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'password',
-                    label: 'Password',
-                },
-                value: '',
-                validation: {
-                    required: true,
-                    minLength: 4
-                },
-                valid: false,
-                touched: false,
-                autoFocus: false,
-                placeholder: '*********'
-            }
-        },
-        formIsValid: false
-    };
+    state: Readonly<IState> = initialState;
 
     submitHandler = (event: any) => {
         event.preventDefault();
@@ -149,8 +151,15 @@ class LoginForm extends React.Component<Props, IState> {
                         />
                         <div className="d-flex justify-content-between align-items-center submitRow">
                             <span className="text-muted forgotPasswordLink">Forgot Password?</span>
-                            <Button btnType="Danger" disabled={!this.state.formIsValid}>Signin</Button>
+                            <Button btnType="Danger" disabled={!this.state.formIsValid}>
+                                {this.props.loading ? (
+                                    <div className="spinner-border spinner-border-sm text-light" role="status">
+                                        <span className="sr-only">Loading...</span>
+                                    </div>
+                                ): 'Sign in'}
+                            </Button>
                         </div>
+                        {this.props.error !== '' && <h6 className='text-danger text-center m-2'>{this.props.error}</h6>}
                     </div>
                     <div className="text-center pt-4">
                         <p className="text-muted mb-0">Do not have an account?

@@ -11,7 +11,6 @@ const initialState: Auth = {
     verifyError: '',
     signupLoading: false,
     signupError: '',
-    isSignupSuccessful: false
 };
 
 const authStart = (state: Auth, action: any) => {

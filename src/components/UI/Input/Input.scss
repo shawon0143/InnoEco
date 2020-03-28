@@ -22,7 +22,7 @@
   display: block;
   width: 100%;
   box-sizing: border-box;
-  background-color: #f5f6fa !important;
+  background-color: #f5f6fa;
   padding-top: 0.55714rem !important;
   padding-bottom: 0.55714rem !important;
   border-radius: .20rem;
@@ -39,5 +39,5 @@
 
 .Invalid {
   border: 1px solid theme-color("danger");
-  background-color: #FDA49A;
+  //background-color: #FDA49A;
 }

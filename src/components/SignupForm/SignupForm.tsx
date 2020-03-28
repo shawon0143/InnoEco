@@ -433,7 +433,6 @@ class SignupForm extends React.Component<Props, IState> {
 interface LinkStateProps {
     signupError: Auth['signupError'];
     signupLoading: Auth['signupLoading'];
-    isSignupSuccessful: Auth['isSignupSuccessful'];
 }
 
 interface LinkDispatchProps {
@@ -443,7 +442,6 @@ interface LinkDispatchProps {
 const mapStateToProps = (state: AppState): LinkStateProps => ({
     signupError: state.auth.signupError,
     signupLoading: state.auth.signupLoading,
-    isSignupSuccessful: state.auth.isSignupSuccessful
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AuthActions>): LinkDispatchProps => ({

@@ -13,5 +13,4 @@ export interface Auth {
     "verifyError": string;
     "signupLoading": boolean;
     "signupError": string;
-    "isSignupSuccessful": boolean;
 }
