@@ -51,9 +51,8 @@ const VerifyAccount: React.FC<IProps> = (props: IProps) => {
                                     />
                                     <button
                                         type="button"
-                                        className="btn btn-danger"
+                                        className="btn btn-danger mt-3"
                                         onClick={() => resendTokenHandler()}
-                                        disabled={!isValid}
                                     >
                                         {resendTokenLoading ? (
                                             <div className="spinner-border spinner-border-sm text-light" role="status">
