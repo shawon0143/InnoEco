@@ -11,6 +11,8 @@ const initialState: Auth = {
     verifyError: '',
     signupLoading: false,
     signupError: '',
+    resendTokenLoading: false,
+    resendTokenStatus: ''
 };
 
 const authStart = (state: Auth, action: any) => {
@@ -41,6 +43,18 @@ const verifyFail = (state: Auth, action: any) => {
     return updateObject(state, {verifyError: action.verifyError, verifyLoading: false });
 };
 
+const resendTokenStart = (state: Auth, action: any) => {
+    return updateObject(state, {resendTokenStatus: '', resendTokenLoading: true});
+};
+
+const resendTokenSuccess = (state: Auth, action: any) => {
+    return updateObject(state, {resendTokenStatus: action.resendTokenStatus, resendTokenLoading: false});
+};
+
+const resendTokenFail = (state: Auth, action: any) => {
+    return updateObject(state, {resendTokenStatus: action.resendTokenStatus, resendTokenLoading: false});
+};
+
 const signupStart = (state: Auth, action: any) => {
     return updateObject(state, {signupError: '', signupLoading: true});
 };
@@ -65,6 +79,9 @@ const reducer = (state = initialState, action: AuthActions): Auth => {
         case actionTypes.VERIFY_START: return verifyStart(state, action);
         case actionTypes.VERIFY_SUCCESS: return verifySuccess(state, action);
         case actionTypes.VERIFY_FAIL: return verifyFail(state, action);
+        case actionTypes.RESEND_TOKEN_START: return resendTokenStart(state, action);
+        case actionTypes.RESEND_TOKEN_SUCCESS: return resendTokenSuccess(state, action);
+        case actionTypes.RESEND_TOKEN_FAIL: return resendTokenFail(state, action);
         case actionTypes.SIGNUP_START: return signupStart(state, action);
         case actionTypes.SIGNUP_SUCCESS: return signupSuccess(state, action);
         case actionTypes.SIGNUP_FAIL: return signupFail(state, action);

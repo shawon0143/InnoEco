@@ -82,6 +82,48 @@ export const verifyMe = (verifyToken: string) => {
     }
 };
 // =====================================
+// ========= Resend token ==============
+// =====================================
+
+export const resendTokenStart = (): AuthActions => {
+    return {
+        type: actionTypes.RESEND_TOKEN_START
+    }
+};
+
+export const resendTokenFail = (err: string): AuthActions => {
+    return {
+        type: actionTypes.RESEND_TOKEN_FAIL,
+        resendTokenStatus: err,
+        resendTokenLoading: false
+    }
+};
+
+export const resendTokenSuccess = (msg: string): AuthActions => {
+    return {
+        type: actionTypes.RESEND_TOKEN_SUCCESS,
+        resendTokenStatus: msg,
+        resendTokenLoading: false
+    }
+};
+
+export const resendVerifyToken = (email: string) => {
+    return (dispatch: Dispatch<AuthActions>) => {
+        dispatch(resendTokenStart());
+        callApi('resendToken', {email: email}, null, (err: any, result: any, status: any) => {
+           if (err) {
+               console.log(err);
+               dispatch(resendTokenFail(err.message));
+           } else {
+               console.log(result);
+               dispatch(resendTokenSuccess(result.message));
+
+           }
+        });
+    }
+};
+
+// =====================================
 // ========= Signup account ============
 // =====================================
 

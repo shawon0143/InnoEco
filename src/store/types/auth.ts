@@ -13,4 +13,6 @@ export interface Auth {
     "verifyError": string;
     "signupLoading": boolean;
     "signupError": string;
+    "resendTokenLoading": boolean;
+    "resendTokenStatus": string;
 }

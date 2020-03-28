@@ -2,5 +2,6 @@ export {
     auth,
     signup,
     verifyMe,
-    resetAuthFlags
+    resetAuthFlags,
+    resendVerifyToken,
 } from './auth';

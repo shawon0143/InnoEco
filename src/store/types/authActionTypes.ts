@@ -37,6 +37,22 @@ export interface VerifyFail {
     verifyLoading: boolean;
 }
 
+export interface ResendTokenStart {
+    type: typeof actionTypes.RESEND_TOKEN_START;
+}
+
+export interface ResendTokenSuccess {
+    type: typeof actionTypes.RESEND_TOKEN_SUCCESS;
+    resendTokenStatus: string;
+    resendTokenLoading: boolean;
+}
+
+export interface ResendTokenFail {
+    type: typeof actionTypes.RESEND_TOKEN_FAIL;
+    resendTokenStatus: string;
+    resendTokenLoading: boolean;
+}
+
 export interface SignupStart {
     type: typeof actionTypes.SIGNUP_START;
 }
@@ -65,6 +81,9 @@ export type AuthActionTypes =
     | VerifyStart
     | VerifySuccess
     | VerifyFail
+    | ResendTokenStart
+    | ResendTokenSuccess
+    | ResendTokenFail
     | SignupStart
     | SignupSuccess
     | SignupFail
