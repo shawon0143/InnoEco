@@ -36,7 +36,7 @@ export const auth = (email: string, password: string) => {
                console.log(err);
                dispatch(authFail(err.message))
            } else {
-               console.log(result);
+               // console.log(result);
                dispatch(authSuccess(result.token));
            }
         });
@@ -75,7 +75,7 @@ export const verifyMe = (verifyToken: string) => {
                 console.log(err);
                 dispatch(verifyFail(err.message));
             } else {
-                console.log(result);
+                // console.log(result);
                 dispatch(verifySuccess());
             }
         });
@@ -115,7 +115,7 @@ export const resendVerifyToken = (email: string) => {
                console.log(err);
                dispatch(resendTokenFail(err.message));
            } else {
-               console.log(result);
+               // console.log(result);
                dispatch(resendTokenSuccess(result.message));
 
            }
@@ -166,6 +166,48 @@ export const signup = (data : {[index: string]:any}) => {
          }
       });
   }
+};
+
+export const setForgotPasswordStatus = (status: string): AuthActions => {
+    return {
+        type: actionTypes.SET_FORGOT_PASSWORD_STATUS,
+        forgotPasswordStatus: status
+    }
+};
+
+export const forgetPassword = (email: string) => {
+  return (dispatch: Dispatch<AuthActions>) => {
+    callApi('forgotPassword', {email: email}, null, (err: any, result: any) => {
+       if (err) {
+           console.log(err);
+           dispatch(setForgotPasswordStatus(err.message));
+       } else {
+           // console.log(result);
+           dispatch(setForgotPasswordStatus(result.message));
+       }
+    });
+  }
+};
+
+export const setResetPasswordStatus = (status: string): AuthActions => {
+    return {
+        type: actionTypes.SET_RESET_PASSWORD_STATUS,
+        resetPasswordStatus: status
+    }
+};
+
+export const resetPassword = (password: string, token: string) => {
+    return (dispatch: Dispatch<AuthActions>) => {
+        callApi('resetPassword', {password: password}, {token: token}, (err: any, result: any) => {
+            if (err) {
+                console.log(err);
+                dispatch(setResetPasswordStatus(err.message));
+            } else {
+                // console.log(result);
+                dispatch(setResetPasswordStatus(result.message));
+            }
+        });
+    }
 };
 
 export const resetAuthFlags = () => {

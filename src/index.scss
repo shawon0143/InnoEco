@@ -8,7 +8,9 @@ $theme-colors: (
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
 @import url('https://fonts.googleapis.com/css?family=Barlow&display=swap');
-
+// font-family: "Barlow", sans-serif;
+@import url('https://fonts.googleapis.com/css?family=Alegreya&display=swap');
+// font-family: 'Alegreya', serif;
 body {
   font-weight: 400;
   font-size: 0.9rem;

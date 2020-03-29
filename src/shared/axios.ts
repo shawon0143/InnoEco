@@ -3,16 +3,13 @@ import axios from 'axios';
 let baseUrl = 'https://innoeco-backend.herokuapp.com';
 
 export function getApiUrl() {
-    // let urlParts =  window.location.href.split('/'),  // ["https://www.google.com/", "/order"]
-    //     host = urlParts[0] + '//' + urlParts[2];
-    //
-    // if (urlParts[2].substring(0,9) === 'localhost') {
-    //     return host;
-    // } else {
-    //     return baseUrl;
-    // }
+    let urlParts =  window.location.href.split('/');  // ["https://www.google.com/", "/order"]
 
-    return baseUrl; // this will be deleted once we have same domain hosting for backend and frontend
+    if (urlParts[2].substring(0,9) === 'localhost') {
+        return 'http://localhost:5000'
+    } else {
+        return baseUrl;
+    }
 }
 
 export default getApiUrl();
@@ -25,7 +22,8 @@ commands['login'] = { url: `/user/login`, method: 'POST', responseType: 'json' }
 commands['deleteUser'] = { url: `/user/:userId`, method: 'DELETE', responseType: 'json' };
 commands['verifyAccount'] = { url: `/user/verifyAccount/:token`, method: 'GET', responseType: 'json' };
 commands['resendToken'] = { url: `/user/resendToken`, method: 'POST', responseType: 'json' };
-
+commands['forgotPassword'] = { url: `/user/forgotPassword`, method: 'POST', responseType: 'json'};
+commands['resetPassword'] = { url: `/user/resetPassword/:token`, method: 'POST', responseType: 'json' };
 
 
 export const callApi = (command: any, data: any, pathPara: any, cb: any) => {

@@ -12,6 +12,7 @@ import * as actions from "../../store/actions/index";
 
 interface IProps {
     createAccountClicked: (formType: string) => void;
+    forgotPasswordClicked: (formType: string) => void;
 }
 export interface input {
     elementType: string;
@@ -150,7 +151,7 @@ class LoginForm extends React.Component<Props, IState> {
 
                         />
                         <div className="d-flex justify-content-between align-items-center submitRow">
-                            <span className="text-muted forgotPasswordLink">Forgot Password?</span>
+                            <span className="text-muted forgotPasswordLink" onClick={() => this.props.forgotPasswordClicked('forgotPassword')}>Forgot Password?</span>
                             <Button btnType="Danger" disabled={!this.state.formIsValid}>
                                 {this.props.loading ? (
                                     <div className="spinner-border spinner-border-sm text-light" role="status">

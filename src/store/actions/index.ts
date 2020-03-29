@@ -3,5 +3,7 @@ export {
     signup,
     verifyMe,
     resetAuthFlags,
+    forgetPassword,
     resendVerifyToken,
+    resetPassword
 } from './auth';

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {useDispatch} from "react-redux";
 import LoginForm from '../../components/LoginForm/LoginForm';
 import SignupForm from "../../components/SignupForm/SignupForm";
+import ForgotPassword from "../../components/ForgotPassword/ForgotPassword";
 
 import './Auth.scss';
 import LoginFormInfo from "../../components/LoginFormInfo/LoginFormInfo";
@@ -44,12 +45,21 @@ const Auth: React.FC = () => {
                     </div>
                     <div className="row justify-content-between">
                         <div className="col-md-6 col-lg-5 order-md-2 signInFormWrapper">
-                            {/* Login Form */}
-                            {showForm === 'login' && <LoginForm createAccountClicked={(formType) => formViewChange(formType)}/>}
-                            {/* Sign up Form */}
+                            {/* ================================= */}
+                            {/* ===== Login Form ================ */}
+                            {/* ================================= */}
+                            {showForm === 'login' && <LoginForm createAccountClicked={(formType) => formViewChange(formType)}
+                                                                forgotPasswordClicked={(formType) => formViewChange(formType)}
+                                                     />
+                            }
+                            {/* ================================= */}
+                            {/* ======= Sign up Form ============ */}
+                            {/* ================================= */}
                             {showForm === 'signup' && <SignupForm signinClicked={(formType) => formViewChange(formType)}/>}
-                            {/* Password reset Form */}
-
+                            {/* ================================= */}
+                            {/* ======= Password reset Form ===== */}
+                            {/* ================================= */}
+                            {showForm === 'forgotPassword' && <ForgotPassword loginClicked={(formType) => formViewChange(formType)}/>}
                             <hr className="hiddenLine" />
                         </div>
                         <div className="col-md-6 order-md-1 mb-5">

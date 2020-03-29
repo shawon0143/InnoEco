@@ -15,4 +15,6 @@ export interface Auth {
     "signupError": string;
     "resendTokenLoading": boolean;
     "resendTokenStatus": string;
+    "forgotPasswordStatus": string;
+    "resetPasswordStatus": string;
 }

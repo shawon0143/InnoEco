@@ -12,7 +12,9 @@ const initialState: Auth = {
     signupLoading: false,
     signupError: '',
     resendTokenLoading: false,
-    resendTokenStatus: ''
+    resendTokenStatus: '',
+    forgotPasswordStatus: '',
+    resetPasswordStatus: ''
 };
 
 const authStart = (state: Auth, action: any) => {
@@ -60,7 +62,7 @@ const signupStart = (state: Auth, action: any) => {
 };
 
 const signupSuccess = (state: Auth, action: any) => {
-    return updateObject(state, {signupError: '', signupLoading: false, isSignupSuccessful: true});
+    return updateObject(state, {signupError: '', signupLoading: false});
 };
 
 const signupFail = (state: Auth, action: any) => {
@@ -68,7 +70,15 @@ const signupFail = (state: Auth, action: any) => {
 };
 
 const resetAuthFlags = (state: Auth, action: any) => {
-    return updateObject(state, {signupError: '', verifyError: '', isSignupSuccessful: false, loading: false, error: ''});
+    return updateObject(state, {signupError: '', verifyError: '', loading: false, error: '', resendTokenStatus: '', forgotPasswordStatus: '', resetPasswordStatus: ''});
+};
+
+const setForgotPasswordStatus = (state: Auth, action: any) => {
+    return updateObject(state, {forgotPasswordStatus: action.forgotPasswordStatus});
+};
+
+const setResetPasswordStatus = (state: Auth, action: any) => {
+    return updateObject(state, {resetPasswordStatus: action.resetPasswordStatus})
 };
 
 const reducer = (state = initialState, action: AuthActions): Auth => {
@@ -86,6 +96,8 @@ const reducer = (state = initialState, action: AuthActions): Auth => {
         case actionTypes.SIGNUP_SUCCESS: return signupSuccess(state, action);
         case actionTypes.SIGNUP_FAIL: return signupFail(state, action);
         case actionTypes.RESET_AUTH_FLAGS: return resetAuthFlags(state, action);
+        case actionTypes.SET_FORGOT_PASSWORD_STATUS: return setForgotPasswordStatus(state, action);
+        case actionTypes.SET_RESET_PASSWORD_STATUS: return setResetPasswordStatus(state, action);
         default:
             return state;
     }

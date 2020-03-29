@@ -73,6 +73,16 @@ export interface ResetAuthFlags {
     type: typeof actionTypes.RESET_AUTH_FLAGS;
 }
 
+export interface SetForgotPasswordStatus {
+    type: typeof actionTypes.SET_FORGOT_PASSWORD_STATUS;
+    forgotPasswordStatus: string;
+}
+
+export interface SetResetPasswordStatus {
+    type: typeof actionTypes.SET_RESET_PASSWORD_STATUS;
+    resetPasswordStatus: string;
+}
+
 export type AuthActionTypes =
     AuthStart
     | AuthSuccess
@@ -87,6 +97,8 @@ export type AuthActionTypes =
     | SignupStart
     | SignupSuccess
     | SignupFail
-    | ResetAuthFlags;
+    | ResetAuthFlags
+    | SetForgotPasswordStatus
+    | SetResetPasswordStatus;
 
 export type AuthActions = AuthActionTypes;
