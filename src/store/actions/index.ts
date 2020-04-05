@@ -5,5 +5,7 @@ export {
     resetAuthFlags,
     forgetPassword,
     resendVerifyToken,
-    resetPassword
+    resetPassword,
+    authCheckState,
+    authLogout
 } from './auth';

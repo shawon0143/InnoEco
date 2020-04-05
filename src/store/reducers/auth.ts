@@ -7,6 +7,9 @@ const initialState: Auth = {
     error: '',
     loading: false,
     token: '',
+    firstName: '',
+    lastName: '',
+    role: '',
     verifyLoading: false,
     verifyError: '',
     signupLoading: false,
@@ -24,6 +27,9 @@ const authStart = (state: Auth, action: any) => {
 const authSuccess = (state: Auth, action: any) => {
     return updateObject(state, {
         token: action.token,
+        firstName: action.firstName,
+        lastName: action.lastName,
+        role: action.role,
         error: '',
         loading: false,
     });
@@ -31,6 +37,10 @@ const authSuccess = (state: Auth, action: any) => {
 
 const authFail = (state: Auth, action: any) => {
     return updateObject(state, { error: action.error, loading: false });
+};
+
+const authLogout = (state: Auth, action: any) => {
+    return updateObject(state, {token: '', firstName: '', lastName: '', role: ''});
 };
 
 const verifyStart = (state: Auth, action: any) => {
@@ -86,6 +96,7 @@ const reducer = (state = initialState, action: AuthActions): Auth => {
         case actionTypes.AUTH_START: return authStart(state, action);
         case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
         case actionTypes.AUTH_FAIL: return authFail(state, action);
+        case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
         case actionTypes.VERIFY_START: return verifyStart(state, action);
         case actionTypes.VERIFY_SUCCESS: return verifySuccess(state, action);
         case actionTypes.VERIFY_FAIL: return verifyFail(state, action);

@@ -26,6 +26,9 @@ const Input: React.FC<IProps> = ( props: IProps ) => {
     if (props.invalid && props.shouldValidate && props.touched) {
         inputClasses.push('Invalid');
     }
+    if (props.elementType === 'select') {
+        inputClasses.push('custom-select');
+    }
 
     switch ( props.elementType ) {
         case ( 'input' ):

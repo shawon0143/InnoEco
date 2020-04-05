@@ -1,18 +1,32 @@
 import React, {useState} from 'react';
+import {useSelector, useDispatch} from "react-redux";
 import './TopNavigation.scss';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from "react-bootstrap/Navbar";
 import {useHistory} from "react-router-dom";
 import {Link} from "react-router-dom";
+import {AppState} from "../../store/configureStore";
+import * as actions from "../../store/actions/index";
 
 const TopNavigation: React.FC = (props) => {
+    const auth = useSelector((state: AppState) => {
+       return state.auth;
+    });
+    const dispatch = useDispatch();
     const [navExpanded, setNavExpanded] = useState(false);
     let history = useHistory();
-    let onClickSignin = () => {
+    const onClickSignin = () => {
         history.push('/auth');
         setNavExpanded(false);
     };
+    const onClickLogout = () => {
+      dispatch(actions.authLogout());
+    };
+    let authButton = (<Button variant="danger" size="sm" className='ml-3 ml-lg-4 px-3' onClick={() => {onClickSignin()} }>Sign in</Button>);
+    if (auth.token !== '' && !auth.loading) {
+        authButton = (<Button variant="danger" size="sm" className='ml-3 ml-lg-4 px-3' onClick={() => {onClickLogout()} }>Logout</Button>);
+    }
     return (
         <Navbar collapseOnSelect expand="lg" variant="dark" fixed="top" className="customNavbar" expanded={navExpanded}>
             <div className="container">
@@ -25,7 +39,7 @@ const TopNavigation: React.FC = (props) => {
                         <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>About</Link>
                         <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>Contacts</Link>
                     </Nav>
-                    <Button variant="outline-danger" size="sm" className='ml-3 ml-lg-4 px-3' onClick={() => {onClickSignin()} }>Sign in</Button>
+                    {authButton}
                 </Navbar.Collapse>
             </div>
         </Navbar>

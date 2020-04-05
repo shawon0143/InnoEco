@@ -12,9 +12,12 @@ export const authStart = (): AuthActions => {
     }
 };
 
-export const authSuccess = (token: string): AuthActions => ({
+export const authSuccess = (data: any): AuthActions => ({
     type: actionTypes.AUTH_SUCCESS,
-    token: token,
+    token: data.token,
+    firstName: data.firstName,
+    lastName: data.lastName,
+    role: data.role,
     error: '',
     loading: false
 });
@@ -27,6 +30,16 @@ export const authFail = (err: string): AuthActions => {
     };
 };
 
+export const authLogout = (): AuthActions => {
+    localStorage.setItem('token', '');
+    localStorage.setItem('firstName', '');
+    localStorage.setItem('lastName', '');
+    localStorage.setItem('role', '');
+    return {
+        type: actionTypes.AUTH_LOGOUT
+    };
+};
+
 export const auth = (email: string, password: string) => {
     return (dispatch: Dispatch<AuthActions>) => {
         dispatch(authStart());
@@ -36,8 +49,12 @@ export const auth = (email: string, password: string) => {
                console.log(err);
                dispatch(authFail(err.message))
            } else {
-               // console.log(result);
-               dispatch(authSuccess(result.token));
+               console.log(result);
+               localStorage.setItem('token', result.token);
+               localStorage.setItem('firstName', result.firstName);
+               localStorage.setItem('lastName', result.lastName);
+               localStorage.setItem('role', result.role);
+               dispatch(authSuccess(result));
            }
         });
     }
@@ -214,4 +231,27 @@ export const resetAuthFlags = () => {
   return {
       type: actionTypes.RESET_AUTH_FLAGS
   }
+};
+
+export const authCheckState = () => {
+    return (dispatch: Dispatch<AuthActions>) => {
+        const token = localStorage.getItem('token');
+        if (token === '' || !token) {
+            dispatch(authLogout());
+        }
+        else {
+            const token = localStorage.getItem('token');
+            const firstName = localStorage.getItem('firstName');
+            const lastName = localStorage.getItem('lastName');
+            const role = localStorage.getItem('role');
+
+            let data = {
+                token: token,
+                firstName: firstName,
+                lastName: lastName,
+                role: role
+            };
+            dispatch(authSuccess(data));
+        }
+    };
 };

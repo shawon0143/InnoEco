@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import { Route, Switch, Redirect } from 'react-router-dom';
 import './index.scss';
 import 'simple-line-icons/css/simple-line-icons.css';
+import * as actions from "../src/store/actions/index";
 
 // import components
 import Layout from "./hoc/Layout/Layout";
@@ -9,8 +11,16 @@ import Home from "./containers/Home/Home";
 import Auth from "./containers/Auth/Auth";
 import VerifyAccount from "./containers/VerifyAccount/VerifyAccount";
 import ResetPassword from "./containers/ResetPassword/ResetPassword";
+import {AppState} from "./store/configureStore";
 
 const App: React.FC = (props) => {
+    const auth = useSelector((state: AppState) => {
+       return state.auth;
+    });
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(actions.authCheckState());
+    }, [dispatch]);
     let routes = (
         <Switch>
             <Route path='/verifyAccount/:token' component={VerifyAccount} />
@@ -22,6 +32,15 @@ const App: React.FC = (props) => {
             <Redirect to='/' />
         </Switch>
     );
+
+    if (!auth.loading && auth.token !== '') {
+        routes = (
+            <Switch>
+                <Route path="/" exact component={Home}/>
+                <Redirect to='/' />
+            </Switch>
+        );
+    }
     return (
         <React.Fragment>
             <Layout>

@@ -38,6 +38,21 @@ export interface input {
     placeholder: string;
 }
 
+interface SelectInput {
+    elementType: string,
+    elementConfig: {
+        label: string;
+        options: any[];
+    },
+    value: string,
+    validation: {
+        required?: boolean;
+    },
+    valid: boolean,
+    touched: boolean,
+    autoFocus: boolean
+}
+
 type IState = {
     signupForm: {
         firstName: input;
@@ -50,6 +65,7 @@ type IState = {
         phone: input;
         email: input;
         password: input;
+        userRole: SelectInput;
     },
     formIsValid: boolean,
     showModal: boolean
@@ -209,7 +225,28 @@ const initialState = {
             touched: false,
             autoFocus: false,
             placeholder: '*********'
-        }
+        },
+        userRole: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Role',
+                options: [
+                    {value: '', displayValue: 'Select a role'},
+                    {value: 'Organization', displayValue: 'Organization'},
+                    {value: 'Entrepreneur', displayValue: 'Entrepreneur'},
+                    {value: 'Investor', displayValue: 'Investor'},
+                    {value: 'Researcher', displayValue: 'Researcher'},
+                    {value: 'Student', displayValue: 'Student'},
+                ]
+            },
+            value: '',
+            validation: {
+                required: true,
+            },
+            valid: false,
+            touched: false,
+            autoFocus: false
+        },
     },
     formIsValid: false,
     showModal: false
@@ -219,14 +256,25 @@ type Props = LinkDispatchProps & LinkStateProps & IProps;
 
 class SignupForm extends React.Component<Props, IState> {
     state: Readonly<IState> = initialState;
-
     submitHandler = (event: any) => {
         event.preventDefault();
         const formData: any = {};
-        for (let formElementIdentifier in this.state.signupForm) {
-            // @ts-ignore
-            formData[formElementIdentifier] = this.state.signupForm[formElementIdentifier].value;
-        }
+        formData['firstName'] = this.state.signupForm.firstName.value;
+        formData['lastName'] = this.state.signupForm.lastName.value;
+        formData['address'] = [{
+            addressTitle: 'Default',
+            street: this.state.signupForm.street.value,
+            zipCode: this.state.signupForm.zipCode.value,
+            city: this.state.signupForm.city.value,
+            country: this.state.signupForm.country.value,
+        }];
+        formData['mobile'] = this.state.signupForm.mobile.value;
+        formData['phone'] = this.state.signupForm.phone.value;
+        formData['email'] = this.state.signupForm.email.value;
+        formData['password'] = this.state.signupForm.password.value;
+        formData['role'] = [this.state.signupForm.userRole.value];
+        formData['imageUrl'] = '';
+
         this.props.onSignup(formData);
         this.setState({showModal: true});
     };
@@ -257,152 +305,165 @@ class SignupForm extends React.Component<Props, IState> {
     };
     render() {
         return (
-            <form onSubmit={this.submitHandler}>
-                <div className="signupFormWrapper">
-                    <div className="inputElementsWrapper">
-                        {/* ======= First Name ====== */}
-                        <Input
-                            elementType={this.state.signupForm.firstName.elementType}
-                            elementConfig={this.state.signupForm.firstName.elementConfig}
-                            value={this.state.signupForm.firstName.value}
-                            changed={(event) => this.inputChangedHandler(event, 'firstName')}
-                            invalid={!this.state.signupForm.firstName.valid}
-                            shouldValidate={this.state.signupForm.firstName.validation}
-                            touched={this.state.signupForm.firstName.touched}
-                            autoFocus={this.state.signupForm.firstName.autoFocus}
-                            placeholder={this.state.signupForm.firstName.placeholder}
-                        />
-                        {/* ======== Last Name ========= */}
-                        <Input
-                            elementType={this.state.signupForm.lastName.elementType}
-                            elementConfig={this.state.signupForm.lastName.elementConfig}
-                            value={this.state.signupForm.lastName.value}
-                            changed={(event) => this.inputChangedHandler(event, 'lastName')}
-                            invalid={!this.state.signupForm.lastName.valid}
-                            shouldValidate={this.state.signupForm.lastName.validation}
-                            touched={this.state.signupForm.lastName.touched}
-                            autoFocus={this.state.signupForm.lastName.autoFocus}
-                            placeholder={this.state.signupForm.lastName.placeholder}
-                        />
-                        {/* ========== Street ========= */}
-                        <Input
-                            elementType={this.state.signupForm.street.elementType}
-                            elementConfig={this.state.signupForm.street.elementConfig}
-                            value={this.state.signupForm.street.value}
-                            changed={(event) => this.inputChangedHandler(event, 'street')}
-                            invalid={!this.state.signupForm.street.valid}
-                            shouldValidate={this.state.signupForm.street.validation}
-                            touched={this.state.signupForm.street.touched}
-                            autoFocus={this.state.signupForm.street.autoFocus}
-                            placeholder={this.state.signupForm.street.placeholder}
-                        />
-                        {/* ========== Zip Code ======== */}
-                        <Input
-                            elementType={this.state.signupForm.zipCode.elementType}
-                            elementConfig={this.state.signupForm.zipCode.elementConfig}
-                            value={this.state.signupForm.zipCode.value}
-                            changed={(event) => this.inputChangedHandler(event, 'zipCode')}
-                            invalid={!this.state.signupForm.zipCode.valid}
-                            shouldValidate={this.state.signupForm.zipCode.validation}
-                            touched={this.state.signupForm.zipCode.touched}
-                            autoFocus={this.state.signupForm.zipCode.autoFocus}
-                            placeholder={this.state.signupForm.zipCode.placeholder}
-                        />
-                        {/* ======== City ============== */}
-                        <Input
-                            elementType={this.state.signupForm.city.elementType}
-                            elementConfig={this.state.signupForm.city.elementConfig}
-                            value={this.state.signupForm.city.value}
-                            changed={(event) => this.inputChangedHandler(event, 'city')}
-                            invalid={!this.state.signupForm.city.valid}
-                            shouldValidate={this.state.signupForm.city.validation}
-                            touched={this.state.signupForm.city.touched}
-                            autoFocus={this.state.signupForm.city.autoFocus}
-                            placeholder={this.state.signupForm.city.placeholder}
-                        />
-                        {/* ======== Country =========== */}
-                        <Input
-                            elementType={this.state.signupForm.country.elementType}
-                            elementConfig={this.state.signupForm.country.elementConfig}
-                            value={this.state.signupForm.country.value}
-                            changed={(event) => this.inputChangedHandler(event, 'country')}
-                            invalid={!this.state.signupForm.country.valid}
-                            shouldValidate={this.state.signupForm.country.validation}
-                            touched={this.state.signupForm.country.touched}
-                            autoFocus={this.state.signupForm.country.autoFocus}
-                            placeholder={this.state.signupForm.country.placeholder}
-                        />
-                        {/* ========= Mobile =========== */}
-                        <Input
-                            elementType={this.state.signupForm.mobile.elementType}
-                            elementConfig={this.state.signupForm.mobile.elementConfig}
-                            value={this.state.signupForm.mobile.value}
-                            changed={(event) => this.inputChangedHandler(event, 'mobile')}
-                            invalid={!this.state.signupForm.mobile.valid}
-                            shouldValidate={this.state.signupForm.mobile.validation}
-                            touched={this.state.signupForm.mobile.touched}
-                            autoFocus={this.state.signupForm.mobile.autoFocus}
-                            placeholder={this.state.signupForm.mobile.placeholder}
-                        />
-                        {/* ========== Phone ============= */}
-                        <Input
-                            elementType={this.state.signupForm.phone.elementType}
-                            elementConfig={this.state.signupForm.phone.elementConfig}
-                            value={this.state.signupForm.phone.value}
-                            changed={(event) => this.inputChangedHandler(event, 'phone')}
-                            invalid={!this.state.signupForm.phone.valid}
-                            shouldValidate={this.state.signupForm.phone.validation}
-                            touched={this.state.signupForm.phone.touched}
-                            autoFocus={this.state.signupForm.phone.autoFocus}
-                            placeholder={this.state.signupForm.phone.placeholder}
-                        />
-                        {/* ========= Email ============== */}
-                        <Input
-                            elementType={this.state.signupForm.email.elementType}
-                            elementConfig={this.state.signupForm.email.elementConfig}
-                            value={this.state.signupForm.email.value}
-                            changed={(event) => this.inputChangedHandler(event, 'email')}
-                            invalid={!this.state.signupForm.email.valid}
-                            shouldValidate={this.state.signupForm.email.validation}
-                            touched={this.state.signupForm.email.touched}
-                            autoFocus={this.state.signupForm.email.autoFocus}
-                            placeholder={this.state.signupForm.email.placeholder}
-                        />
-                        {/* ========= Password ============ */}
-                        <Input
-                            elementType={this.state.signupForm.password.elementType}
-                            elementConfig={this.state.signupForm.password.elementConfig}
-                            value={this.state.signupForm.password.value}
-                            changed={(event) => this.inputChangedHandler(event, 'password')}
-                            invalid={!this.state.signupForm.password.valid}
-                            shouldValidate={this.state.signupForm.password.validation}
-                            touched={this.state.signupForm.password.touched}
-                            autoFocus={this.state.signupForm.password.autoFocus}
-                            placeholder={this.state.signupForm.password.placeholder}
-                        />
-                        <div/> {/* dont delete this */}
-                        <div className="d-flex submitRow">
-                            <Button
-                                btnType="Danger"
-                                disabled={!this.state.formIsValid || this.props.signupLoading}
-                            >
-                                {this.props.signupLoading ? (
-                                    <div className="spinner-border spinner-border-sm text-light" role="status">
-                                        <span className="sr-only">Loading...</span>
-                                    </div>) : 'Create account'
-                                }
-                            </Button>
+            <React.Fragment>
+                <form onSubmit={this.submitHandler}>
+                    <div className="signupFormWrapper">
+                        <div className="inputElementsWrapper">
+                            {/* ======= First Name ====== */}
+                            <Input
+                                elementType={this.state.signupForm.firstName.elementType}
+                                elementConfig={this.state.signupForm.firstName.elementConfig}
+                                value={this.state.signupForm.firstName.value}
+                                changed={(event) => this.inputChangedHandler(event, 'firstName')}
+                                invalid={!this.state.signupForm.firstName.valid}
+                                shouldValidate={this.state.signupForm.firstName.validation}
+                                touched={this.state.signupForm.firstName.touched}
+                                autoFocus={this.state.signupForm.firstName.autoFocus}
+                                placeholder={this.state.signupForm.firstName.placeholder}
+                            />
+                            {/* ======== Last Name ========= */}
+                            <Input
+                                elementType={this.state.signupForm.lastName.elementType}
+                                elementConfig={this.state.signupForm.lastName.elementConfig}
+                                value={this.state.signupForm.lastName.value}
+                                changed={(event) => this.inputChangedHandler(event, 'lastName')}
+                                invalid={!this.state.signupForm.lastName.valid}
+                                shouldValidate={this.state.signupForm.lastName.validation}
+                                touched={this.state.signupForm.lastName.touched}
+                                autoFocus={this.state.signupForm.lastName.autoFocus}
+                                placeholder={this.state.signupForm.lastName.placeholder}
+                            />
+                            {/* ========== Street ========= */}
+                            <Input
+                                elementType={this.state.signupForm.street.elementType}
+                                elementConfig={this.state.signupForm.street.elementConfig}
+                                value={this.state.signupForm.street.value}
+                                changed={(event) => this.inputChangedHandler(event, 'street')}
+                                invalid={!this.state.signupForm.street.valid}
+                                shouldValidate={this.state.signupForm.street.validation}
+                                touched={this.state.signupForm.street.touched}
+                                autoFocus={this.state.signupForm.street.autoFocus}
+                                placeholder={this.state.signupForm.street.placeholder}
+                            />
+                            {/* ========== Zip Code ======== */}
+                            <Input
+                                elementType={this.state.signupForm.zipCode.elementType}
+                                elementConfig={this.state.signupForm.zipCode.elementConfig}
+                                value={this.state.signupForm.zipCode.value}
+                                changed={(event) => this.inputChangedHandler(event, 'zipCode')}
+                                invalid={!this.state.signupForm.zipCode.valid}
+                                shouldValidate={this.state.signupForm.zipCode.validation}
+                                touched={this.state.signupForm.zipCode.touched}
+                                autoFocus={this.state.signupForm.zipCode.autoFocus}
+                                placeholder={this.state.signupForm.zipCode.placeholder}
+                            />
+                            {/* ======== City ============== */}
+                            <Input
+                                elementType={this.state.signupForm.city.elementType}
+                                elementConfig={this.state.signupForm.city.elementConfig}
+                                value={this.state.signupForm.city.value}
+                                changed={(event) => this.inputChangedHandler(event, 'city')}
+                                invalid={!this.state.signupForm.city.valid}
+                                shouldValidate={this.state.signupForm.city.validation}
+                                touched={this.state.signupForm.city.touched}
+                                autoFocus={this.state.signupForm.city.autoFocus}
+                                placeholder={this.state.signupForm.city.placeholder}
+                            />
+                            {/* ======== Country =========== */}
+                            <Input
+                                elementType={this.state.signupForm.country.elementType}
+                                elementConfig={this.state.signupForm.country.elementConfig}
+                                value={this.state.signupForm.country.value}
+                                changed={(event) => this.inputChangedHandler(event, 'country')}
+                                invalid={!this.state.signupForm.country.valid}
+                                shouldValidate={this.state.signupForm.country.validation}
+                                touched={this.state.signupForm.country.touched}
+                                autoFocus={this.state.signupForm.country.autoFocus}
+                                placeholder={this.state.signupForm.country.placeholder}
+                            />
+                            {/* ========= Mobile =========== */}
+                            <Input
+                                elementType={this.state.signupForm.mobile.elementType}
+                                elementConfig={this.state.signupForm.mobile.elementConfig}
+                                value={this.state.signupForm.mobile.value}
+                                changed={(event) => this.inputChangedHandler(event, 'mobile')}
+                                invalid={!this.state.signupForm.mobile.valid}
+                                shouldValidate={this.state.signupForm.mobile.validation}
+                                touched={this.state.signupForm.mobile.touched}
+                                autoFocus={this.state.signupForm.mobile.autoFocus}
+                                placeholder={this.state.signupForm.mobile.placeholder}
+                            />
+                            {/* ========== Phone ============= */}
+                            <Input
+                                elementType={this.state.signupForm.phone.elementType}
+                                elementConfig={this.state.signupForm.phone.elementConfig}
+                                value={this.state.signupForm.phone.value}
+                                changed={(event) => this.inputChangedHandler(event, 'phone')}
+                                invalid={!this.state.signupForm.phone.valid}
+                                shouldValidate={this.state.signupForm.phone.validation}
+                                touched={this.state.signupForm.phone.touched}
+                                autoFocus={this.state.signupForm.phone.autoFocus}
+                                placeholder={this.state.signupForm.phone.placeholder}
+                            />
+                            {/* ========= Email ============== */}
+                            <Input
+                                elementType={this.state.signupForm.email.elementType}
+                                elementConfig={this.state.signupForm.email.elementConfig}
+                                value={this.state.signupForm.email.value}
+                                changed={(event) => this.inputChangedHandler(event, 'email')}
+                                invalid={!this.state.signupForm.email.valid}
+                                shouldValidate={this.state.signupForm.email.validation}
+                                touched={this.state.signupForm.email.touched}
+                                autoFocus={this.state.signupForm.email.autoFocus}
+                                placeholder={this.state.signupForm.email.placeholder}
+                            />
+                            {/* ========= Password ============ */}
+                            <Input
+                                elementType={this.state.signupForm.password.elementType}
+                                elementConfig={this.state.signupForm.password.elementConfig}
+                                value={this.state.signupForm.password.value}
+                                changed={(event) => this.inputChangedHandler(event, 'password')}
+                                invalid={!this.state.signupForm.password.valid}
+                                shouldValidate={this.state.signupForm.password.validation}
+                                touched={this.state.signupForm.password.touched}
+                                autoFocus={this.state.signupForm.password.autoFocus}
+                                placeholder={this.state.signupForm.password.placeholder}
+                            />
+                            {/* ========= User Role ============ */}
+                            <Input
+                                elementType={this.state.signupForm.userRole.elementType}
+                                elementConfig={this.state.signupForm.userRole.elementConfig}
+                                value={this.state.signupForm.userRole.value}
+                                changed={(event) => this.inputChangedHandler(event, 'userRole')}
+                                invalid={!this.state.signupForm.userRole.valid}
+                                shouldValidate={this.state.signupForm.userRole.validation}
+                                touched={this.state.signupForm.userRole.touched}
+                                autoFocus={this.state.signupForm.userRole.autoFocus}
+                            />
 
+                            <div className="d-flex submitRow">
+                                <Button
+                                    btnType="Danger"
+                                    disabled={!this.state.formIsValid || this.props.signupLoading}
+                                >
+                                    {this.props.signupLoading ? (
+                                        <div className="spinner-border spinner-border-sm text-light" role="status">
+                                            <span className="sr-only">Loading...</span>
+                                        </div>) : 'Create account'
+                                    }
+                                </Button>
+
+                            </div>
+                        </div>
+                        <div className="text-center pt-4">
+                            <p className="text-muted mb-0">Already have an account?
+                                <span className="text-danger ml-1 signinLink"
+                                      onClick={() => this.props.signinClicked('login')}>Signin
+                            </span>
+                            </p>
                         </div>
                     </div>
-                    <div className="text-center pt-4">
-                        <p className="text-muted mb-0">Already have an account?
-                            <span className="text-danger ml-1 signinLink"
-                                  onClick={() => this.props.signinClicked('login')}>Signin
-                            </span>
-                        </p>
-                    </div>
-                </div>
+                </form>
                 {/* ================================ */}
                 <Modal show={this.state.showModal}
                        modalClosed={() => {console.log('modal closed')}}
@@ -410,22 +471,23 @@ class SignupForm extends React.Component<Props, IState> {
                     <div>
                         { this.props.signupLoading ? (<Spinner />) : (
                             this.props.signupError !== '' ? (
-                                    <div className='signupResponseWrapper p-4'>
-                                        <i className='icons icon-exclamation'/>
-                                        <h6 className='m-4 text-center'>{this.props.signupError}</h6>
-                                        <button type="button" className="btn btn-dark btn-block" onClick={() => {this.resetForm()}}>OK</button>
-                                    </div>
-                                ) : (
-                                    <div className='signupResponseWrapper p-4'>
-                                        <i className='icons icon-envelope-letter'/>
-                                        <h6 className='m-4 text-center'>A verification email has been sent to your email. please verify.</h6>
-                                        <button type="button" className="btn btn-dark btn-block" onClick={() => {this.resetForm()}}>OK</button>
-                                    </div>
-                                )
+                                <div className='signupResponseWrapper p-4'>
+                                    <i className='icons icon-exclamation'/>
+                                    <h6 className='m-4 text-center'>{this.props.signupError}</h6>
+                                    <button type="button" className="btn btn-dark btn-block" onClick={() => {this.resetForm()}}>OK</button>
+                                </div>
+                            ) : (
+                                <div className='signupResponseWrapper p-4'>
+                                    <i className='icons icon-envelope-letter'/>
+                                    <h6 className='m-4 text-center'>A verification email has been sent to your email. please verify.</h6>
+                                    <button type="button" className="btn btn-dark btn-block" onClick={() => {this.resetForm()}}>OK</button>
+                                </div>
+                            )
                         )}
                     </div>
                 </Modal>
-            </form>
+            </React.Fragment>
+
         );
     }
 }

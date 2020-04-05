@@ -7,6 +7,9 @@ export interface AuthStart {
 export interface AuthSuccess {
     type: typeof actionTypes.AUTH_SUCCESS;
     token: string;
+    firstName: string;
+    lastName: string;
+    role: string;
     error: string;
     loading: boolean;
 }

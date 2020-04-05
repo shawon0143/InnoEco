@@ -100,3 +100,47 @@ export const callApi = (command: any, data: any, pathPara: any, cb: any) => {
 
 
 };
+
+export const uploadFile = (file: any, fileName: any, fileType: any, cb: any) => {
+    let callback = cb;
+    console.log("Preparing the upload");
+    axios.post(getApiUrl() +"/upload/sign_s3",{
+        fileName : fileName,
+        fileType : fileType
+    })
+        .then(response => {
+            let returnData = response.data.data.returnData;
+            let signedRequest = returnData.signedRequest;
+            let url = returnData.url;
+            console.log("Received a signed request " + signedRequest);
+
+            // Put the fileType in the headers for the upload
+            let options = {
+                headers: {
+                    'Content-Type': fileType
+                }
+            };
+            axios.put(signedRequest,file,options)
+                .then(result => {
+                    console.log("Response from s3");
+                    callback(null, url);
+                })
+                .catch(error => {
+                    // alert("ERROR " + JSON.stringify(error));
+                    callback(error, null);
+                })
+        })
+        .catch(error => {
+            // alert(JSON.stringify(error));
+            callback(error, null);
+        })
+};
+
+export const sessionInfo = () => {
+    return {
+        token: localStorage.getItem('token'),
+        firstName: localStorage.getItem('firstName'),
+        lastName: localStorage.getItem('lastName'),
+        role: localStorage.getItem('role'),
+    };
+};

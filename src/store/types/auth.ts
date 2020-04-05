@@ -9,6 +9,9 @@ export interface Auth {
     "error": string;
     "loading": boolean;
     "token": string;
+    "firstName": string;
+    "lastName": string;
+    "role": string;
     "verifyLoading": boolean;
     "verifyError": string;
     "signupLoading": boolean;

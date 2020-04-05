@@ -20,7 +20,6 @@ const ForgotPassword: React.FC<IProps> = (props: IProps) => {
     const submitHandler = (event: any) => {
         event.preventDefault();
         if (isValid) {
-            console.log(email);
             dispatch(actions.forgetPassword(email));
         }
     };
