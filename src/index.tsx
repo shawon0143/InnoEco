@@ -5,12 +5,14 @@ import { BrowserRouter } from 'react-router-dom'
 import { store } from './store/configureStore';
 
 import App from './App';
+import Footer from "./components/Footer/Footer";
 import * as serviceWorker from './serviceWorker';
 
 const app = (
     <Provider store={store}>
         <BrowserRouter>
             <App />
+            <Footer />
         </BrowserRouter>
     </Provider>
 );

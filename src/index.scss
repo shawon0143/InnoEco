@@ -3,7 +3,16 @@ $darkBlue: #26304d;
 $cyan: #00BCD4;
 
 $theme-colors: (
-        "danger": #a61d37
+        "danger": #a61d37,
+        "success": #00c9a7,
+        "secondary": #6e1ac9,
+        "primary": #26304d,
+        "warning": #ffc107,
+        "info": #00dffc,
+        "dark": #1e2022,
+        "black": #000000,
+        "light": #f8fafd,
+        "white": #ffffff
 );
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
@@ -24,6 +33,10 @@ body {
   background-color: #fff;
   padding: 0;
   margin: 0;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, .h7, h1, h2, h3, h4, h5, h6 {
+  font-family: "Alegreya", serif;
 }
 
 .topNavMargin {

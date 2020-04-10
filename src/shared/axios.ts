@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {authLogout} from "../store/actions";
 
 let baseUrl = 'https://innoeco-backend.herokuapp.com';
 
@@ -83,8 +84,8 @@ export const callApi = (command: any, data: any, pathPara: any, cb: any) => {
                 callback(res.data, null, res.status);
             } else if (res.status === 401) {
                 console.log('not authorised');
-                // window.location.href = '#/logout';
-                // authLogout();
+                window.location.href = '/';
+                authLogout();
                 callback(res.data, null, res.status);
             } else if (res.status === 406) {
                 callback(res.data, null, res.status);

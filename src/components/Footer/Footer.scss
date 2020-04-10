@@ -1,0 +1,38 @@
+.footerContainer {
+    background-color: #f5f6fa !important;
+    padding-bottom: 3.57143rem !important;
+    padding-top: 7.14286rem !important;
+    .footerColumn {
+      margin-bottom: 1.42857rem !important;
+      ul li {
+        padding-top: 0.35714rem !important;
+        padding-bottom: 0.35714rem !important;
+        span {
+          color: #26304d;
+          text-decoration: none;
+          line-height: 1.6;
+          transition: all .2s;
+          outline: none;
+          font-size: 1rem;
+        }
+        span:hover {
+          cursor: pointer;
+          color: #a61d37 !important;
+        }
+      }
+    }
+  .socialIcon {
+    width: 1.98571rem;
+    height: 1.98571rem;
+    background-color: #fff !important;
+    color: #a61d37 !important;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+  .socialIcon:hover {
+    cursor: pointer;
+    background-color: #a61d37 !important;
+    color: #ffffff !important;
+  }
+}

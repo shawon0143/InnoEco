@@ -8,6 +8,7 @@ InnoEco is an innovation ecosystem collaboration platform. This repo is the fron
 2. Typescript
 3. Redux
 4. REST Api
+5. Bootstrap
 
 ## Running Locally
 

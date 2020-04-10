@@ -1,0 +1,7 @@
+<svg class="d-inline-block g-width-35" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 37 1" enable-background="new 0 0 37 1" xml:space="preserve">
+            <linearGradient id="SVGID_5_" gradientUnits="userSpaceOnUse" x1="0" y1="0.5" x2="37" y2="0.5">
+              <stop offset="0" style="stop-color:#f5f6fa"></stop>
+                <stop offset="1" style="stop-color:#b5b8cb"></stop>
+            </linearGradient>
+    <line fill="none" stroke="url(#SVGID_5_)" stroke-miterlimit="10" x1="37" y1="0.5" x2="0" y2="0.5"></line>
+          </svg>

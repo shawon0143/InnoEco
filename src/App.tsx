@@ -28,7 +28,7 @@ const App: React.FC = (props) => {
             <Route path="/" exact component={Home}/>
             <Route path="/auth" exact component={Auth}/>
             {/* TODO: Create a nice 404 not found component */}
-            <Route render={() => <h3 className='text-dark text-center' style={{marginTop: 64}}>404 - Page Not Found !</h3>}/>
+            <Route render={() => <h3 className='text-dark text-center' style={{marginTop: 64, height: '35vh'}}>404 - Page Not Found !</h3>}/>
             <Redirect to='/' />
         </Switch>
     );
