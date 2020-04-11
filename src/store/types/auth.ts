@@ -12,6 +12,10 @@ export interface Auth {
     "firstName": string;
     "lastName": string;
     "role": string;
+    "address": any;
+    "mobile": string;
+    "phone": string;
+    "email": string;
     "verifyLoading": boolean;
     "verifyError": string;
     "signupLoading": boolean;
@@ -20,4 +24,6 @@ export interface Auth {
     "resendTokenStatus": string;
     "forgotPasswordStatus": string;
     "resetPasswordStatus": string;
+    "userDetailsLoading": boolean;
+    "userDetailsError": string;
 }

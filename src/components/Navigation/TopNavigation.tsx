@@ -21,6 +21,7 @@ const TopNavigation: React.FC = (props) => {
         setNavExpanded(false);
     };
     const onClickLogout = () => {
+        history.push('/');
       dispatch(actions.authLogout());
     };
     let authButton = (<Button variant="danger" size="sm" className='ml-3 ml-lg-4 px-3' onClick={() => {onClickSignin()} }>Sign in</Button>);
@@ -34,10 +35,12 @@ const TopNavigation: React.FC = (props) => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setNavExpanded(!navExpanded)} />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto">
-                        <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>Home</Link>
                         <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>Newsfeed</Link>
                         <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>About</Link>
                         <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>Contacts</Link>
+                        { auth.token !== '' && !auth.loading && (
+                            <Link to="/profile" className='navLink' onClick={() => setNavExpanded(false)}>My profile</Link>
+                        )}
                     </Nav>
                     {authButton}
                 </Navbar.Collapse>

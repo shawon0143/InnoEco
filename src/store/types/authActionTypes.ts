@@ -7,9 +7,8 @@ export interface AuthStart {
 export interface AuthSuccess {
     type: typeof actionTypes.AUTH_SUCCESS;
     token: string;
-    firstName: string;
-    lastName: string;
-    role: string;
+    role: string[];
+    email: string;
     error: string;
     loading: boolean;
 }
@@ -86,6 +85,24 @@ export interface SetResetPasswordStatus {
     resetPasswordStatus: string;
 }
 
+export interface GetUserDetailsStart {
+    type: typeof actionTypes.GET_USER_DETAILS_START;
+}
+
+export interface GetUserDetailsSuccess {
+    type: typeof actionTypes.GET_USER_DETAILS_SUCCESS;
+    firstName: string;
+    lastName: string;
+    address: [{}];
+    mobile: string;
+    phone: string;
+}
+
+export interface GetUserDetailsFail {
+    type: typeof actionTypes.GET_USER_DETAILS_FAIL;
+    userDetailsError: string;
+}
+
 export type AuthActionTypes =
     AuthStart
     | AuthSuccess
@@ -102,6 +119,9 @@ export type AuthActionTypes =
     | SignupFail
     | ResetAuthFlags
     | SetForgotPasswordStatus
-    | SetResetPasswordStatus;
+    | SetResetPasswordStatus
+    | GetUserDetailsStart
+    | GetUserDetailsSuccess
+    | GetUserDetailsFail;
 
 export type AuthActions = AuthActionTypes;

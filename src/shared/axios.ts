@@ -25,6 +25,7 @@ commands['verifyAccount'] = { url: `/user/verifyAccount/:token`, method: 'GET', 
 commands['resendToken'] = { url: `/user/resendToken`, method: 'POST', responseType: 'json' };
 commands['forgotPassword'] = { url: `/user/forgotPassword`, method: 'POST', responseType: 'json'};
 commands['resetPassword'] = { url: `/user/resetPassword/:token`, method: 'POST', responseType: 'json' };
+commands['getUserDetails'] = { url: `/user/getUserDetails/:email`, method: 'GET', responseType: 'json'};
 
 
 export const callApi = (command: any, data: any, pathPara: any, cb: any) => {
@@ -64,7 +65,7 @@ export const callApi = (command: any, data: any, pathPara: any, cb: any) => {
         data = null;
     }
 
-    const header = (localStorage.getItem('token')) ? { 'token': localStorage.getItem('token') } : null,
+    const header = (localStorage.getItem('token')) ? { 'authorization': 'Bearer ' +localStorage.getItem('token') } : null,
         para: any = {
             url: url,
             method: commands[command].method,
@@ -76,6 +77,7 @@ export const callApi = (command: any, data: any, pathPara: any, cb: any) => {
     if (header) {
         para['headers'] = header;
     }
+    // console.log(para);
     axios(para)
         .then(res => {
             if (res.status === 200) {

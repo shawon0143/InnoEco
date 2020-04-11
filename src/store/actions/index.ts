@@ -7,5 +7,6 @@ export {
     resendVerifyToken,
     resetPassword,
     authCheckState,
-    authLogout
+    authLogout,
+    getUserByEmail
 } from './auth';

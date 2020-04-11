@@ -1,0 +1,43 @@
+@import "../../styles/variables";
+.profileContainer {
+    .iconWrapper {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-flow: column nowrap;
+        flex-flow: column nowrap;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
+  .icon-note {
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .icon-cursor, .icon-layers, .icon-settings {
+    top: 0.07143rem;
+    margin-right: 0.57143rem !important;
+    position: relative;
+    color: $darkBlue;
+  }
+  .userInfo {
+    position: absolute;
+    top: 20px;
+    left: 0;
+  }
+  .navButtonSelected {
+    background: $danger;
+    color: #ffffff;
+    outline: none;
+    span i {
+      color: #ffffff;
+    }
+  }
+  .navBtn {
+    outline: none;
+  }
+}

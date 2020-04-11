@@ -1,6 +1,3 @@
-// variables
-$darkBlue: #26304d;
-$cyan: #00BCD4;
 
 $theme-colors: (
         "danger": #a61d37,
@@ -40,5 +37,56 @@ body {
 }
 
 .topNavMargin {
-  margin-top: 63px;
+  margin-top: 65px;
+}
+
+
+// ========== Unify CSS ==============
+[class*="block-hover"] {
+  position: relative;
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+[class*="block-hover"], [class*="u-block-hover"]::before, [class*="u-block-hover"]::after {
+  transition: all .3s ease;
+}
+.block-hover__main--zoom-v1,
+.block-hover__main--zoom-v2 {
+  -webkit-transform: scale(1.01);
+}
+
+.block-hover:hover .block-hover__main--zoom-v1 {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.block-hover__additional--fade {
+  opacity: 0;
+}
+
+.block-hover:hover .block-hover__additional--fade {
+  opacity: 1;
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.block-hover__additional--fade-up {
+  -webkit-transform: translate(0, 15%);
+  -ms-transform: translate(0, 15%);
+  transform: translate(0, 15%);
+}
+[class*="block-hover__additional"] {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }

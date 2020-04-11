@@ -11,6 +11,7 @@ import Home from "./containers/Home/Home";
 import Auth from "./containers/Auth/Auth";
 import VerifyAccount from "./containers/VerifyAccount/VerifyAccount";
 import ResetPassword from "./containers/ResetPassword/ResetPassword";
+import Profile from "./containers/Profile/Profile";
 import {AppState} from "./store/configureStore";
 
 const App: React.FC = (props) => {
@@ -37,6 +38,7 @@ const App: React.FC = (props) => {
         routes = (
             <Switch>
                 <Route path="/" exact component={Home}/>
+                <Route path="/profile" exact component={Profile} />
                 <Redirect to='/' />
             </Switch>
         );

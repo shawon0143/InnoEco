@@ -2,6 +2,7 @@ import * as actionTypes from './actionTypes';
 import { AuthActions } from "../types/authActionTypes";
 import {callApi} from "../../shared/axios";
 import {Dispatch} from "redux";
+import {store} from "../configureStore";
 
 // =====================================
 // ========= Login account =============
@@ -12,12 +13,11 @@ export const authStart = (): AuthActions => {
     }
 };
 
-export const authSuccess = (data: any): AuthActions => ({
+export const authSuccess = (data: any, email: string): AuthActions => ({
     type: actionTypes.AUTH_SUCCESS,
     token: data.token,
-    firstName: data.firstName,
-    lastName: data.lastName,
     role: data.role,
+    email: email,
     error: '',
     loading: false
 });
@@ -31,10 +31,9 @@ export const authFail = (err: string): AuthActions => {
 };
 
 export const authLogout = (): AuthActions => {
-    localStorage.setItem('token', '');
-    localStorage.setItem('firstName', '');
-    localStorage.setItem('lastName', '');
-    localStorage.setItem('role', '');
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('email');
     return {
         type: actionTypes.AUTH_LOGOUT
     };
@@ -51,12 +50,55 @@ export const auth = (email: string, password: string) => {
            } else {
                console.log(result);
                localStorage.setItem('token', result.token);
-               localStorage.setItem('firstName', result.firstName);
-               localStorage.setItem('lastName', result.lastName);
-               localStorage.setItem('role', result.role);
-               dispatch(authSuccess(result));
+               localStorage.setItem('role', JSON.stringify(result.role));
+               localStorage.setItem('email', email);
+               dispatch(authSuccess(result, email));
            }
         });
+    }
+};
+
+// ===============================================
+// ========= get user account details ============
+// ===============================================
+
+export const getUserDetailsStart = (): AuthActions => {
+    return {
+        type: actionTypes.GET_USER_DETAILS_START
+    }
+};
+
+export const getUserDetailsSuccess = (data: any): AuthActions => {
+    return {
+        type: actionTypes.GET_USER_DETAILS_SUCCESS,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        address: data.address,
+        mobile: data.mobile,
+        phone: data.phone
+    }
+};
+
+export const getUserDetailsFail = (err: string):AuthActions => {
+    return {
+        type: actionTypes.GET_USER_DETAILS_FAIL,
+        userDetailsError: err
+    }
+};
+
+export const getUserByEmail = () => {
+    return (dispatch: Dispatch<AuthActions>) => {
+        dispatch(getUserDetailsStart());
+        callApi('getUserDetails', null, {email: store.getState().auth.email},(err: any, result: any) => {
+            if (err) {
+                console.log(err);
+                dispatch(getUserDetailsFail(err));
+            } else {
+                console.log(result);
+                dispatch(getUserDetailsSuccess(result.user));
+            }
+        })
+
     }
 };
 // =====================================
@@ -241,17 +283,19 @@ export const authCheckState = () => {
         }
         else {
             const token = localStorage.getItem('token');
-            const firstName = localStorage.getItem('firstName');
-            const lastName = localStorage.getItem('lastName');
-            const role = localStorage.getItem('role');
-
+            const role: any = JSON.parse(localStorage.getItem('role') || "[]");
+            const email = localStorage.getItem('email') || "";
+            let roleArray = [];
+            for (let key in role) {
+                if (role.hasOwnProperty(key)) {
+                    roleArray.push(role[key]);
+                }
+            }
             let data = {
                 token: token,
-                firstName: firstName,
-                lastName: lastName,
-                role: role
+                role: roleArray,
             };
-            dispatch(authSuccess(data));
+            dispatch(authSuccess(data, email));
         }
     };
 };

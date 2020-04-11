@@ -1,5 +1,4 @@
-@import "../../../../node_modules/bootstrap/scss/functions";
-@import "../../../../node_modules/bootstrap/scss/variables";
+@import "../../../styles/variables";
 .Input {
   width: 100%;
   padding: 10px;
@@ -31,13 +30,13 @@
 .InputElement:focus {
   outline: none;
   background-color: #f0f2f8;
-  color: #26304d;
+  color: $darkBlue;
 }
 .InputElement::placeholder {
   font-size: 0.8rem;
 }
 
 .Invalid {
-  border: 1px solid theme-color("danger");
+  border: 1px solid $danger;
   //background-color: #FDA49A;
 }

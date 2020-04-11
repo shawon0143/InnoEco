@@ -1,7 +1,8 @@
+@import "../../styles/variables";
 .customNavbar {
     padding-top: 0.71429rem !important;
     padding-bottom: 0.71429rem !important;
-    background: #26304d !important;
+    background: $darkBlue !important;
 }
 .navLink {
     font-size: 0.85714rem !important;

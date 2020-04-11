@@ -10,6 +10,10 @@ const initialState: Auth = {
     firstName: '',
     lastName: '',
     role: '',
+    address: [],
+    mobile: '',
+    phone: '',
+    email: '',
     verifyLoading: false,
     verifyError: '',
     signupLoading: false,
@@ -17,7 +21,9 @@ const initialState: Auth = {
     resendTokenLoading: false,
     resendTokenStatus: '',
     forgotPasswordStatus: '',
-    resetPasswordStatus: ''
+    resetPasswordStatus: '',
+    userDetailsLoading: false,
+    userDetailsError: ''
 };
 
 const authStart = (state: Auth, action: any) => {
@@ -27,9 +33,8 @@ const authStart = (state: Auth, action: any) => {
 const authSuccess = (state: Auth, action: any) => {
     return updateObject(state, {
         token: action.token,
-        firstName: action.firstName,
-        lastName: action.lastName,
         role: action.role,
+        email: action.email,
         error: '',
         loading: false,
     });
@@ -40,7 +45,7 @@ const authFail = (state: Auth, action: any) => {
 };
 
 const authLogout = (state: Auth, action: any) => {
-    return updateObject(state, {token: '', firstName: '', lastName: '', role: ''});
+    return updateObject(state, {token: '', firstName: '', lastName: '', role: '', address: []});
 };
 
 const verifyStart = (state: Auth, action: any) => {
@@ -80,7 +85,14 @@ const signupFail = (state: Auth, action: any) => {
 };
 
 const resetAuthFlags = (state: Auth, action: any) => {
-    return updateObject(state, {signupError: '', verifyError: '', loading: false, error: '', resendTokenStatus: '', forgotPasswordStatus: '', resetPasswordStatus: ''});
+    return updateObject(state, {
+        signupError: '',
+        verifyError: '',
+        loading: false,
+        error: '',
+        resendTokenStatus: '',
+        forgotPasswordStatus: '',
+        resetPasswordStatus: ''});
 };
 
 const setForgotPasswordStatus = (state: Auth, action: any) => {
@@ -89,6 +101,22 @@ const setForgotPasswordStatus = (state: Auth, action: any) => {
 
 const setResetPasswordStatus = (state: Auth, action: any) => {
     return updateObject(state, {resetPasswordStatus: action.resetPasswordStatus})
+};
+
+const getUserDetailsStart = (state: Auth, action: any) => {
+    return updateObject(state, { userDetailsError: '', userDetailsLoading: true });
+};
+
+const getUserDetailsSuccess = (state: Auth, action: any) => {
+    return updateObject(state, {
+        userDetailsError: '',
+        userDetailsLoading: false,
+        firstName: action.firstName,
+        lastName: action.lastName,
+        address: action.address,
+        mobile: action.mobile,
+        phone: action.phone
+    })
 };
 
 const reducer = (state = initialState, action: AuthActions): Auth => {
@@ -109,6 +137,8 @@ const reducer = (state = initialState, action: AuthActions): Auth => {
         case actionTypes.RESET_AUTH_FLAGS: return resetAuthFlags(state, action);
         case actionTypes.SET_FORGOT_PASSWORD_STATUS: return setForgotPasswordStatus(state, action);
         case actionTypes.SET_RESET_PASSWORD_STATUS: return setResetPasswordStatus(state, action);
+        case actionTypes.GET_USER_DETAILS_START: return getUserDetailsStart(state, action);
+        case actionTypes.GET_USER_DETAILS_SUCCESS: return getUserDetailsSuccess(state, action);
         default:
             return state;
     }
