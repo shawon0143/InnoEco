@@ -96,11 +96,25 @@ export interface GetUserDetailsSuccess {
     address: [{}];
     mobile: string;
     phone: string;
+    imageUrl: string;
 }
 
 export interface GetUserDetailsFail {
     type: typeof actionTypes.GET_USER_DETAILS_FAIL;
     userDetailsError: string;
+}
+
+export interface SaveUserDataStart {
+    type: typeof actionTypes.SAVE_USER_DATA_START;
+}
+
+export interface SaveUserDataSuccess {
+    type: typeof actionTypes.SAVE_USER_DATA_SUCCESS;
+}
+
+export interface SaveUserDataFail {
+    type: typeof actionTypes.SAVE_USER_DATA_FAIL;
+    saveUserDataError: string;
 }
 
 export type AuthActionTypes =
@@ -122,6 +136,9 @@ export type AuthActionTypes =
     | SetResetPasswordStatus
     | GetUserDetailsStart
     | GetUserDetailsSuccess
-    | GetUserDetailsFail;
+    | GetUserDetailsFail
+    | SaveUserDataStart
+    | SaveUserDataSuccess
+    | SaveUserDataFail;
 
 export type AuthActions = AuthActionTypes;

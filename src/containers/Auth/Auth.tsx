@@ -7,6 +7,9 @@ import ForgotPassword from "../../components/ForgotPassword/ForgotPassword";
 import './Auth.scss';
 import LoginFormInfo from "../../components/LoginFormInfo/LoginFormInfo";
 import * as actions from "../../store/actions/index";
+import axios from 'axios';
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+
 
 const Auth: React.FC = () => {
     const dispatch = useDispatch();
@@ -74,4 +77,4 @@ const Auth: React.FC = () => {
     );
 };
 
-export default Auth;
+export default withErrorHandler(Auth, axios);

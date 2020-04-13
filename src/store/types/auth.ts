@@ -15,7 +15,10 @@ export interface Auth {
     "address": any;
     "mobile": string;
     "phone": string;
+    "imageUrl": string;
     "email": string;
+    "saveUserDataLoading": boolean,
+    "saveUserDataError": string,
     "verifyLoading": boolean;
     "verifyError": string;
     "signupLoading": boolean;

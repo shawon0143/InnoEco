@@ -1,0 +1,58 @@
+.imageCropperContainer {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+    .mainImg {
+        max-width: 100%;
+    }
+
+    .previewBox {
+        border: 1px solid #eeeeee;
+        border-radius: 5px;
+        width: 80%;
+    }
+
+    .cropperControlIcon {
+      color: #673AB7;
+      font-size: 1.0rem;
+      padding: 10px;
+      margin: 5px;
+      background: #eee;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+
+    .flexWrapperColumn {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .flexWrapperRow {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .noPreviewWrapper {
+        border: 1px solid #eee;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media (max-width: 575.98px) {
+  .imageCropperContainer {
+    .previewBox {
+      width: 50%;
+    }
+  }
+
+}

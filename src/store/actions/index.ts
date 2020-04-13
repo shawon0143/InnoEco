@@ -8,5 +8,7 @@ export {
     resetPassword,
     authCheckState,
     authLogout,
-    getUserByEmail
+    getUserByEmail,
+    saveUserData,
+    deleteUserProfileImage
 } from './auth';

@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import { AuthActions } from "../types/authActionTypes";
+import {AuthActions} from "../types/authActionTypes";
 import {callApi} from "../../shared/axios";
 import {Dispatch} from "redux";
 import {store} from "../configureStore";
@@ -75,7 +75,8 @@ export const getUserDetailsSuccess = (data: any): AuthActions => {
         lastName: data.lastName,
         address: data.address,
         mobile: data.mobile,
-        phone: data.phone
+        phone: data.phone,
+        imageUrl: data.imageUrl
     }
 };
 
@@ -94,11 +95,59 @@ export const getUserByEmail = () => {
                 console.log(err);
                 dispatch(getUserDetailsFail(err));
             } else {
-                console.log(result);
+                // console.log(result);
                 dispatch(getUserDetailsSuccess(result.user));
             }
         })
 
+    }
+};
+// ========================================
+// ========== Update user data ============
+// ========================================
+
+export const saveUserData = (dataObject: any) => {
+    return (dispatch: Dispatch<AuthActions>) => {
+        dispatch(saveUserDataStart());
+        callApi('updateUser', dataObject, {email: store.getState().auth.email}, (err: any, result: any) => {
+            if (err) {
+                console.log(err);
+                dispatch(saveUserDataFail(err.message));
+            } else {
+                dispatch(saveUserDataSuccess());
+            }
+        });
+    };
+};
+
+export const saveUserDataStart = (): AuthActions => {
+    return {
+        type: actionTypes.SAVE_USER_DATA_START
+    };
+};
+
+export const saveUserDataSuccess = (): AuthActions => {
+    return {
+        type: actionTypes.SAVE_USER_DATA_SUCCESS
+    }
+};
+
+export const saveUserDataFail = (err: any): AuthActions => {
+    return {
+        type: actionTypes.SAVE_USER_DATA_FAIL,
+        saveUserDataError: err
+    }
+};
+
+export const deleteUserProfileImage = (fileName: string) => {
+    return () => {
+        callApi('deleteUserImage', null, {fileName: fileName}, (err: any, result: any) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(result);
+            }
+        });
     }
 };
 // =====================================

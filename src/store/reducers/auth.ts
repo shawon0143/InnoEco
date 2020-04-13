@@ -14,6 +14,9 @@ const initialState: Auth = {
     mobile: '',
     phone: '',
     email: '',
+    imageUrl: '',
+    saveUserDataLoading: false,
+    saveUserDataError: '',
     verifyLoading: false,
     verifyError: '',
     signupLoading: false,
@@ -115,8 +118,20 @@ const getUserDetailsSuccess = (state: Auth, action: any) => {
         lastName: action.lastName,
         address: action.address,
         mobile: action.mobile,
-        phone: action.phone
+        phone: action.phone,
+        imageUrl: action.imageUrl
     })
+};
+
+const saveUserDataStart = (state: Auth, action: any) => {
+    return updateObject(state, {saveUserDataError: '', saveUserDataLoading: true});
+};
+const saveUserDataSuccess = (state: Auth, action: any) => {
+    return updateObject(state, {saveUserDataError: '', saveUserDataLoading: false});
+};
+
+const saveUserDataFail = (state: Auth, action: any) => {
+    return updateObject(state, {saveUserDataError: action.saveUserDataError, saveUserDataLoading: false})
 };
 
 const reducer = (state = initialState, action: AuthActions): Auth => {
@@ -139,6 +154,9 @@ const reducer = (state = initialState, action: AuthActions): Auth => {
         case actionTypes.SET_RESET_PASSWORD_STATUS: return setResetPasswordStatus(state, action);
         case actionTypes.GET_USER_DETAILS_START: return getUserDetailsStart(state, action);
         case actionTypes.GET_USER_DETAILS_SUCCESS: return getUserDetailsSuccess(state, action);
+        case actionTypes.SAVE_USER_DATA_START: return saveUserDataStart(state, action);
+        case actionTypes.SAVE_USER_DATA_SUCCESS: return saveUserDataSuccess(state, action);
+        case actionTypes.SAVE_USER_DATA_FAIL: return saveUserDataFail(state, action);
         default:
             return state;
     }

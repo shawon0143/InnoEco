@@ -90,3 +90,40 @@ body {
   left: 0;
   right: 0;
 }
+
+
+// ========== Custom Modal CSS ===========
+.customModal {
+  position: fixed;
+  z-index: 1300;
+  background-color: white;
+  width: 80%;
+  left: 10%;
+  top: 10%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px black;
+  padding: 15px;
+  box-sizing: border-box;
+  height: 80%;
+  overflow: auto;
+  transition: all 0.3s ease-out;
+}
+
+/*scroll issue for modal ----------*/
+.hideBodyScroll {
+  overflow-y: hidden;
+}
+
+.showBodyScroll {
+  overflow-y: visible;
+}
+
+@media (max-width: 575.98px) {
+  .customModal {
+    //width: 100%;
+    height: 90%;
+    top: 5%;
+    //left: 0;
+  }
+}

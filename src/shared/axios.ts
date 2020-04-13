@@ -26,6 +26,8 @@ commands['resendToken'] = { url: `/user/resendToken`, method: 'POST', responseTy
 commands['forgotPassword'] = { url: `/user/forgotPassword`, method: 'POST', responseType: 'json'};
 commands['resetPassword'] = { url: `/user/resetPassword/:token`, method: 'POST', responseType: 'json' };
 commands['getUserDetails'] = { url: `/user/getUserDetails/:email`, method: 'GET', responseType: 'json'};
+commands['updateUser'] = { url: `/user/:email`, method: 'PATCH', responseType: 'json'};
+commands['deleteUserImage'] = { url: `/upload/s3_delete_object/:fileName`, method: 'DELETE', responseType: 'json' };
 
 
 export const callApi = (command: any, data: any, pathPara: any, cb: any) => {
@@ -110,6 +112,10 @@ export const uploadFile = (file: any, fileName: any, fileType: any, cb: any) => 
     axios.post(getApiUrl() +"/upload/sign_s3",{
         fileName : fileName,
         fileType : fileType
+    }, {
+        headers: {
+            'authorization': 'Bearer ' +localStorage.getItem('token')
+        }
     })
         .then(response => {
             let returnData = response.data.data.returnData;
