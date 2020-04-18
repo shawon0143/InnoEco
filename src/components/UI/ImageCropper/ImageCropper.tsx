@@ -209,7 +209,7 @@ class ImageCropper extends React.Component<IProps, State> {
                             opacity: this.props.show ? 1 : 0
                         }}
                         onDragOver={event => this.onDragOver(event)}
-                        // onDrop={event => this.imageChangeHandler(event)}
+                        onDrop={event => this.imageChangeHandler(event)}
                         onDragLeave={event => this.onDragLeave(event)}
                     >
                         <div className=" imageCropperContainer container h-100 w-100">

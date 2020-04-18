@@ -13,7 +13,7 @@ interface IProps {
 }
 const ProfileInfo: React.FC<IProps> = (props: IProps) => {
     return (
-        <div className="profileInfoContainer p-3 mb-4 border shadow-sm">
+        <div className="profileInfoContainer p-3 mb-4 border rounded shadow-sm bg-white">
             <div className="row">
                 <div className="col">
                     <h4 className="text-primary">

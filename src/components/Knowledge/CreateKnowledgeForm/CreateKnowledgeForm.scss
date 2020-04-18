@@ -1,0 +1,75 @@
+@import "../../../styles/variables";
+.createKnowledgeFormContainer {
+  .inputElementsWrapper {
+    padding: 2.37143rem 2.35714rem !important;
+    //-webkit-box-shadow: 0 4px 7px 0 rgba(38, 48, 77, 0.045);
+    //box-shadow: 0 4px 7px 0 rgba(38, 48, 77, 0.045);
+    background-color: #fff !important;
+  }
+  .tagsWrapper {
+    padding: 0 10px;
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 5px 5px 0;
+    //border: 1px solid $cyan;
+    border-radius: 5px;
+    padding: 3px 8px;
+    //background: $cyan;
+    color: #ffffff;
+    span {
+      font-size: 12px;
+      font-weight: 600;
+    }
+  }
+  .tag i {
+    color: #bbb;
+    cursor: pointer;
+    opacity: 0.6;
+  }
+  .tag i:hover {
+    opacity: 1.0
+  }
+  .tag .remove {
+    vertical-align: bottom;
+    top: 0;
+  }
+  .tag i {
+    margin: 0 0 0 .3em;
+  }
+  .tag i {
+    color: #fff;
+    //margin-bottom: 2px;
+  }
+
+  .formGroup {
+    display: flex;
+  }
+
+  .fileTypeSelectionContainer {
+    .box {
+      i {
+        font-size: 20px;
+      }
+    }
+    .box:hover {
+      cursor: pointer;
+      background-color: #00bed6;
+      color: #ffffff;
+      //transition: all 0.3s ease-out;
+    }
+  }
+
+  .player-wrapper {
+    position: relative;
+    padding-top: 56.25% /* Player ratio: 100 / (1280 / 720) */
+  }
+
+  .react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+}

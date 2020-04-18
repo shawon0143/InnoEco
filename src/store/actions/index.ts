@@ -10,5 +10,5 @@ export {
     authLogout,
     getUserByEmail,
     saveUserData,
-    deleteUserProfileImage
+    deleteFile
 } from './auth';

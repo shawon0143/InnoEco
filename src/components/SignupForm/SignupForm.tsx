@@ -38,7 +38,7 @@ export interface input {
     placeholder: string;
 }
 
-interface SelectInput {
+export interface SelectInput {
     elementType: string,
     elementConfig: {
         label: string;

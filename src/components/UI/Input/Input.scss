@@ -1,42 +1,49 @@
-@import "../../../styles/variables";
+@import '../../../styles/variables';
 .Input {
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .Label {
-  font-weight: 600;
-  color: #6e7887 !important;
-  font-size: 0.9rem;
-  display: inline-block;
-  margin-bottom: .5rem;
+    font-weight: 600;
+    color: #6e7887 !important;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
 }
 
 .InputElement {
-  outline: none;
-  border: 1px solid #e4e6e9;
-  font: inherit;
-  padding: 6px 10px;
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  background-color: #f5f6fa;
-  //padding-top: 0.55714rem !important;
-  //padding-bottom: 0.55714rem !important;
-  border-radius: .20rem;
+    outline: none;
+    border: 1px solid #e4e6e9;
+    font: inherit;
+    padding: 6px 10px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    //background-color: #f5f6fa;
+    background-color: rgba(240, 240, 240, 0.18);
+    //padding-top: 0.55714rem !important;
+    //padding-bottom: 0.55714rem !important;
+    border-radius: 0.2rem;
 }
 
 .InputElement:focus {
-  outline: none;
-  background-color: #f0f2f8;
-  color: $darkBlue;
+    outline: none;
+    background-color: #f0f2f8;
+    color: $darkBlue;
 }
 .InputElement::placeholder {
-  font-size: 0.8rem;
+    font-size: 0.8rem;
+    color: #bfbfbf;
 }
 
 .Invalid {
-  border: 1px solid $danger;
-  //background-color: #FDA49A;
+    border: 1px solid $danger;
+    //background-color: #FDA49A;
+}
+
+.custom-select:focus {
+  border-color: #e4e6e9;
+  box-shadow: none;
 }

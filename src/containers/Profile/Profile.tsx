@@ -3,11 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import './Profile.scss';
 import { AppState } from '../../store/configureStore';
 import ProfileInfo from "../../components/Profile/ProfileInfo/ProfileInfo";
+import MyContributions from "../../components/Profile/MyContributions/MyContributions";
 import * as actions from "../../store/actions/index";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import ImageCropper from "../../components/UI/ImageCropper/ImageCropper";
 import {showScrollbar, hideScrollBar} from "../../hoc/scrollLock/scrollLock";
 import {uploadFile} from "../../shared/axios";
+import axios from 'axios';
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
 
 interface IProps {}
@@ -52,7 +55,7 @@ const Profile: React.FC<IProps> = (props: IProps) => {
     const callBackFromImageEditor = (imageFile: any) => {
         let fileName = imageFile.name +"-profilePic(" + Date.now() + ")";
         if (userProfile.imageUrl !== '') {
-            dispatch(actions.deleteUserProfileImage(userProfile.imageUrl.substring(userProfile.imageUrl.lastIndexOf('/') + 1)))
+            dispatch(actions.deleteFile(userProfile.imageUrl.substring(userProfile.imageUrl.lastIndexOf('/') + 1)))
         }
         uploadFile(imageFile, fileName, imageFile.type, (err: any, result: any) => {
             if (err) {
@@ -68,7 +71,7 @@ const Profile: React.FC<IProps> = (props: IProps) => {
         });
     };
     return (
-        <div className="container profileContainer topNavMargin p-3">
+        <div className="container profileContainer topNavMargin p-4">
             <div className="row">
                 <div className="col-lg-3">
                     {/* === User Image ==== */}
@@ -86,7 +89,7 @@ const Profile: React.FC<IProps> = (props: IProps) => {
                             style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
                         >
                             <div className="block-hover__additional--fade block-hover__additional--fade-up iconWrapper">
-                                <ul className="list-inline text-center mt-auto mb-5">
+                                <ul className="list-inline text-center mb-0">
                                     <li className="list-inline-item align-center d-inline-block">
                                         <div id="drop_zone">
                                             <label htmlFor="fileUpload"
@@ -113,7 +116,7 @@ const Profile: React.FC<IProps> = (props: IProps) => {
                     </div>
                     {/* === END User Image ==== */}
                     {/* === Sidebar navigation ==== */}
-                    <div className="list-group mb-4">
+                    <div className="list-group mb-5 shadow-sm">
                         {/* ==== Profile ==== */}
                         <button
                             onClick={() => setSelectedOption('profile')}
@@ -141,7 +144,6 @@ const Profile: React.FC<IProps> = (props: IProps) => {
                                 <i className="icons icon-layers" /> My
                                 Contributions
                             </span>
-                            {/*<span className="bg-primary rounded-circle text-light px-1">9</span>*/}
                         </button>
                         {/* ==== END My contribution ==== */}
                         {/* ==== Settings ======= */}
@@ -163,12 +165,17 @@ const Profile: React.FC<IProps> = (props: IProps) => {
                     {/* === END Sidebar navigation ==== */}
                 </div>
                 <div className="col-lg-9">
+                    {/* ======= Profile detail view ========= */}
                     {selectedOption === 'profile' && (
                         profileInfo
                     )}
+                    {/* ======= My Contribution view ========   */}
+                    {selectedOption === 'contribution' && (
+                        <MyContributions />
+                    )}
                 </div>
             </div>
-        {/*  ============  MODAL ============ */}
+        {/*  ============  MODAL Image cropper ============ */}
 
             <ImageCropper
                 show={showCropperModal}
@@ -179,9 +186,9 @@ const Profile: React.FC<IProps> = (props: IProps) => {
                 saveImage={(imageFile) => {callBackFromImageEditor(imageFile)}}
             />
 
-        {/*  =========== END MODAL =============*/}
+        {/*  =========== END MODAL image cropper =============*/}
         </div>
     );
 };
 
-export default Profile;
+export default withErrorHandler(Profile, axios);

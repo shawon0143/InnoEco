@@ -9,7 +9,7 @@ interface IProps {
         label: string;
         options?: any[];
     };
-    value: string | number;
+    value: string | number | string[];
     changed: (event: any) => void;
     invalid: boolean;
     shouldValidate: {};

@@ -27,7 +27,9 @@ commands['forgotPassword'] = { url: `/user/forgotPassword`, method: 'POST', resp
 commands['resetPassword'] = { url: `/user/resetPassword/:token`, method: 'POST', responseType: 'json' };
 commands['getUserDetails'] = { url: `/user/getUserDetails/:email`, method: 'GET', responseType: 'json'};
 commands['updateUser'] = { url: `/user/:email`, method: 'PATCH', responseType: 'json'};
-commands['deleteUserImage'] = { url: `/upload/s3_delete_object/:fileName`, method: 'DELETE', responseType: 'json' };
+// file delete
+commands['deleteFile'] = { url: `/upload/s3_delete_object/:fileName`, method: 'DELETE', responseType: 'json' };
+// knowledge
 
 
 export const callApi = (command: any, data: any, pathPara: any, cb: any) => {

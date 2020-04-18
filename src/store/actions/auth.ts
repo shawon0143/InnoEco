@@ -139,9 +139,9 @@ export const saveUserDataFail = (err: any): AuthActions => {
     }
 };
 
-export const deleteUserProfileImage = (fileName: string) => {
+export const deleteFile = (fileName: string) => {
     return () => {
-        callApi('deleteUserImage', null, {fileName: fileName}, (err: any, result: any) => {
+        callApi('deleteFile', null, {fileName: fileName}, (err: any, result: any) => {
             if (err) {
                 console.log(err);
             } else {

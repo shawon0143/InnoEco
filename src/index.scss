@@ -2,7 +2,6 @@
 $theme-colors: (
         "danger": #a61d37,
         "success": #00c9a7,
-        "secondary": #6e1ac9,
         "primary": #26304d,
         "warning": #ffc107,
         "info": #00dffc,
@@ -27,7 +26,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -moz-font-feature-settings: "liga", "kern";
   text-rendering: optimizelegibility;
-  background-color: #fff;
+  background-color: #e9ebee;
   padding: 0;
   margin: 0;
 }
@@ -53,7 +52,7 @@ body {
   transform: translateZ(0);
 }
 
-[class*="block-hover"], [class*="u-block-hover"]::before, [class*="u-block-hover"]::after {
+[class*="block-hover"], [class*="block-hover"]::before, [class*="block-hover"]::after {
   transition: all .3s ease;
 }
 .block-hover__main--zoom-v1,
