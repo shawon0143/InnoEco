@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from "react-redux";
 import Input from '../../UI/Input/Input';
 import Modal from "../../UI/Modal/Modal";
-import Button from "../../UI/Button/Button";
 import { updateObject, checkValidity } from '../../../shared/utility';
 import "./CreateKnowledgeForm.scss";
 import {AppState} from "../../../store/configureStore";
@@ -734,13 +733,6 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
                     </Modal>
 
                     {/* ============= Submit button =============  */}
-                    {/*<Button btnType="Danger" disabled={!this.state.formIsValid} clicked={this.submitForm}>*/}
-                    {/*    {this.props.loading ? (*/}
-                    {/*        <div className="spinner-border spinner-border-sm text-light" role="status">*/}
-                    {/*            <span className="sr-only">Loading...</span>*/}
-                    {/*        </div>*/}
-                    {/*    ): 'Create post'}*/}
-                    {/*</Button>*/}
                     <button className='btn btn-dark btn-block mt-3' disabled={!this.state.formIsValid} onClick={this.submitForm}>
                         {this.props.loading ? (
                             <div className="spinner-border spinner-border-sm text-light" role="status">
