@@ -2,17 +2,18 @@ import React from 'react';
 import { connect } from "react-redux";
 import Input from '../../UI/Input/Input';
 import Modal from "../../UI/Modal/Modal";
+import Button from "../../UI/Button/Button";
 import { updateObject, checkValidity } from '../../../shared/utility';
 import "./CreateKnowledgeForm.scss";
 import {AppState} from "../../../store/configureStore";
-import {ThunkDispatch} from "redux-thunk";
-import {AuthActions} from "../../../store/types/authActionTypes";
 import ImageCropper from "../../UI/ImageCropper/ImageCropper";
 import {showScrollbar, hideScrollBar} from "../../../hoc/scrollLock/scrollLock";
 import * as actions from "../../../store/actions";
-// import {uploadFile} from "../../../shared/axios";
 import Dropdown from "react-bootstrap/Dropdown";
 import ReactPlayer from "react-player";
+import {Knowledge} from "../../../store/types/knowledge";
+import {uploadFile} from "../../../shared/axios";
+import {Auth} from "../../../store/types/auth";
 interface IProps {
 
 }
@@ -60,7 +61,7 @@ type IState = {
         description: input;
         type: SelectInput;
         status: SelectInput;
-        affiliations: input;
+        affiliation: input;
         lookingFor: input;
         members: input;
         knowledgeFile: input;
@@ -148,7 +149,7 @@ const initialState = {
             touched: false,
             autoFocus: false
         },
-        affiliations: {
+        affiliation: {
             elementType: 'input',
             elementConfig: {
                 type: 'text',
@@ -158,7 +159,7 @@ const initialState = {
             validation: {
                 required: false,
             },
-            valid: false,
+            valid: true,
             touched: false,
             autoFocus: false,
             placeholder: 'Affiliation'
@@ -173,7 +174,7 @@ const initialState = {
             validation: {
                 required: false,
             },
-            valid: false,
+            valid: true,
             touched: false,
             autoFocus: false,
             placeholder: 'LookingFor'
@@ -188,7 +189,7 @@ const initialState = {
             validation: {
                 required: false,
             },
-            valid: false,
+            valid: true,
             touched: false,
             autoFocus: false,
             placeholder: 'Members'
@@ -203,7 +204,7 @@ const initialState = {
             validation: {
                 required: false,
             },
-            valid: false,
+            valid: true,
             touched: false,
             autoFocus: false,
             placeholder: 'Upload File'
@@ -230,7 +231,7 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
 
     inputChangedHandler = (inputValue: any, inputIdentifier: any, isArrayValueDelete?: boolean) => {
         let value = inputValue.trim();
-        if (inputIdentifier === 'affiliations' || inputIdentifier === 'lookingFor' || inputIdentifier === 'members') {
+        if (inputIdentifier === 'affiliation' || inputIdentifier === 'lookingFor' || inputIdentifier === 'members') {
 
             if (isArrayValueDelete) {
                 // @ts-ignore
@@ -267,15 +268,17 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
         });
     };
 
-    addAffiliation = () => {
+    addAffiliation = (event: any) => {
+        event.preventDefault();
         if (this.state.affiliations.trim() === '') {
             return;
         }
-        this.inputChangedHandler(this.state.affiliations, 'affiliations');
+        this.inputChangedHandler(this.state.affiliations, 'affiliation');
         this.setState({affiliations: ''});
     };
 
-    addLookingFor = () => {
+    addLookingFor = (event: any) => {
+        event.preventDefault();
         if (this.state.lookingFor.trim() === '') {
             return;
         }
@@ -283,14 +286,17 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
         this.setState({lookingFor: ''});
     };
 
-    addMembers = () => {
+    addMembers = (event: any) => {
+        event.preventDefault();
         if (this.state.members.trim() === '') {
             return;
         }
         this.inputChangedHandler(this.state.members, 'members');
         this.setState({members: ''});
     };
-
+    // ================================================
+    // START of image upload related methods =======
+    // ================================================
     showImageCropperView = () => {
         this.setState({showImageCropper: true});
     };
@@ -300,52 +306,51 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
     };
 
     callBackFromImageEditor = (imageFile: any) => {
-
-        console.log(imageFile);
+        // console.log(imageFile);
         this.setState({tempFile: imageFile, tempFileType: 'image'});
-
-        // let fileName = imageFile.name +"-profilePic(" + Date.now() + ")";
-        // if (this.state.createKnowledgeForm.knowledgeFile.value !== '') {
-        //     this.props.onDeleteFile(this.state.createKnowledgeForm.knowledgeFile.value);
-        // }
-        // uploadFile(imageFile, fileName, imageFile.type, (err: any, result: any) => {
-        //     if (err) {
-        //         console.log(err)
-        //     } else {
-        //         console.log(result);
-        //         this.inputChangedHandler(result, 'knowledgeFile');
-        //         let data = {
-        //             imageUrl: result
-        //         };
-        //         this.props.onUploadFile(data);
-        //     }
-        // });
     };
+    // ================================================
+    // ==== END OF Image upload related methods =======
+    // ================================================
+
+    // ================================================
+    // ==== START of video file related methods =========
+    // ================================================
+
     videoFileChangeHandler = (event: any) => {
         event.stopPropagation();
         event.preventDefault();
         let file = event.target.files[0];
-        console.log(file);
+        // console.log(file);
 
-        // console.log(URL.createObjectURL(file));
         if (file !== null || true) {
-            console.log(ReactPlayer.canPlay(URL.createObjectURL(file)));
-            if (ReactPlayer.canPlay(URL.createObjectURL(file))) {
-                this.setState({tempFile: file, tempFileType: 'video'});
-            } else {
-                this.setState({
-                    errorMsg: 'File type not supported.',
-                });
-                setTimeout(() => {
-                    this.setState({ errorMsg: '' });
-                }, 1500);
-            }
+            this.setState({tempFile: file, tempFileType: 'video'});
+            this.inputChangedHandler('','knowledgeFile');
         }
+    };
+
+    onVideoFilePlayError = () => {
+        this.setState({
+            errorMsg: 'File type not supported.',
+            tempFile: null,
+            tempFileType: ''
+        });
+        setTimeout(() => {
+            this.setState({ errorMsg: '' });
+        }, 2000);
     };
 
     cancelVideoUpload = (event: any) => {
         event.target.value = null;
     };
+
+    // ================================================
+    // ==== END of video file related methods =========
+    // ================================================
+
+    // ================================================
+    // ==== START of video link related methods =========
+    // ================================================
 
     videoLinkChangeHandler = () => {
         // hide the modal
@@ -355,27 +360,11 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
             tempFileType: '',
             tempFile: null
         });
-        // check for valid url
-        let url = this.state.createKnowledgeForm.knowledgeFile.value;
-        if (url.trim() === '') {
-            return;
-        }
-        if (!url.includes('//')) {
-            url = 'https://' + url;
-        }
         // if the link is not working we remove it from state and show error msg
+        let url = this.state.createKnowledgeForm.knowledgeFile.value;
         if (!ReactPlayer.canPlay(url)) {
-            const updatedFormElement = updateObject(this.state.createKnowledgeForm.knowledgeFile, {
-                value: '',
-                valid: false,
-                touched: true
-            });
-            const updatedForm = updateObject(this.state.createKnowledgeForm, {
-                knowledgeFile: updatedFormElement
-            });
+            this.inputChangedHandler('','knowledgeFile');
             this.setState({
-                createKnowledgeForm: updatedForm,
-                formIsValid: false,
                 errorMsg: 'Video not supported.',
             });
             setTimeout(() => {
@@ -386,6 +375,10 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
     };
 
     showUploadLinkModalView = () => {
+        this.setState({
+            tempFileType: '',
+            tempFile: null
+        });
         this.setState({showUploadLinkModal: true});
     };
 
@@ -393,7 +386,47 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
         this.setState({showUploadLinkModal: false});
     };
 
+    // ================================================
+    // ==== END of video link related methods =========
+    // ================================================
+
+    // ========= Form submit =======
+    submitForm = () => {
+        if (this.state.tempFile !== null) {
+            let fileName = this.state.tempFile.name + "-" + this.state.tempFileType +"(" + Date.now() + ")";
+
+            uploadFile(this.state.tempFile, fileName, this.state.tempFile.type, (err: any, result: any) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    // console.log(result);
+                    this.inputChangedHandler(result, 'knowledgeFile');
+                    this.sendDataToServer();
+                }
+            });
+        } else {
+            this.sendDataToServer();
+        }
+    };
+
+    sendDataToServer = () => {
+        const formData: any = {};
+        for (let formElementIdentifier in this.state.createKnowledgeForm) {
+            // @ts-ignore
+            formData[formElementIdentifier] = this.state.createKnowledgeForm[formElementIdentifier].value;
+        }
+        // console.log(formData);
+        formData['createdBy'] = this.props.userEmail;
+        this.props.onAddNewKnowledge(formData);
+        this.resetForm();
+    };
+
+    resetForm = () => {
+        this.setState(initialState);
+    };
+
     render() {
+        // the hidden input field for file upload
         let fileInput = (
             <input
                 id="myInput"
@@ -470,33 +503,35 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
 
                     <div className='Input'>
                         <label className="Label">Affiliations</label>
-                        <div className="formGroup">
-                            <input
-                                className='InputElement'
-                                type='text'
-                                placeholder='Add affiliation'
-                                value={this.state.affiliations}
-                                onChange={(event) => this.setState({affiliations: event.target.value})}
-                            />
-                            <button
-                                className='btn btn-primary'
-                                onClick={this.addAffiliation}
-                            >
-                                <i className='icons icon-plus' />
-                            </button>
-                        </div>
+                        <form onSubmit={this.addAffiliation}>
+                            <div className="formGroup">
+                                <input
+                                    className='InputElement'
+                                    type='text'
+                                    placeholder='Add affiliation'
+                                    value={this.state.affiliations}
+                                    onChange={(event) => this.setState({affiliations: event.target.value})}
+                                />
+                                <button
+                                    className='btn btn-primary'
+                                    type='submit'
+                                >
+                                    <i className='icons icon-plus' />
+                                </button>
+                            </div>
+                        </form>
                         <small className='text-muted'>Add your entry by clicking the <i className='icons icon-plus' /> button</small>
                     </div>
                     <div className='tagsWrapper'>
                         {
-                            this.state.createKnowledgeForm.affiliations.value.map((value: any, index: any) => {
+                            this.state.createKnowledgeForm.affiliation.value.map((value: any, index: any) => {
                                 return (
                                     <span className="tag bg-light text-primary border" key={index}>
                                       <span className='mr-2'>{value}</span>
                                       <i
                                           className="icons icon-close text-danger"
                                           onClick={() => {
-                                              this.inputChangedHandler(value, 'affiliations', true)}}
+                                              this.inputChangedHandler(value, 'affiliation', true)}}
                                       />
                                    </span>
                                 );
@@ -508,21 +543,23 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
                     {/* ============================================= */}
                     <div className='Input'>
                         <label className="Label">Looking for</label>
-                        <div className="formGroup">
-                            <input
-                                className='InputElement'
-                                type='text'
-                                placeholder='Software developer, Marketing expert'
-                                value={this.state.lookingFor}
-                                onChange={(event) => this.setState({lookingFor: event.target.value})}
-                            />
-                            <button
-                                className='btn btn-primary'
-                                onClick={this.addLookingFor}
-                            >
-                                <i className='icons icon-plus' />
-                            </button>
-                        </div>
+                        <form onSubmit={this.addLookingFor}>
+                            <div className="formGroup">
+                                <input
+                                    className='InputElement'
+                                    type='text'
+                                    placeholder='Software developer, Marketing expert'
+                                    value={this.state.lookingFor}
+                                    onChange={(event) => this.setState({lookingFor: event.target.value})}
+                                />
+                                <button
+                                    className='btn btn-primary'
+                                    type='submit'
+                                >
+                                    <i className='icons icon-plus' />
+                                </button>
+                            </div>
+                        </form>
                         <small className='text-muted'>Add your entry by clicking the <i className='icons icon-plus' /> button</small>
                     </div>
                     <div className='tagsWrapper'>
@@ -547,20 +584,23 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
 
                     <div className='Input'>
                         <label className="Label">Members</label>
-                        <div className="formGroup">
-                            <input
-                                className='InputElement'
-                                type='text'
-                                placeholder='Email or Name'
-                                value={this.state.members}
-                                onChange={(event) => this.setState({members: event.target.value})}
-                            />
-                            <button
-                                className='btn btn-primary'
-                                onClick={this.addMembers}
-                            ><i className='icons icon-plus' />
-                            </button>
-                        </div>
+                        <form onSubmit={this.addMembers}>
+                            <div className="formGroup">
+                                <input
+                                    className='InputElement'
+                                    type='text'
+                                    placeholder='Email or Name'
+                                    value={this.state.members}
+                                    onChange={(event) => this.setState({members: event.target.value})}
+                                />
+                                <button
+                                    className='btn btn-primary'
+                                    type='submit'
+                                ><i className='icons icon-plus' />
+                                </button>
+                            </div>
+                        </form>
+
                         <small className='text-muted'>Add your entry by clicking the <i className='icons icon-plus' /> button</small>
                     </div>
                     <div className='tagsWrapper'>
@@ -645,13 +685,13 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
                                     controls
                                     width='100%'
                                     height='100%'
-                                    onError={(e) => console.log(e)}
+                                    onError={this.onVideoFilePlayError}
                                 />
                             )
                         }
                         {/* ===== Video link preview ===== */}
                         {
-                            this.state.createKnowledgeForm.knowledgeFile.value !== '' && (
+                            this.state.createKnowledgeForm.knowledgeFile.value !== '' && !this.state.showUploadLinkModal && (
                                 <ReactPlayer
                                     url={this.state.createKnowledgeForm.knowledgeFile.value}
                                     controls
@@ -664,7 +704,7 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
                         {/* ===== Error message ======== */}
                         {
                             this.state.errorMsg !== '' && (
-                                <small className='text-danger'>{this.state.errorMsg}</small>
+                                <h6 className='text-danger'>{this.state.errorMsg}</h6>
                             )
                         }
 
@@ -684,7 +724,7 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
                                 type='text'
                                 placeholder='Link of your video i.e youtube'
                                 value={this.state.createKnowledgeForm.knowledgeFile.value}
-                                onChange={(event) => {this.inputChangedHandler(event.target.value, 'knowledgeFile', true)}}
+                                onChange={(event) => {this.inputChangedHandler(event.target.value, 'knowledgeFile')}}
                             />
                             <div className='d-flex justify-content-center mt-4'>
                                 <button type="button" className="btn btn-outline-danger mr-2 w-50" onClick={this.hideUploadLinkModalView}>CANCEL</button>
@@ -692,6 +732,22 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
                             </div>
                         </div>
                     </Modal>
+
+                    {/* ============= Submit button =============  */}
+                    {/*<Button btnType="Danger" disabled={!this.state.formIsValid} clicked={this.submitForm}>*/}
+                    {/*    {this.props.loading ? (*/}
+                    {/*        <div className="spinner-border spinner-border-sm text-light" role="status">*/}
+                    {/*            <span className="sr-only">Loading...</span>*/}
+                    {/*        </div>*/}
+                    {/*    ): 'Create post'}*/}
+                    {/*</Button>*/}
+                    <button className='btn btn-dark btn-block mt-3' disabled={!this.state.formIsValid} onClick={this.submitForm}>
+                        {this.props.loading ? (
+                            <div className="spinner-border spinner-border-sm text-light" role="status">
+                                <span className="sr-only">Loading...</span>
+                            </div>
+                        ): 'Create post'}
+                    </button>
                 </div>
             </div>
 
@@ -700,17 +756,21 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
 }
 
 interface LinkStateProps {
-
+    error: Knowledge['error'];
+    loading: Knowledge['loading'];
+    userEmail: Auth['email'];
 }
 interface LinkDispatchProps {
-    onUploadFile: (data: any) => void;
+    onAddNewKnowledge: (data: any) => void;
     onDeleteFile: (imageUrl: string) => void;
 }
 const mapStateToProps = (state: AppState): LinkStateProps => ({
-
+    error: state.knowledge.error,
+    loading: state.knowledge.loading,
+    userEmail: state.auth.email
 });
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AuthActions>): LinkDispatchProps => ({
-    onUploadFile: (data) => dispatch(actions.saveUserData(data)),
+const mapDispatchToProps = (dispatch: any): LinkDispatchProps => ({
+    onAddNewKnowledge: (data: any) => dispatch(actions.createKnowledge(data)),
     onDeleteFile: (imageUrl) => dispatch(actions.deleteFile(imageUrl.substring(imageUrl.lastIndexOf('/') + 1)))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CreateKnowledgeForm);

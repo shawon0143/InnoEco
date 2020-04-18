@@ -46,17 +46,6 @@ export const checkValidity = (value: any, rules: any) => {
         }
     }
 
-    if (rules.isVideoTypeValid) {
-        // const allowedImageTypes = ['video/quicktime', 'video/quicktime', 'image/jpg'];
-        // if (value !== undefined) {
-        //     let resultIsValid = allowedImageTypes.find(function(element) {
-        //         return element === value.type;
-        //     });
-        //
-        //     isValid = resultIsValid && isValid;
-        // }
-    }
-
     if (rules.isPhoneOrFaxNumber && rules.required === undefined) {
         if (value.trim() !== '') {
             const pattern = /^[+]*[0-9][-\s/0-9]*$/;

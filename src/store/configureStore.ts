@@ -2,8 +2,10 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 // reducers import
 import authReducer from './reducers/auth';
+import knowledgeReducer from './reducers/knowledge';
 export const rootReducer = combineReducers({
-    auth: authReducer
+    auth: authReducer,
+    knowledge: knowledgeReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

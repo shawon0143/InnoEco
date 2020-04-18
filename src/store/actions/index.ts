@@ -12,3 +12,7 @@ export {
     saveUserData,
     deleteFile
 } from './auth';
+
+export {
+    createKnowledge
+} from './knowledge';

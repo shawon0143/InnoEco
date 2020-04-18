@@ -30,6 +30,12 @@ commands['updateUser'] = { url: `/user/:email`, method: 'PATCH', responseType: '
 // file delete
 commands['deleteFile'] = { url: `/upload/s3_delete_object/:fileName`, method: 'DELETE', responseType: 'json' };
 // knowledge
+commands['createKnowledge'] = { url: `/knowledge`, method: 'POST', responseType: 'json' };
+commands['updateKnowledge'] = { url: `/knowledge/:knowledgeId`, method: 'PATCH', responseType: 'json' };
+commands['getAllKnowledge'] = { url: `/knowledge`, method: 'GET', responseType: 'json' };
+commands['getKnowledgeById'] = { url: `/knowledge/:knowledgeId`, method: 'GET', responseType: 'json' };
+commands['deleteKnowledge'] = { url: `/knowledge/:knowledgeId`, method: 'DELETE', responseType: 'json' };
+
 
 
 export const callApi = (command: any, data: any, pathPara: any, cb: any) => {
