@@ -229,9 +229,9 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
 
 
     inputChangedHandler = (inputValue: any, inputIdentifier: any, isArrayValueDelete?: boolean) => {
-        let value = inputValue.trim();
+        let value = inputValue;
         if (inputIdentifier === 'affiliation' || inputIdentifier === 'lookingFor' || inputIdentifier === 'members') {
-
+            value = value.trim();
             if (isArrayValueDelete) {
                 // @ts-ignore
                 value = this.state.createKnowledgeForm[inputIdentifier].value.filter((item: string) =>  item !== value)
