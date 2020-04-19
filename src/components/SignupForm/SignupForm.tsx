@@ -172,7 +172,7 @@ const initialState = {
             value: '',
             validation: {
                 required: true,
-                isNumeric: true
+                isPhoneOrFaxNumber: true
             },
             valid: false,
             touched: false,
@@ -187,6 +187,7 @@ const initialState = {
             },
             value: '',
             validation: {
+                isPhoneOrFaxNumber: true
             },
             valid: true,
             touched: false,

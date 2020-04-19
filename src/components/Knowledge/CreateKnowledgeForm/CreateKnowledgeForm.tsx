@@ -73,7 +73,7 @@ type IState = {
     tempFile: any,
     tempFileType: string,
     errorMsg: string,
-    showUploadLinkModal: boolean
+    showUploadLinkModal: boolean,
 };
 
 const initialState = {
@@ -218,7 +218,7 @@ const initialState = {
     tempFile: null,
     tempFileType: '',
     errorMsg: '',
-    showUploadLinkModal: false
+    showUploadLinkModal: false,
 };
 
 type Props = LinkDispatchProps & LinkStateProps & IProps;
@@ -226,6 +226,7 @@ type Props = LinkDispatchProps & LinkStateProps & IProps;
 class CreateKnowledgeForm extends React.Component<Props, IState> {
     state: Readonly<IState> = initialState;
     fileUploadInputElement: HTMLInputElement | null | undefined;
+    pdfFileUploadInputElement: HTMLInputElement | null | undefined;
 
 
     inputChangedHandler = (inputValue: any, inputIdentifier: any, isArrayValueDelete?: boolean) => {
@@ -348,7 +349,7 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
     // ================================================
 
     // ================================================
-    // ==== START of video link related methods =========
+    // ==== START of video link related methods =======
     // ================================================
 
     videoLinkChangeHandler = () => {
@@ -368,7 +369,7 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
             });
             setTimeout(() => {
                 this.setState({ errorMsg: '' });
-            }, 1500);
+            }, 2000);
         }
 
     };
@@ -389,8 +390,48 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
     // ==== END of video link related methods =========
     // ================================================
 
+    // ================================================
+    // ==== START of pdf file related methods =========
+    // ================================================
+    pdfFileChangeHandler = (event: any) => {
+        event.stopPropagation();
+        event.preventDefault();
+        let file = event.target.files[0];
+        console.log(file);
+        if (file.type !== 'application/pdf') {
+            this.setState({
+                errorMsg: 'PDF only.',
+            });
+            setTimeout(() => {
+                this.setState({ errorMsg: '' });
+            }, 2000);
+            return;
+        }
+
+        this.setState({tempFile: file, tempFileType: 'pdf'});
+        this.inputChangedHandler('', 'knowledgeFile');
+    };
+
+    cancelPdfUpload = (event: any) => {
+        event.target.value = null;
+    };
+    // ================================================
+    // ==== END  of pdf file related methods ==========
+    // ================================================
+
+    clearFileUploads = () => {
+        this.setState({
+            tempFileType: '',
+            tempFile: null
+        });
+        this.inputChangedHandler('', 'knowledgeFile');
+    };
+
     // ========= Form submit =======
     submitForm = () => {
+        // first we disable the submit button so that user cannot click multiple times
+        this.setState({formIsValid: false});
+        this.props.onStartCreateKnowledge();
         if (this.state.tempFile !== null) {
             let fileName = this.state.tempFile.name + "-" + this.state.tempFileType +"(" + Date.now() + ")";
 
@@ -424,6 +465,10 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
         this.setState(initialState);
     };
 
+    componentDidMount(): void {
+        this.props.onResetKnowledgeFlags();
+    }
+
     render() {
         // the hidden input field for file upload
         let fileInput = (
@@ -434,6 +479,16 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
                 style={{ display: 'none', maxWidth: '100%' }}
                 onChange={e => this.videoFileChangeHandler(e)}
                 onClick={event => {this.cancelVideoUpload(event);}}
+            />
+        );
+        let pdfFileInput = (
+            <input
+                id="myInput"
+                type="file"
+                ref={ref => (this.pdfFileUploadInputElement = ref)}
+                style={{ display: 'none', maxWidth: '100%' }}
+                onChange={e => this.pdfFileChangeHandler(e)}
+                onClick={event => {this.cancelPdfUpload(event);}}
             />
         );
         return (
@@ -621,30 +676,42 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
                     {/* ============================================= */}
                     {/* ============== Knowledge file =============== */}
                     {/* ============================================= */}
+                    {/* The hidden input field for upload file to work */}
+                    {fileInput}
+                    {pdfFileInput}
                     <div className='Input'>
                         <label className="Label">Upload file</label>
                         <div className="fileTypeSelectionContainer d-flex">
+                            <button
+                                className='btn btn-info btn-sm mr-2'
+                                onClick={() => {
+                                    // @ts-ignore
+                                    this.pdfFileUploadInputElement.click()}}
+                            >
+                                <i className='icons icon-paper-clip' />
+
+                            </button>
 
                             <button
-                                className='btn btn-danger mr-2'
+                                className='btn btn-danger btn-sm mr-2'
                                 onClick={() => {this.showImageCropperView(); hideScrollBar();}}
                             >
-                                <i className='icons icon-camera' />
+                                <i className='icons icon-picture' />
 
                             </button>
                             <Dropdown>
-                                <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                                    <i className='icons icon-camrecorder mr-2'/>
+                                <Dropdown.Toggle variant="primary" size="sm" id="dropdown-basic">
+                                    <i className='icons icon-film'/>
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item onClick={() => {
                                         this.showUploadLinkModalView()
-                                    }}> <i className='icons icon-link' /> Url</Dropdown.Item>
+                                    }}> <i className='icons icon-link mr-2' /> Url</Dropdown.Item>
                                     <Dropdown.Item onClick={() => {
                                         // @ts-ignore
                                         this.fileUploadInputElement.click();}}>
-                                        <i className='icons icon-doc' /> file
+                                        <i className='icons icon-doc mr-2' /> File
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
@@ -667,8 +734,6 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
                     {/* ============================================= */}
                     {/* ============== upload preview =============== */}
                     {/* ============================================= */}
-                    {/* The hidden input field for upload file to work */}
-                    {fileInput}
                     <div className='uploadPreviewWrapper d-flex justify-content-center align-content-center'>
                         {/* ==== Image preview ==== */}
                         {
@@ -682,8 +747,8 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
                                 <ReactPlayer
                                     url={URL.createObjectURL(this.state.tempFile)}
                                     controls
-                                    width='100%'
-                                    height='100%'
+                                    width='70%'
+                                    height='70%'
                                     onError={this.onVideoFilePlayError}
                                 />
                             )
@@ -694,10 +759,19 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
                                 <ReactPlayer
                                     url={this.state.createKnowledgeForm.knowledgeFile.value}
                                     controls
-                                    width='100%'
-                                    height='100%'
+                                    width='70%'
+                                    height='70%'
                                     onError={(e) => console.log(e)}
                                 />
+                            )
+                        }
+                        {/* ======= PDF upload preview ===== */}
+                        {
+                            this.state.tempFile !== null && this.state.tempFileType === "pdf" && (
+                                <div className='p-3 border rounded'>
+                                    <i className='icons icon-book-open mr-2' />
+                                    {this.state.tempFile.name}
+                                </div>
                             )
                         }
                         {/* ===== Error message ======== */}
@@ -706,8 +780,20 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
                                 <h6 className='text-danger'>{this.state.errorMsg}</h6>
                             )
                         }
+                        {/* ======= Success message ========== */}
+
 
                     </div>
+                    {
+                        (this.state.tempFile !== null || this.state.createKnowledgeForm.knowledgeFile.value !== '') && (
+                            <div className='mt-3 text-center text-danger d-block'>
+                                <i className='icons icon-trash p-2 border'
+                                   style={{cursor: 'pointer'}}
+                                   onClick={this.clearFileUploads}
+                                />
+                            </div>
+                        )
+                    }
                     {/* ============================================= */}
                     {/* ============== video link modal ============= */}
                     {/* ============================================= */}
@@ -740,6 +826,21 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
                             </div>
                         ): 'Create post'}
                     </button>
+
+                    {
+                        this.props.error !== '' && (
+                            <div className="alert alert-danger text-center mt-2" role="alert">
+                                {this.props.error}
+                            </div>
+                        )
+                    }
+                    {
+                        this.props.successFeedback !== '' && (
+                            <div className="alert alert-success text-center mt-2" role="alert">
+                                {this.props.successFeedback}
+                            </div>
+                        )
+                    }
                 </div>
             </div>
 
@@ -751,18 +852,24 @@ interface LinkStateProps {
     error: Knowledge['error'];
     loading: Knowledge['loading'];
     userEmail: Auth['email'];
+    successFeedback: Knowledge['successFeedback'];
 }
 interface LinkDispatchProps {
+    onStartCreateKnowledge: () => void;
     onAddNewKnowledge: (data: any) => void;
     onDeleteFile: (imageUrl: string) => void;
+    onResetKnowledgeFlags: () => void;
 }
 const mapStateToProps = (state: AppState): LinkStateProps => ({
     error: state.knowledge.error,
     loading: state.knowledge.loading,
-    userEmail: state.auth.email
+    userEmail: state.auth.email,
+    successFeedback: state.knowledge.successFeedback
 });
 const mapDispatchToProps = (dispatch: any): LinkDispatchProps => ({
+    onStartCreateKnowledge: () => dispatch(actions.createKnowledgeStart()),
     onAddNewKnowledge: (data: any) => dispatch(actions.createKnowledge(data)),
-    onDeleteFile: (imageUrl) => dispatch(actions.deleteFile(imageUrl.substring(imageUrl.lastIndexOf('/') + 1)))
+    onDeleteFile: (imageUrl) => dispatch(actions.deleteFile(imageUrl.substring(imageUrl.lastIndexOf('/') + 1))),
+    onResetKnowledgeFlags: () => dispatch(actions.resetKnowledgeFlags())
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CreateKnowledgeForm);

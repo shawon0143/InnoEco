@@ -7,6 +7,7 @@ import { updateObject } from "../../shared/utility";
 const initialState: Knowledge = {
     error: '',
     loading: false,
+    successFeedback: '',
 };
 
 const createKnowledgeStart = (state: Knowledge, action: any) => {
@@ -14,11 +15,15 @@ const createKnowledgeStart = (state: Knowledge, action: any) => {
 };
 
 const createKnowledgeSuccess = (state: Knowledge, action: any) => {
-    return updateObject(state, {error: '', loading: false});
+    return updateObject(state, {error: '', loading: false, successFeedback: action.successFeedback});
 };
 
 const createKnowledgeFail = (state: Knowledge, action: any) => {
     return updateObject(state, {error: action.error, loading: false});
+};
+
+const resetKnowledgeFlags = (state: Knowledge, action: any) => {
+    return updateObject(state, {error: '', loading: false, successFeedback: ''});
 };
 
 
@@ -27,6 +32,7 @@ const reducer = (state = initialState, action: KnowledgeActions): Knowledge => {
         case actionTypes.CREATE_KNOWLEDGE_START: return createKnowledgeStart(state, action);
         case actionTypes.CREATE_KNOWLEDGE_SUCCESS: return createKnowledgeSuccess(state, action);
         case actionTypes.CREATE_KNOWLEDGE_FAIL: return createKnowledgeFail(state, action);
+        case actionTypes.RESET_KNOWLEDGE_FLAGS: return resetKnowledgeFlags(state, action);
         default:
             return state;
     }

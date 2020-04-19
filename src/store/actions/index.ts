@@ -14,5 +14,7 @@ export {
 } from './auth';
 
 export {
-    createKnowledge
+    createKnowledgeStart,
+    createKnowledge,
+    resetKnowledgeFlags
 } from './knowledge';

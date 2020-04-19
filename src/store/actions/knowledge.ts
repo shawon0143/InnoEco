@@ -14,9 +14,10 @@ export const createKnowledgeStart = (): KnowledgeActions => {
     }
 };
 
-export const createKnowledgeSuccess = (): KnowledgeActions => {
+export const createKnowledgeSuccess = (successFeedback: string): KnowledgeActions => {
     return {
-        type: actionTypes.CREATE_KNOWLEDGE_SUCCESS
+        type: actionTypes.CREATE_KNOWLEDGE_SUCCESS,
+        successFeedback: successFeedback
     }
 };
 
@@ -29,15 +30,29 @@ export const createKnowledgeFail = (error: string): KnowledgeActions => {
 
 export const createKnowledge = (data: any) => {
     return (dispatch: Dispatch<KnowledgeActions>) => {
-        dispatch(createKnowledgeStart());
+        // we called this action from createKnowledgeForm.tsx
+        // dispatch(createKnowledgeStart());
         callApi('createKnowledge', data, null, (err: any, result: any) => {
             if (err) {
                 console.log(err);
                 dispatch(createKnowledgeFail(err));
+                // we hide the error message after 5 seconds
+                setTimeout(() => {
+                    dispatch(resetKnowledgeFlags());
+                }, 5000);
             } else {
                 console.log(result);
-                dispatch(createKnowledgeSuccess());
+                dispatch(createKnowledgeSuccess(result.message));
+                // we hide the success message after 5 seconds
+                setTimeout(() => {
+                    dispatch(resetKnowledgeFlags());
+                }, 5000);
             }
         });
     }
 };
+
+
+export const resetKnowledgeFlags = (): KnowledgeActions => ({
+    type: actionTypes.RESET_KNOWLEDGE_FLAGS
+});

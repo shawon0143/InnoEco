@@ -17,6 +17,7 @@ interface IProps {}
 const Profile: React.FC<IProps> = (props: IProps) => {
     const dispatch = useDispatch();
     useEffect(() => {
+        window.scrollTo(0,0);
         dispatch(actions.getUserByEmail());
     }, [dispatch]);
     const userProfile = useSelector((state: AppState) => {
