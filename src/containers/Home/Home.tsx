@@ -1,15 +1,20 @@
 import React, {useEffect} from 'react';
 import {useHistory} from "react-router-dom";
 import './Home.scss';
+import RecentWiki from "../../components/RecentWiki/RecentWiki";
 import hrLeftSvg from "../../assets/images/hrLeft.svg";
 import hrRightSvg from "../../assets/images/hrRight.svg";
 import shapeSvg from "../../assets/images/joinUsShape.svg";
+import {useDispatch} from "react-redux";
+import * as actions from "../../store/actions/index";
 
 const Home: React.FC = () => {
+    let dispatch = useDispatch();
     let history = useHistory();
     useEffect(() => {
         window.scrollTo(0,0);
-    });
+        dispatch(actions.getAllKnowledge());
+    }, [dispatch]);
     return (
         <React.Fragment>
             <div className="container-fluid homeContainer topNavMargin">
@@ -27,6 +32,11 @@ const Home: React.FC = () => {
                     </div>
                 </div>
             </div>
+            {/* ========== Recent WIkI ========== */}
+
+            <RecentWiki />
+
+
             {/* ========= Call to Action ======= */}
             <div className="position-relative joinInnoEcoWrapper">
                 <div className="container text-center callToActionContainer">

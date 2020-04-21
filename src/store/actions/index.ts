@@ -10,11 +10,12 @@ export {
     authLogout,
     getUserByEmail,
     saveUserData,
-    deleteFile
+    deleteFile,
 } from './auth';
 
 export {
     createKnowledgeStart,
     createKnowledge,
+    getAllKnowledge,
     resetKnowledgeFlags
 } from './knowledge';

@@ -26,13 +26,14 @@ commands['resendToken'] = { url: `/user/resendToken`, method: 'POST', responseTy
 commands['forgotPassword'] = { url: `/user/forgotPassword`, method: 'POST', responseType: 'json'};
 commands['resetPassword'] = { url: `/user/resetPassword/:token`, method: 'POST', responseType: 'json' };
 commands['getUserDetails'] = { url: `/user/getUserDetails/:email`, method: 'GET', responseType: 'json'};
+commands['getUserByIdList'] = { url: `/user/getUserByIdList`, method: 'POST', responseType: 'json'};
 commands['updateUser'] = { url: `/user/:email`, method: 'PATCH', responseType: 'json'};
 // file delete
 commands['deleteFile'] = { url: `/upload/s3_delete_object/:fileName`, method: 'DELETE', responseType: 'json' };
 // knowledge
 commands['createKnowledge'] = { url: `/knowledge`, method: 'POST', responseType: 'json' };
 commands['updateKnowledge'] = { url: `/knowledge/:knowledgeId`, method: 'PATCH', responseType: 'json' };
-commands['getAllKnowledge'] = { url: `/knowledge`, method: 'GET', responseType: 'json' };
+commands['getKnowledge'] = { url: `/knowledge`, method: 'GET', responseType: 'json' };
 commands['getKnowledgeById'] = { url: `/knowledge/:knowledgeId`, method: 'GET', responseType: 'json' };
 commands['deleteKnowledge'] = { url: `/knowledge/:knowledgeId`, method: 'DELETE', responseType: 'json' };
 
@@ -90,6 +91,7 @@ export const callApi = (command: any, data: any, pathPara: any, cb: any) => {
     // console.log(para);
     axios(para)
         .then(res => {
+            // console.log(res);
             if (res.status === 200) {
                 callback(null, res.data, res.status);
             } else if (res.status === 400) {

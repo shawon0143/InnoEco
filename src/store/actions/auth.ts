@@ -102,6 +102,21 @@ export const getUserByEmail = () => {
 
     }
 };
+
+// array or singleId
+export const getUserById = (idList: string[]) => {
+    return new Promise<any>( async (resolve, reject) => {
+        await callApi('getUserByIdList', {idList: idList}, null, (err: any, result: any) => {
+            if (err) {
+                console.log(err);
+                reject();
+            } else {
+                console.log(result);
+                resolve(result);
+            }
+        });
+    });
+};
 // ========================================
 // ========== Update user data ============
 // ========================================
