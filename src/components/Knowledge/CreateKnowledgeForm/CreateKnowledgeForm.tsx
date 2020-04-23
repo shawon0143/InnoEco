@@ -64,6 +64,7 @@ type IState = {
         lookingFor: input;
         members: input;
         knowledgeFile: input;
+        knowledgeFileType: input;
     },
     formIsValid: boolean,
     affiliations: string,
@@ -208,6 +209,21 @@ const initialState = {
             autoFocus: false,
             placeholder: 'Upload File'
         },
+        knowledgeFileType: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'File type',
+            },
+            value: '',
+            validation: {
+                required: false,
+            },
+            valid: true,
+            touched: false,
+            autoFocus: false,
+            placeholder: 'File type'
+        },
 
     },
     formIsValid: false,
@@ -308,6 +324,7 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
     callBackFromImageEditor = (imageFile: any) => {
         // console.log(imageFile);
         this.setState({tempFile: imageFile, tempFileType: 'image'});
+        this.inputChangedHandler('image', 'knowledgeFileType');
     };
     // ================================================
     // ==== END OF Image upload related methods =======
@@ -325,6 +342,7 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
 
         if (file !== null || true) {
             this.setState({tempFile: file, tempFileType: 'video'});
+            this.inputChangedHandler('video', 'knowledgeFileType');
             this.inputChangedHandler('','knowledgeFile');
         }
     };
@@ -355,6 +373,7 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
     videoLinkChangeHandler = () => {
         // hide the modal
         this.hideUploadLinkModalView();
+        this.inputChangedHandler('video', 'knowledgeFileType');
         // hide any previous video file preview
         this.setState({
             tempFileType: '',
@@ -410,6 +429,8 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
 
         this.setState({tempFile: file, tempFileType: 'pdf'});
         this.inputChangedHandler('', 'knowledgeFile');
+        this.inputChangedHandler('other', 'knowledgeFileType');
+
     };
 
     cancelPdfUpload = (event: any) => {
@@ -425,6 +446,7 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
             tempFile: null
         });
         this.inputChangedHandler('', 'knowledgeFile');
+        this.inputChangedHandler('', 'knowledgeFileType');
     };
 
     // ========= Form submit =======
@@ -682,36 +704,26 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
                     <div className='Input'>
                         <label className="Label">Upload file</label>
                         <div className="fileTypeSelectionContainer d-flex">
-                            <button
-                                className='btn btn-info btn-sm mr-2'
-                                onClick={() => {
-                                    // @ts-ignore
-                                    this.pdfFileUploadInputElement.click()}}
-                            >
-                                <i className='icons icon-paper-clip' />
 
-                            </button>
-
-                            <button
-                                className='btn btn-danger btn-sm mr-2'
-                                onClick={() => {this.showImageCropperView(); hideScrollBar();}}
-                            >
-                                <i className='icons icon-picture' />
-
-                            </button>
-                            <Dropdown>
+                            <Dropdown className='mr-2'>
                                 <Dropdown.Toggle variant="primary" size="sm" id="dropdown-basic">
-                                    <i className='icons icon-film'/>
+                                    <i className='icons icon-paper-clip mr-2'/>
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
+                                    <Dropdown.Item onClick={() => {this.showImageCropperView(); hideScrollBar();}}> <i className='icons icon-picture mr-2' /> Picture</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => {
+                                        // @ts-ignore
+                                        this.pdfFileUploadInputElement.click()}}>
+                                        <i className='icons icon-doc mr-2' /> PDF
+                                    </Dropdown.Item>
                                     <Dropdown.Item onClick={() => {
                                         this.showUploadLinkModalView()
-                                    }}> <i className='icons icon-link mr-2' /> Url</Dropdown.Item>
+                                    }}> <i className='icons icon-link mr-2' /> Video Url</Dropdown.Item>
                                     <Dropdown.Item onClick={() => {
                                         // @ts-ignore
                                         this.fileUploadInputElement.click();}}>
-                                        <i className='icons icon-doc mr-2' /> File
+                                        <i className='icons icon-doc mr-2' /> Video File
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>

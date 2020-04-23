@@ -18,7 +18,8 @@ export type TKnowledge = {
     lookingFor: string[],
     members: string[],
     knowledgeFile: string,
-    createdBy: string,
+    knowledgeFileType: string,
+    createdBy: TCreatedBy,
     comments: TComment[],
     likes: TLike[],
     createdAt: Date,
@@ -31,7 +32,8 @@ export type TKnowledge = {
 
 export type TCreatedBy = {
     _id: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     imageUrl: string;
 }
 

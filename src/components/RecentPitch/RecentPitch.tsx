@@ -25,13 +25,13 @@ const RecentPitch:React.FC<IProps> = (props:IProps) => {
         return item.type === 'pitch'
     });
     sortedLatestPitches = sortedLatestPitches.sort((a:any, b:any) => a.createdAt - b.createdAt).slice(0,4);
-    console.log(sortedLatestPitches);
     let newsCardArray: any = [];
     newsCardArray = sortedLatestPitches.map((knowledge: TKnowledge, key: number) => {
        return (
            <NewsCard
                key={knowledge._id}
-               imageUrl={knowledge.knowledgeFile}
+               fileUrl={knowledge.knowledgeFile}
+               fileType={knowledge.knowledgeFileType}
                title={knowledge.title}
                description={knowledge.description}
                createdBy={knowledge.createdBy}
@@ -59,7 +59,7 @@ const RecentPitch:React.FC<IProps> = (props:IProps) => {
                 </div>
                 <div className="row mt-5">
                     <div className="col text-center">
-                        <button className='btn btn-outline-primary'>
+                        <button className='btn btn-secondary'>
                             View all <i className='icons icon-arrow-right-circle ml-3'/>
                         </button>
                     </div>

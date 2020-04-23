@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactPlayer from "react-player";
 import dateFormat from 'dateformat';
+import "./NewsCard.scss";
+import {TCreatedBy} from "../../../store/types/knowledge";
 
 interface IProps {
-    imageUrl: string;
+    fileUrl: string;
+    fileType: string;
     title: string;
     description: string;
-    createdBy: string;
+    createdBy: TCreatedBy;
     noOfLikes: number;
     noOfComments: number;
     createdAt: Date;
@@ -27,56 +30,77 @@ dateFormat.i18n = {
 };
 
 const NewsCard: React.FC<IProps> = (props: IProps) => {
+    let userImageUrl = require("../../../assets/images/avatar.png");
+    if (props.createdBy.imageUrl) {
+        userImageUrl = props.createdBy.imageUrl;
+    }
 
     return (
-        <div className="card mb-3" style={{ maxWidth: 540 }}>
-            <div className="row no-gutters">
-                <div className="col-4 col-md-12">
-                    {
-                        props.imageUrl.includes('-video(') && (
-                            <ReactPlayer
-                                url={props.imageUrl}
-                                width='100%'
-                                height='100%'
-                                onError={(e) => console.log(e)}
-                            />
-                        )
-                    }
+            <div className="card newsCardContainer mb-3" style={{ maxWidth: 540 }}>
+                <div className="row no-gutters">
+                    <div className="col-4 col-md-12">
+                        {
+                            props.fileType === 'video' && (
+                                <div className='player-wrapper'>
+                                <ReactPlayer
+                                    url={props.fileUrl}
+                                    className='react-player'
+                                    width='100%'
+                                    height='100%'
+                                    onError={(e) => console.log(e)}
+                                />
+                                </div>
+                            )
+                        }
 
-                    {
-                        props.imageUrl.includes('-image(') && (
-                            <img
-                                src={props.imageUrl}
-                                className="card-img"
-                                alt="..."
-                            />
-                        )
-                    }
-                    {
-                        props.imageUrl.includes('-pdf(') && (
-                            <img
-                                src="https://inno-eco.s3.amazonaws.com/imageFile-image(1587589709976)"
-                                alt="pdf"
-                            />
-                        )
-                    }
+                        {
+                            props.fileType === 'image' && (
+                                <img
+                                    src={props.fileUrl}
+                                    className="card-img"
+                                    alt="..."
+                                />
+                            )
+                        }
+                        {
+                            props.fileType === 'other' && (
+                                <img
+                                    src={require('../../../assets/images/tempDocPlaceholder.jpg')}
+                                    alt="pdf"
+                                />
+                            )
+                        }
 
-                </div>
-                <div className="col-8 col-md-12">
-                    <div className="card-body">
-                        <p className="card-text">
-                            <small className="text-muted">
-                                {dateFormat(props.createdAt, 'mmm  dd, yyyy' )}
-                            </small>
-                        </p>
-                        <h5 className="card-title">{props.title}</h5>
-                        <p className="card-text">
-                            {props.description}
-                        </p>
+                    </div>
+                    <div className="col-8 col-md-12">
+                        <div className="card-body">
+                            <p className="card-text">
+                                <small className="text-muted">
+                                    {dateFormat(props.createdAt, 'mmm  dd, yyyy' )}
+                                </small>
+                            </p>
+                            <h5 className="card-title text-truncate">{props.title}</h5>
+                            <p className="card-text lineClamp-four">
+                                {props.description}
+                            </p>
+                        </div>
+                        <div className="p-3 d-flex justify-content-between align-items-center">
+                            <div>
+                                <img src={userImageUrl} alt="..." className="rounded-circle" style={{height: 28, width: 28}} />
+                                <small className="text-muted ml-1">{props.createdBy.firstName} {props.createdBy.lastName}</small>
+                            </div>
+                            <div>
+                                <span className='text-muted mr-3'>
+                                    <i  className='icons icon-bubbles mr-1'/>{props.noOfComments}
+                                </span>
+                                <span className='text-muted'>
+                                    <i className='icons icon-like mr-1'/>{props.noOfLikes}
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     );
 };
 

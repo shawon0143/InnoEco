@@ -108,8 +108,16 @@ body {
   overflow: auto;
   transition: all 0.3s ease-out;
 }
+@media (max-width: 575.98px) {
+  .customModal {
+    //width: 100%;
+    height: 90%;
+    top: 5%;
+    //left: 0;
+  }
+}
 
-/*scroll issue for modal ----------*/
+/* ======= scroll issue for modal ========== */
 .hideBodyScroll {
   overflow-y: hidden;
 }
@@ -118,11 +126,18 @@ body {
   overflow-y: visible;
 }
 
-@media (max-width: 575.98px) {
-  .customModal {
-    //width: 100%;
-    height: 90%;
-    top: 5%;
-    //left: 0;
-  }
+// ===== Utility css ========
+.lineClamp-four {
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+.lineClamp-two {
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 }
