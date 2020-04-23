@@ -1,9 +1,10 @@
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom'
 import { store } from './store/configureStore';
-import "babel-polyfill";
 
 import App from './App';
 import Footer from "./components/Footer/Footer";
