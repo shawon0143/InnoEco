@@ -84,7 +84,7 @@ export const getAllKnowledge = () => {
                console.log(err);
                dispatch(getAllKnowledgeFail(err.message));
            } else {
-               console.log(result);
+               // console.log(result);
                dispatch(getAllKnowledgeSuccess(result));
                let userIdList: any = [];
                    for (let i = 0; i < result.knowledge.length; i++) {

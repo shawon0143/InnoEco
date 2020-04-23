@@ -72,7 +72,7 @@ export const formatDate = (d: Date) => {
     // minutes = (d.getMinutes());
 
     // return `${date}.${month}.${year} ${hours}:${minutes}`;
-    return `${date}.${month}.${year}`;
+    return `${month} ${date},${year}`;
 };
 
 export const formatDateForMiniChart = (d: Date) => {

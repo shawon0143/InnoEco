@@ -18,10 +18,10 @@ const App: React.FC = (props) => {
     const auth = useSelector((state: AppState) => {
        return state.auth;
     });
-    // const dispatch = useDispatch();
-    // useEffect(() => {
-    //     dispatch(actions.authCheckState());
-    // }, [dispatch]);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(actions.authCheckState());
+    }, [dispatch]);
     let routes = (
         <Switch>
             <Route path='/verifyAccount/:token' component={VerifyAccount} />

@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {useHistory} from "react-router-dom";
 import './Home.scss';
 import RecentWiki from "../../components/RecentWiki/RecentWiki";
+import RecentPitch from "../../components/RecentPitch/RecentPitch";
 import hrLeftSvg from "../../assets/images/hrLeft.svg";
 import hrRightSvg from "../../assets/images/hrRight.svg";
 import shapeSvg from "../../assets/images/joinUsShape.svg";
@@ -32,10 +33,8 @@ const Home: React.FC = () => {
                     </div>
                 </div>
             </div>
-            {/* ========== Recent WIkI ========== */}
-
-            <RecentWiki />
-
+            {/* ========== Recent Pitch ========== */}
+            <RecentPitch />
 
             {/* ========= Call to Action ======= */}
             <div className="position-relative joinInnoEcoWrapper">
@@ -53,6 +52,8 @@ const Home: React.FC = () => {
                 </div>
                 <img src={shapeSvg} alt="" style={{position: 'absolute', bottom: 0, zIndex: -1, left: 0, overflow: 'hidden'}}/>
             </div>
+            {/* ========== Recent WIkI ========== */}
+            <RecentWiki />
         </React.Fragment>
     );
 };

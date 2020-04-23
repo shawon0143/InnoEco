@@ -111,7 +111,7 @@ export const getUserById = (idList: string[]) => {
                 console.log(err);
                 reject();
             } else {
-                console.log(result);
+                // console.log(result);
                 resolve(result);
             }
         });

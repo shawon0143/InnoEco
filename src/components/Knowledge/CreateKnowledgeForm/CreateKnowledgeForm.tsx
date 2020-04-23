@@ -723,7 +723,7 @@ class CreateKnowledgeForm extends React.Component<Props, IState> {
                     <ImageCropper
                         show={this.state.showImageCropper}
                         hideDropZoneModal={() => {this.hideImageCropperView(); showScrollbar();}}
-                        aspectRatio={1} // 16/9 if requires rectangle
+                        aspectRatio={16/9} // 16/9 if requires rectangle
                         requiredHeight={256}
                         requiredWidth={256}
                         saveImage={(imageFile) => {this.callBackFromImageEditor(imageFile)}}
