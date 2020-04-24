@@ -4,18 +4,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom'
-import { store } from './store/configureStore';
+import configureStore from './store/configureStore';
+import { PersistGate } from 'redux-persist/integration/react'
 
 import App from './App';
 import Footer from "./components/Footer/Footer";
 import * as serviceWorker from './serviceWorker';
-
+const { store, persistor } = configureStore();
 const app = (
+
     <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
             <App />
             <Footer />
         </BrowserRouter>
+        </PersistGate>
     </Provider>
 );
 

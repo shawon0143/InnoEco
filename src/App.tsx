@@ -12,6 +12,7 @@ import Auth from "./containers/Auth/Auth";
 import VerifyAccount from "./containers/VerifyAccount/VerifyAccount";
 import ResetPassword from "./containers/ResetPassword/ResetPassword";
 import Profile from "./containers/Profile/Profile";
+import Wiki from "./containers/Wiki/Wiki";
 import {AppState} from "./store/configureStore";
 
 const App: React.FC = (props) => {
@@ -28,6 +29,7 @@ const App: React.FC = (props) => {
             <Route path='/resetPassword/:token' component={ResetPassword}/>
             <Route path="/" exact component={Home}/>
             <Route path="/auth" exact component={Auth}/>
+            <Route path="/wiki" exact component={Wiki} />
             {/* TODO: Create a nice 404 not found component */}
             <Route render={() => <h3 className='text-dark text-center' style={{marginTop: 64, height: '35vh'}}>404 - Page Not Found !</h3>}/>
             <Redirect to='/' />
@@ -39,6 +41,7 @@ const App: React.FC = (props) => {
             <Switch>
                 <Route path="/" exact component={Home}/>
                 <Route path="/profile" exact component={Profile} />
+                <Route path="/wiki" exact component={Wiki} />
                 <Redirect to='/' />
             </Switch>
         );

@@ -38,17 +38,17 @@ const NewsCard: React.FC<IProps> = (props: IProps) => {
     return (
             <div className="card newsCardContainer mb-3" style={{ maxWidth: 540 }}>
                 <div className="row no-gutters">
-                    <div className="col-4 col-md-12">
+                    <div className="col-12">
                         {
                             props.fileType === 'video' && (
                                 <div className='player-wrapper'>
-                                <ReactPlayer
-                                    url={props.fileUrl}
-                                    className='react-player'
-                                    width='100%'
-                                    height='100%'
-                                    onError={(e) => console.log(e)}
-                                />
+                                    <ReactPlayer
+                                        url={props.fileUrl}
+                                        className='react-player'
+                                        width='100%'
+                                        height='100%'
+                                        onError={(e) => console.log(e)}
+                                    />
                                 </div>
                             )
                         }
@@ -67,12 +67,13 @@ const NewsCard: React.FC<IProps> = (props: IProps) => {
                                 <img
                                     src={require('../../../assets/images/tempDocPlaceholder.jpg')}
                                     alt="pdf"
+                                    className="card-img"
                                 />
                             )
                         }
 
                     </div>
-                    <div className="col-8 col-md-12">
+                    <div className="col-12">
                         <div className="card-body">
                             <p className="card-text">
                                 <small className="text-muted">

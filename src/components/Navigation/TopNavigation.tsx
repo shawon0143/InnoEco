@@ -36,8 +36,10 @@ const TopNavigation: React.FC = (props) => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setNavExpanded(!navExpanded)} />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto">
-                        <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>My feed</Link>
-                        <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>Wiki</Link>
+                        {auth.token !== '' && !auth.loading && (
+                            <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>My feed</Link>
+                        )}
+                        <Link to="/wiki" className='navLink' onClick={() => setNavExpanded(false)}>Wiki</Link>
                         <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>Pitch hub</Link>
                         <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>About</Link>
                         { auth.token !== '' && !auth.loading && (

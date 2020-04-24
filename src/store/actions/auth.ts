@@ -2,7 +2,10 @@ import * as actionTypes from './actionTypes';
 import {AuthActions} from "../types/authActionTypes";
 import {callApi} from "../../shared/axios";
 import {Dispatch} from "redux";
-import {store} from "../configureStore";
+import configureStore from "../configureStore";
+const { store } = configureStore();
+
+
 
 // =====================================
 // ========= Login account =============
