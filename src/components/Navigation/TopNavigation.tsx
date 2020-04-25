@@ -32,7 +32,7 @@ const TopNavigation: React.FC = (props) => {
     return (
         <Navbar collapseOnSelect expand="lg" variant="dark" fixed="top" className="customNavbar" expanded={navExpanded}>
             <div className="container">
-                <Link to="/" className='navbar-brand'>InnoEco</Link>
+                <Link to="/" className='navbar-brand' onClick={() => setNavExpanded(false)}>InnoEco</Link>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setNavExpanded(!navExpanded)} />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto">
@@ -40,7 +40,7 @@ const TopNavigation: React.FC = (props) => {
                             <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>My feed</Link>
                         )}
                         <Link to="/wiki" className='navLink' onClick={() => setNavExpanded(false)}>Wiki</Link>
-                        <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>Pitch hub</Link>
+                        <Link to="/pitchHub" className='navLink' onClick={() => setNavExpanded(false)}>Pitch hub</Link>
                         <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>About</Link>
                         { auth.token !== '' && !auth.loading && (
                             <Link to="/profile" className='navLink' onClick={() => setNavExpanded(false)}>My profile</Link>

@@ -3,7 +3,7 @@ $theme-colors: (
         "danger": #a61d37,
         "success": #00c9a7,
         "primary": #26304d,
-        "warning": #ffc107,
+        "warning": #ebc71d,
         "info": #00dffc,
         "dark": #1e2022,
         "black": #000000,
@@ -26,7 +26,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -moz-font-feature-settings: "liga", "kern";
   text-rendering: optimizelegibility;
-  background-color: #e9ebee;
+  background-color: #ffffff; //#e9ebee
   padding: 0;
   margin: 0;
 }

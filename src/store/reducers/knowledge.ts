@@ -38,7 +38,7 @@ const getAllKnowledgeSuccess = (state: Knowledge, action: any) => {
     for (let i = 0; i < action.knowledge.length; i++) {
         allKnowledge[action.knowledge[i]._id] = Object.assign({}, action.knowledge[i]);
     }
-    return updateObject(state, {allKnowledge: allKnowledge});
+    return updateObject(state, {allKnowledge: allKnowledge, getAllKnowledgeError: '', getAllKnowledgeLoading: false});
 };
 
 const loadKnowledgeCreatorDetails = (state: Knowledge, action: any) => {

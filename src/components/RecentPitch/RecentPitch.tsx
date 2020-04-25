@@ -4,6 +4,8 @@ import NewsCard from "../UI/NewsCard/NewsCard";
 import {useSelector} from "react-redux";
 import {AppState} from "../../store/configureStore";
 import {TKnowledge} from "../../store/types/knowledge";
+import {useHistory} from "react-router-dom";
+import Spinner from "../UI/Spinner/Spinner";
 
 
 interface IProps {
@@ -11,9 +13,11 @@ interface IProps {
 }
 
 const RecentPitch:React.FC<IProps> = (props:IProps) => {
+    let history = useHistory();
     const allKnowledge = useSelector((state: AppState) => {
        return state.knowledge.allKnowledge;
     });
+    const loading = useSelector((state: AppState) => state.knowledge.getAllKnowledgeLoading);
     let sortedLatestPitches = [];
     for (let key in allKnowledge) {
         if (allKnowledge.hasOwnProperty(key)) {
@@ -25,7 +29,7 @@ const RecentPitch:React.FC<IProps> = (props:IProps) => {
         return item.type === 'pitch'
     });
     sortedLatestPitches = sortedLatestPitches.sort((a:any, b:any) => a.createdAt - b.createdAt).slice(0,4);
-    let newsCardArray: any = [];
+    let newsCardArray: any;
     newsCardArray = sortedLatestPitches.map((knowledge: TKnowledge, key: number) => {
        return (
            <NewsCard
@@ -38,6 +42,9 @@ const RecentPitch:React.FC<IProps> = (props:IProps) => {
                createdAt={new Date(knowledge.createdAt)}
                noOfLikes={knowledge.likes.length}
                noOfComments={knowledge.comments.length}
+               type={knowledge.type}
+               cardClicked={(id) => history.push(`/pitchHub/${id}`)}
+               id={knowledge._id}
            />
        )
     });
@@ -53,13 +60,13 @@ const RecentPitch:React.FC<IProps> = (props:IProps) => {
                 <div className="row">
                     <div className="col">
                         <div className="card-deck">
-                            {newsCardArray}
+                            {loading ? <Spinner/> : newsCardArray}
                         </div>
                     </div>
                 </div>
                 <div className="row mt-5">
                     <div className="col text-center">
-                        <button className='btn btn-secondary'>
+                        <button className='btn btn-secondary' onClick={() => history.push('/pitchHub')}>
                             View all <i className='icons icon-arrow-right-circle ml-3'/>
                         </button>
                     </div>

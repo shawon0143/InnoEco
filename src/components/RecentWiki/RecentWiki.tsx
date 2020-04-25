@@ -4,15 +4,19 @@ import "./RecentWiki.scss";
 import {useSelector} from "react-redux";
 import {AppState} from "../../store/configureStore";
 import {TKnowledge} from "../../store/types/knowledge";
+import {useHistory} from "react-router-dom";
+import Spinner from "../UI/Spinner/Spinner";
 
 interface IProps {
 
 }
 
 const RecentWiki:React.FC<IProps> = (props: IProps) => {
+    let history = useHistory();
     const allKnowledge = useSelector((state: AppState) => {
         return state.knowledge.allKnowledge;
     });
+    const loading = useSelector((state: AppState) => state.knowledge.getAllKnowledgeLoading);
     let sortedLatestWiki = [];
     for (let key in allKnowledge) {
         if (allKnowledge.hasOwnProperty(key)) {
@@ -37,6 +41,9 @@ const RecentWiki:React.FC<IProps> = (props: IProps) => {
                 createdAt={new Date(knowledge.createdAt)}
                 noOfLikes={knowledge.likes.length}
                 noOfComments={knowledge.comments.length}
+                type={knowledge.type}
+                cardClicked={(id) => history.push(`/wiki/${id}`)}
+                id={knowledge._id}
             />
         )
     });
@@ -52,13 +59,13 @@ const RecentWiki:React.FC<IProps> = (props: IProps) => {
                 <div className="row">
                     <div className="col">
                         <div className="card-deck">
-                            {newsCardArray}
+                            {loading ? <Spinner/> : newsCardArray}
                         </div>
                     </div>
                 </div>
                 <div className="row mt-5">
                     <div className="col text-center">
-                        <button className='btn btn-secondary'>
+                        <button className='btn btn-secondary' onClick={() => history.push('/wiki')}>
                             View all <i className='icons icon-arrow-right-circle ml-3'/>
                         </button>
                     </div>

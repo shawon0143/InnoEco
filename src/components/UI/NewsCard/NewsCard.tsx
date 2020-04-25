@@ -2,9 +2,10 @@ import React from 'react';
 import ReactPlayer from "react-player";
 import dateFormat from 'dateformat';
 import "./NewsCard.scss";
-import {TCreatedBy} from "../../../store/types/knowledge";
+import {TCreatedBy, TKnowledgeType} from "../../../store/types/knowledge";
 
 interface IProps {
+    id: string;
     fileUrl: string;
     fileType: string;
     title: string;
@@ -13,6 +14,8 @@ interface IProps {
     noOfLikes: number;
     noOfComments: number;
     createdAt: Date;
+    type: TKnowledgeType;
+    cardClicked: (id: string) => void;
 }
 
 dateFormat.i18n = {
@@ -35,8 +38,20 @@ const NewsCard: React.FC<IProps> = (props: IProps) => {
         userImageUrl = props.createdBy.imageUrl;
     }
 
+    let typeBadgeClass = 'badge badge-primary text-uppercase font-weight-bold py-1 px-2 mr-2 rounded-0';
+
+    if (props.type === 'post') {
+        typeBadgeClass =  'badge badge-danger text-uppercase font-weight-light py-1 px-2 mr-2 rounded-0';
+    }
+    if (props.type === 'publication') {
+        typeBadgeClass = 'badge badge-secondary text-uppercase font-weight-light py-1 px-2 mr-2 rounded-0';
+    }
+    if (props.type === 'project') {
+        typeBadgeClass = 'badge badge-warning text-uppercase font-weight-light py-1 px-2 mr-2 rounded-0';
+    }
+
     return (
-            <div className="card newsCardContainer mb-3" style={{ maxWidth: 540 }}>
+            <div className="card newsCardContainer mb-3" style={{ maxWidth: 540 }} onClick={() => props.cardClicked(props.id)}>
                 <div className="row no-gutters">
                     <div className="col-12">
                         {
@@ -57,7 +72,7 @@ const NewsCard: React.FC<IProps> = (props: IProps) => {
                             props.fileType === 'image' && (
                                 <img
                                     src={props.fileUrl}
-                                    className="card-img"
+                                    className="card-img-top"
                                     alt="..."
                                 />
                             )
@@ -67,7 +82,7 @@ const NewsCard: React.FC<IProps> = (props: IProps) => {
                                 <img
                                     src={require('../../../assets/images/tempDocPlaceholder.jpg')}
                                     alt="pdf"
-                                    className="card-img"
+                                    className="card-img-top"
                                 />
                             )
                         }
@@ -76,8 +91,9 @@ const NewsCard: React.FC<IProps> = (props: IProps) => {
                     <div className="col-12">
                         <div className="card-body">
                             <p className="card-text">
-                                <small className="text-muted">
-                                    {dateFormat(props.createdAt, 'mmm  dd, yyyy' )}
+                                <span className={typeBadgeClass}>{props.type}</span>
+                                <small className="text-muted ml-2">
+                                   | &nbsp; &nbsp; {dateFormat(props.createdAt, 'mmm  dd, yyyy' )}
                                 </small>
                             </p>
                             <h5 className="card-title text-truncate">{props.title}</h5>

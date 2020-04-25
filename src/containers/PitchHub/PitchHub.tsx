@@ -4,41 +4,39 @@ import {AppState} from "../../store/configureStore";
 import {TKnowledge} from "../../store/types/knowledge";
 import NewsCard from "../../components/UI/NewsCard/NewsCard";
 import * as actions from "../../store/actions/index";
-import Spinner from "../../components/UI/Spinner/Spinner";
 import {useHistory} from "react-router-dom";
 
 interface IProps {
 
 }
 
-const Wiki:React.FC<IProps> = (props:IProps) => {
+const PitchHub:React.FC<IProps> = (props: IProps) => {
     let history = useHistory();
     const dispatch = useDispatch();
     const allKnowledge = useSelector((state: AppState) => {
         return state.knowledge.allKnowledge;
     });
-    const loading = useSelector((state: AppState) => state.knowledge.getAllKnowledgeLoading);
-    let sortedWiki: any = [];
+    let sortedPitch = [];
     for (let key in allKnowledge) {
         if (allKnowledge.hasOwnProperty(key)) {
             allKnowledge[key]._id = key;
-            sortedWiki.push(allKnowledge[key]);
+            sortedPitch.push(allKnowledge[key]);
         }
     }
-    sortedWiki = sortedWiki.sort((a:any, b:any) => a.createdAt - b.createdAt);
-    sortedWiki = sortedWiki.filter((item: TKnowledge) => {
-        return item.type !== 'pitch'
+    sortedPitch = sortedPitch.sort((a:any, b:any) => a.createdAt - b.createdAt);
+    sortedPitch = sortedPitch.filter((item: TKnowledge) => {
+        return item.type === 'pitch'
     });
     useEffect(() => {
-        if (sortedWiki.length === 0) {
+        if (sortedPitch.length === 0) {
             dispatch(actions.getAllKnowledge());
         }
-    }, [dispatch,sortedWiki]);
+    }, [dispatch,sortedPitch]);
     useEffect(() => {
         window.scrollTo(0,0);
     });
     let newsCardArray: any;
-    newsCardArray = sortedWiki.map((knowledge: TKnowledge, key: number) => {
+    newsCardArray = sortedPitch.map((knowledge: TKnowledge, key: number) => {
         return (
             <div className='col-md-3 col-sm-12' key={knowledge._id}>
                 <NewsCard
@@ -51,21 +49,20 @@ const Wiki:React.FC<IProps> = (props:IProps) => {
                     noOfLikes={knowledge.likes.length}
                     noOfComments={knowledge.comments.length}
                     type={knowledge.type}
-                    cardClicked={(id) => history.push(`/wiki/${id}`)}
+                    cardClicked={(id) => history.push(`/pitchHub/${id}`)}
                     id={knowledge._id}
                 />
             </div>
         )
     });
-
     return (
-            <div className="container topNavMargin py-5">
-                <h1>Wiki</h1>
-                <div className="row">
-                    {loading ? <Spinner/> : newsCardArray}
-                </div>
+        <div className="container topNavMargin">
+            <h1>PitchHub</h1>
+            <div className="row">
+                {newsCardArray}
             </div>
+        </div>
     );
 };
 
-export default Wiki;
+export default PitchHub;
