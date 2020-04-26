@@ -11,11 +11,14 @@ export {
     getUserByEmail,
     saveUserData,
     deleteFile,
+    loadUserDetailsById
 } from './auth';
 
 export {
     createKnowledgeStart,
     createKnowledge,
     getAllKnowledge,
-    resetKnowledgeFlags
+    resetKnowledgeFlags,
+    addNewComment,
+    saveKnowledge
 } from './knowledge';

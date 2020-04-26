@@ -28,7 +28,7 @@ commands['resetPassword'] = { url: `/user/resetPassword/:token`, method: 'POST',
 commands['getUserDetails'] = { url: `/user/getUserDetails/:email`, method: 'GET', responseType: 'json'};
 commands['getUserByIdList'] = { url: `/user/getUserByIdList`, method: 'POST', responseType: 'json'};
 commands['updateUser'] = { url: `/user/:email`, method: 'PATCH', responseType: 'json'};
-// file delete
+// file related commands
 commands['deleteFile'] = { url: `/upload/s3_delete_object/:fileName`, method: 'DELETE', responseType: 'json' };
 // knowledge
 commands['createKnowledge'] = { url: `/knowledge`, method: 'POST', responseType: 'json' };
@@ -36,6 +36,7 @@ commands['updateKnowledge'] = { url: `/knowledge/:knowledgeId`, method: 'PATCH',
 commands['getKnowledge'] = { url: `/knowledge`, method: 'GET', responseType: 'json' };
 commands['getKnowledgeById'] = { url: `/knowledge/:knowledgeId`, method: 'GET', responseType: 'json' };
 commands['deleteKnowledge'] = { url: `/knowledge/:knowledgeId`, method: 'DELETE', responseType: 'json' };
+commands['addComment'] = { url: `/knowledge/comment/:knowledgeId`, method: 'POST', responseType: 'json' };
 
 
 

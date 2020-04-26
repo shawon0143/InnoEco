@@ -4,6 +4,8 @@ export interface Knowledge {
     successFeedback: string;
     getAllKnowledgeError: string,
     getAllKnowledgeLoading: boolean,
+    updateKnowledgeError: string,
+    updateKnowledgeLoading: boolean,
     allKnowledge: {[id: string]: TKnowledge},
     totalNoOfKnowledge: number
 }
@@ -19,7 +21,7 @@ export type TKnowledge = {
     members: string[],
     knowledgeFile: string,
     knowledgeFileType: string,
-    createdBy: TCreatedBy,
+    createdBy: string,
     comments: TComment[],
     likes: TLike[],
     createdAt: Date,
@@ -30,7 +32,7 @@ export type TKnowledge = {
     }
 };
 
-export type TCreatedBy = {
+export type TUserDetails = {
     _id: string;
     firstName: string;
     lastName: string;
@@ -38,12 +40,14 @@ export type TCreatedBy = {
 }
 
 export type TComment = {
+    _id: string;
     details: string;
     userId: string;
     postedOn: Date;
 }
 
 export type TLike = {
+    _id: string;
     userId: string;
     likedOn: Date;
 }

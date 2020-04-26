@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import {TCreatedBy} from "./knowledge";
+import {TComment, TUserDetails, TKnowledge} from "./knowledge";
 
 export interface CreateKnowledgeStart {
     type: typeof actionTypes.CREATE_KNOWLEDGE_START;
@@ -30,7 +30,27 @@ export interface GetAllKnowledgeSuccess {
 
 export interface LoadKnowledgeCreatorDetails {
     type: typeof actionTypes.LOAD_KNOWLEDGE_CREATOR_DETAILS;
-    users: TCreatedBy[]
+    users: TUserDetails[]
+}
+
+export interface UpdateKnowledgeStart {
+    type: typeof actionTypes.UPDATE_KNOWLEDGE_START;
+}
+
+export interface UpdateKnowledgeFail {
+    type: typeof actionTypes.UPDATE_KNOWLEDGE_FAIL;
+    updateKnowledgeError: string;
+}
+
+export interface UpdateKnowledgeSuccess {
+    type: typeof actionTypes.UPDATE_KNOWLEDGE_SUCCESS;
+    knowledge: TKnowledge;
+}
+
+export interface AddCommentToKnowledge {
+    type: typeof actionTypes.ADD_COMMENT_TO_KNOWLEDGE;
+    comment: TComment;
+    knowledgeId: string;
 }
 
 export interface ResetKnowledgeFlags {
@@ -45,7 +65,11 @@ export type KnowledgeActionTypes =
     | GetAllKnowledgeStart
     | GetAllKnowledgeFail
     | GetAllKnowledgeSuccess
-    | LoadKnowledgeCreatorDetails;
+    | LoadKnowledgeCreatorDetails
+    | UpdateKnowledgeStart
+    | UpdateKnowledgeFail
+    | UpdateKnowledgeSuccess
+    | AddCommentToKnowledge;
 
 
 export type KnowledgeActions = KnowledgeActionTypes;

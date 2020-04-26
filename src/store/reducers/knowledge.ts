@@ -1,7 +1,7 @@
-import {Knowledge, TKnowledge} from "../types/knowledge";
-import { KnowledgeActions } from '../types/knowledgeActionTypes';
+import {Knowledge, TComment, TKnowledge} from "../types/knowledge";
+import {KnowledgeActions} from '../types/knowledgeActionTypes';
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from "../../shared/utility";
+import {updateObject} from "../../shared/utility";
 
 const initialState: Knowledge = {
     error: '',
@@ -9,6 +9,8 @@ const initialState: Knowledge = {
     successFeedback: '',
     getAllKnowledgeError: '',
     getAllKnowledgeLoading: false,
+    updateKnowledgeError: '',
+    updateKnowledgeLoading: false,
     allKnowledge: {},
     totalNoOfKnowledge: 0
 };
@@ -41,24 +43,39 @@ const getAllKnowledgeSuccess = (state: Knowledge, action: any) => {
     return updateObject(state, {allKnowledge: allKnowledge, getAllKnowledgeError: '', getAllKnowledgeLoading: false});
 };
 
-const loadKnowledgeCreatorDetails = (state: Knowledge, action: any) => {
-    // console.log(action.users);
-    // console.log(state.allKnowledge);
+// update knowledge =====
+
+const updateKnowledgeStart = (state: Knowledge, action: any) => {
+    return updateObject(state, {updateKnowledgeError: '', updateKnowledgeLoading: true});
+};
+
+const updateKnowledgeFail = (state: Knowledge, action: any) => {
+    return updateObject(state, {updateKnowledgeError: action.updateKnowledgeError, updateKnowledgeLoading: false});
+};
+
+const updateKnowledgeSuccess = (state: Knowledge, action: any) => {
+    console.log(action.knowledge);
     let updatedKnowledgeArray = {...state.allKnowledge};
-    for (let key in updatedKnowledgeArray) {
-        if (updatedKnowledgeArray.hasOwnProperty(key)) {
-            let userDetails = updatedKnowledgeArray[key].createdBy;
-            for (let i = 0; i < action.users.user.length; i++) {
-                if (action.users.user[i]._id === userDetails) {
-                    userDetails = action.users.user[i];
-                    updatedKnowledgeArray[key].createdBy = userDetails;
-                }
-            }
-        }
-    }
+    updatedKnowledgeArray[action.knowledge._id] = action.knowledge;
+    return updateObject(state, {allKnowledge: updatedKnowledgeArray, updateKnowledgeError: '', updateKnowledgeLoading: false});
+};
+
+const addCommentToKnowledge = (state: Knowledge, action: any) => {
+    let comment: TComment = action.comment;
+    let knowledgeId = action.knowledgeId;
+    let updatedKnowledgeArray = {...state.allKnowledge};
+    let selectedKnowledge = {...updatedKnowledgeArray[knowledgeId]};
+    let comments = [...selectedKnowledge.comments];
+    comments = [...comments, comment];
     return {
         ...state,
-        allKnowledge: updatedKnowledgeArray
+        allKnowledge: {
+            ...state.allKnowledge,
+            [knowledgeId]: {
+                ...state.allKnowledge[knowledgeId],
+                comments: comments
+            }
+        }
     }
 };
 
@@ -76,7 +93,10 @@ const reducer = (state = initialState, action: KnowledgeActions): Knowledge => {
         case actionTypes.GET_ALL_KNOWLEDGE_START: return getAllKnowledgeStart(state, action);
         case actionTypes.GET_ALL_KNOWLEDGE_FAIL: return getAllKnowledgeFail(state, action);
         case actionTypes.GET_ALL_KNOWLEDGE_SUCCESS: return getAllKnowledgeSuccess(state, action);
-        case actionTypes.LOAD_KNOWLEDGE_CREATOR_DETAILS: return loadKnowledgeCreatorDetails(state, action);
+        case actionTypes.UPDATE_KNOWLEDGE_START: return updateKnowledgeStart(state, action);
+        case actionTypes.UPDATE_KNOWLEDGE_FAIL: return updateKnowledgeFail(state, action);
+        case actionTypes.UPDATE_KNOWLEDGE_SUCCESS: return updateKnowledgeSuccess(state, action);
+        case actionTypes.ADD_COMMENT_TO_KNOWLEDGE: return addCommentToKnowledge(state, action);
         default:
             return state;
     }

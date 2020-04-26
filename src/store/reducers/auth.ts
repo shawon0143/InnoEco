@@ -2,8 +2,10 @@ import { Auth } from '../types/auth';
 import { AuthActions } from '../types/authActionTypes';
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../shared/utility';
+import {TUserDetails} from "../types/knowledge";
 
 const initialState: Auth = {
+    id: '',
     error: '',
     loading: false,
     token: '',
@@ -14,6 +16,7 @@ const initialState: Auth = {
     mobile: '',
     phone: '',
     email: '',
+    userDetailsById: {},
     imageUrl: '',
     saveUserDataLoading: false,
     saveUserDataError: '',
@@ -38,6 +41,7 @@ const authSuccess = (state: Auth, action: any) => {
         token: action.token,
         role: action.role,
         email: action.email,
+        id: action.id,
         error: '',
         loading: false,
     });
@@ -134,6 +138,15 @@ const saveUserDataFail = (state: Auth, action: any) => {
     return updateObject(state, {saveUserDataError: action.saveUserDataError, saveUserDataLoading: false})
 };
 
+const loadUserDetailsById = (state: Auth, action: any) => {
+    // console.log(action.allUser);
+    let allUserNew: { [id: string]: TUserDetails } = {};
+    for (let i = 0; i < action.allUser.user.length; i++) {
+        allUserNew[action.allUser.user[i]._id] = Object.assign({}, action.allUser.user[i]);
+    }
+    return updateObject(state, {userDetailsById: allUserNew});
+};
+
 const reducer = (state = initialState, action: AuthActions): Auth => {
     switch (action.type) {
         case actionTypes.AUTH_START: return authStart(state, action);
@@ -157,6 +170,7 @@ const reducer = (state = initialState, action: AuthActions): Auth => {
         case actionTypes.SAVE_USER_DATA_START: return saveUserDataStart(state, action);
         case actionTypes.SAVE_USER_DATA_SUCCESS: return saveUserDataSuccess(state, action);
         case actionTypes.SAVE_USER_DATA_FAIL: return saveUserDataFail(state, action);
+        case actionTypes.LOAD_USER_DETAILS_BY_ID: return loadUserDetailsById(state, action);
         default:
             return state;
     }

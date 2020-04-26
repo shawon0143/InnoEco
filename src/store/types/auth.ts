@@ -6,6 +6,7 @@
 //     "country": string;
 // }
 export interface Auth {
+    "id": string;
     "error": string;
     "loading": boolean;
     "token": string;
@@ -17,6 +18,7 @@ export interface Auth {
     "phone": string;
     "imageUrl": string;
     "email": string;
+    "userDetailsById": {[id: string]: any};
     "saveUserDataLoading": boolean,
     "saveUserDataError": string,
     "verifyLoading": boolean;

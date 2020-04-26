@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import {TUserDetails} from "./knowledge";
 
 export interface AuthStart {
     type: typeof actionTypes.AUTH_START;
@@ -9,6 +10,7 @@ export interface AuthSuccess {
     token: string;
     role: string[];
     email: string;
+    id: string;
     error: string;
     loading: boolean;
 }
@@ -117,6 +119,11 @@ export interface SaveUserDataFail {
     saveUserDataError: string;
 }
 
+export interface LoadUserDetailsById {
+    type: typeof actionTypes.LOAD_USER_DETAILS_BY_ID;
+    allUser: TUserDetails[]
+}
+
 export type AuthActionTypes =
     AuthStart
     | AuthSuccess
@@ -139,6 +146,7 @@ export type AuthActionTypes =
     | GetUserDetailsFail
     | SaveUserDataStart
     | SaveUserDataSuccess
-    | SaveUserDataFail;
+    | SaveUserDataFail
+    | LoadUserDetailsById;
 
 export type AuthActions = AuthActionTypes;

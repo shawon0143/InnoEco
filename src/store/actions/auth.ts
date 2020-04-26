@@ -21,6 +21,7 @@ export const authSuccess = (data: any, email: string): AuthActions => ({
     token: data.token,
     role: data.role,
     email: email,
+    id: data._id,
     error: '',
     loading: false
 });
@@ -37,6 +38,7 @@ export const authLogout = (): AuthActions => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('email');
+    localStorage.removeItem('id');
     return {
         type: actionTypes.AUTH_LOGOUT
     };
@@ -55,6 +57,7 @@ export const auth = (email: string, password: string) => {
                localStorage.setItem('token', result.token);
                localStorage.setItem('role', JSON.stringify(result.role));
                localStorage.setItem('email', email);
+               localStorage.setItem('id', result._id);
                dispatch(authSuccess(result, email));
            }
         });
@@ -352,6 +355,7 @@ export const authCheckState = () => {
             const token = localStorage.getItem('token');
             const role: any = JSON.parse(localStorage.getItem('role') || "[]");
             const email = localStorage.getItem('email') || "";
+            const id = localStorage.getItem('id') || "";
             let roleArray = [];
             for (let key in role) {
                 if (role.hasOwnProperty(key)) {
@@ -361,8 +365,15 @@ export const authCheckState = () => {
             let data = {
                 token: token,
                 role: roleArray,
+                _id: id
             };
             dispatch(authSuccess(data, email));
         }
     };
 };
+
+
+export const loadUserDetailsById = (allUser: any): AuthActions => ({
+    type: actionTypes.LOAD_USER_DETAILS_BY_ID,
+    allUser: allUser
+});

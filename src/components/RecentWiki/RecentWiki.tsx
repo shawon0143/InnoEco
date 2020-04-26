@@ -33,17 +33,8 @@ const RecentWiki:React.FC<IProps> = (props: IProps) => {
         return (
             <NewsCard
                 key={knowledge._id}
-                fileUrl={knowledge.knowledgeFile}
-                fileType={knowledge.knowledgeFileType}
-                title={knowledge.title}
-                description={knowledge.description}
-                createdBy={knowledge.createdBy}
-                createdAt={new Date(knowledge.createdAt)}
-                noOfLikes={knowledge.likes.length}
-                noOfComments={knowledge.comments.length}
-                type={knowledge.type}
+                knowledge={knowledge}
                 cardClicked={(id) => history.push(`/wiki/${id}`)}
-                id={knowledge._id}
             />
         )
     });

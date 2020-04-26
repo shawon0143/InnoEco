@@ -1,0 +1,35 @@
+.singleKnowledgeContainer {
+  hr {
+    border-color: #a61d37;
+    border-width: 3px;
+    max-width: 50px;
+    // border-color: white;
+  }
+  .knowledgeDescription {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+    text-align: justify;
+  }
+  .authorDetailsContainer {
+    padding-bottom: 5.14286rem;
+    //padding-top: 2.28571rem;
+    border-top: solid 1px #ddd;
+    .media {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: start;
+      -ms-flex-align: start;
+      align-items: flex-start;
+      .media-body {
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+      }
+    }
+  }
+  .commentsContainer {
+
+  }
+}

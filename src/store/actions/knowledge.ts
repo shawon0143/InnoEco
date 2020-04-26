@@ -2,8 +2,8 @@ import * as actionTypes from './actionTypes';
 import {KnowledgeActions} from "../types/knowledgeActionTypes";
 import {callApi} from "../../shared/axios";
 import {Dispatch} from "redux";
-import {getUserById} from "./auth";
-import {TCreatedBy} from "../types/knowledge";
+import {getUserById, loadUserDetailsById} from "./auth";
+import {TComment, TKnowledge} from "../types/knowledge";
 
 // =====================================
 // ======= Create new knowledge ========
@@ -71,10 +71,10 @@ export const getAllKnowledgeSuccess = (result: any): KnowledgeActions => ({
     knowledge: result.knowledge
 });
 
-export const loadKnowledgeCreatorDetails = (users: TCreatedBy[]): KnowledgeActions => ({
-    type: actionTypes.LOAD_KNOWLEDGE_CREATOR_DETAILS,
-    users: users,
-});
+// export const loadKnowledgeCreatorDetails = (users: TUserDetails[]): KnowledgeActions => ({
+//     type: actionTypes.LOAD_KNOWLEDGE_CREATOR_DETAILS,
+//     users: users,
+// });
 
 export const getAllKnowledge = () => {
     return (dispatch: Dispatch<KnowledgeActions>) => {
@@ -91,18 +91,82 @@ export const getAllKnowledge = () => {
                        if (!userIdList.includes(result.knowledge[i].createdBy)) {
                            userIdList.push(result.knowledge[i].createdBy);
                        }
+                       // we extract comment userId's
+                       for (let j = 0; j < result.knowledge[i].comments.length; j++) {
+                           if (!userIdList.includes(result.knowledge[i].comments[j].userId)) {
+                               userIdList.push(result.knowledge[i].comments[j].userId);
+                           }
+                       }
+                       // we extract like userId's
+                       for (let k = 0; k < result.knowledge[i].likes.length; k++) {
+                           if (!userIdList.includes(result.knowledge[i].likes[k].userId)) {
+                               userIdList.push(result.knowledge[i].likes[k].userId);
+                           }
+                       }
                    }
                 // console.log(userIdList);
                 let users = await getUserById(userIdList);
                 // console.log(users);
-                dispatch(loadKnowledgeCreatorDetails(users));
+                dispatch(loadUserDetailsById(users) as any);
+                // dispatch(loadKnowledgeCreatorDetails(users));
 
            }
         });
     };
 };
 
+// ======== Update knowledge ===========
+export const updateKnowledgeStart = (): KnowledgeActions => ({
+    type: actionTypes.UPDATE_KNOWLEDGE_START
+});
 
+export const updateKnowledgeFail = (error: string): KnowledgeActions => ({
+    type: actionTypes.UPDATE_KNOWLEDGE_FAIL,
+    updateKnowledgeError: error
+});
+
+export const updateKnowledgeSuccess = (knowledge: TKnowledge): KnowledgeActions => ({
+    type: actionTypes.UPDATE_KNOWLEDGE_SUCCESS,
+    knowledge: knowledge
+});
+
+export const saveKnowledge = (knowledge: any) => {
+    return (dispatch: Dispatch<KnowledgeActions>) => {
+        dispatch(updateKnowledgeStart());
+        callApi('updateKnowledge', knowledge, {knowledgeId: knowledge._id}, (err: any, result: any) => {
+            if (err) {
+                console.log(err);
+                dispatch(updateKnowledgeFail(err));
+            } else {
+                console.log(result);
+                dispatch(updateKnowledgeSuccess(knowledge));
+            }
+        });
+    }
+};
+// ======= add new comment ==========
+export const addNewComment = (comment: any, knowledgeId: string) => {
+    return (dispatch: Dispatch<KnowledgeActions>) => {
+        dispatch(updateKnowledgeStart());
+        callApi('addComment', comment, {knowledgeId: knowledgeId}, (err: any, result: any) => {
+            if (err) {
+                console.log(err);
+                dispatch(updateKnowledgeFail(err));
+            } else {
+                // console.log(result);
+                dispatch(addCommentToKnowledge(result.data.comments[result.data.comments.length - 1], result.data._id));
+            }
+        });
+    }
+};
+
+export const addCommentToKnowledge = (comment: TComment, knowledgeId: string): KnowledgeActions => ({
+    type: actionTypes.ADD_COMMENT_TO_KNOWLEDGE,
+    comment: comment,
+    knowledgeId: knowledgeId
+});
+
+// ========== RESET FLAGS =============
 export const resetKnowledgeFlags = (): KnowledgeActions => ({
     type: actionTypes.RESET_KNOWLEDGE_FLAGS
 });

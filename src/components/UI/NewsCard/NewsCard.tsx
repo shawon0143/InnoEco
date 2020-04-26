@@ -2,19 +2,12 @@ import React from 'react';
 import ReactPlayer from "react-player";
 import dateFormat from 'dateformat';
 import "./NewsCard.scss";
-import {TCreatedBy, TKnowledgeType} from "../../../store/types/knowledge";
+import {useSelector} from "react-redux";
+import {AppState} from "../../../store/configureStore";
+import {TKnowledge} from "../../../store/types/knowledge";
 
 interface IProps {
-    id: string;
-    fileUrl: string;
-    fileType: string;
-    title: string;
-    description: string;
-    createdBy: TCreatedBy;
-    noOfLikes: number;
-    noOfComments: number;
-    createdAt: Date;
-    type: TKnowledgeType;
+    knowledge: TKnowledge;
     cardClicked: (id: string) => void;
 }
 
@@ -33,32 +26,33 @@ dateFormat.i18n = {
 };
 
 const NewsCard: React.FC<IProps> = (props: IProps) => {
+    let creatorDetails = useSelector((state: AppState) => state.auth.userDetailsById[props.knowledge.createdBy]);
     let userImageUrl = require("../../../assets/images/avatar.png");
-    if (props.createdBy.imageUrl) {
-        userImageUrl = props.createdBy.imageUrl;
+    if (creatorDetails.imageUrl) {
+        userImageUrl = creatorDetails.imageUrl;
     }
 
     let typeBadgeClass = 'badge badge-primary text-uppercase font-weight-bold py-1 px-2 mr-2 rounded-0';
 
-    if (props.type === 'post') {
+    if (props.knowledge.type === 'post') {
         typeBadgeClass =  'badge badge-danger text-uppercase font-weight-light py-1 px-2 mr-2 rounded-0';
     }
-    if (props.type === 'publication') {
+    if (props.knowledge.type === 'publication') {
         typeBadgeClass = 'badge badge-secondary text-uppercase font-weight-light py-1 px-2 mr-2 rounded-0';
     }
-    if (props.type === 'project') {
+    if (props.knowledge.type === 'project') {
         typeBadgeClass = 'badge badge-warning text-uppercase font-weight-light py-1 px-2 mr-2 rounded-0';
     }
 
     return (
-            <div className="card newsCardContainer mb-3" style={{ maxWidth: 540 }} onClick={() => props.cardClicked(props.id)}>
+            <div className="card newsCardContainer mb-3" style={{ maxWidth: 540 }} onClick={() => props.cardClicked(props.knowledge._id)}>
                 <div className="row no-gutters">
                     <div className="col-12">
                         {
-                            props.fileType === 'video' && (
+                            props.knowledge.knowledgeFileType === 'video' && (
                                 <div className='player-wrapper'>
                                     <ReactPlayer
-                                        url={props.fileUrl}
+                                        url={props.knowledge.knowledgeFile}
                                         className='react-player'
                                         width='100%'
                                         height='100%'
@@ -69,16 +63,16 @@ const NewsCard: React.FC<IProps> = (props: IProps) => {
                         }
 
                         {
-                            props.fileType === 'image' && (
+                            props.knowledge.knowledgeFileType === 'image' && (
                                 <img
-                                    src={props.fileUrl}
+                                    src={props.knowledge.knowledgeFile}
                                     className="card-img-top"
                                     alt="..."
                                 />
                             )
                         }
                         {
-                            props.fileType === 'other' && (
+                            props.knowledge.knowledgeFileType === 'other' && (
                                 <img
                                     src={require('../../../assets/images/tempDocPlaceholder.jpg')}
                                     alt="pdf"
@@ -91,27 +85,27 @@ const NewsCard: React.FC<IProps> = (props: IProps) => {
                     <div className="col-12">
                         <div className="card-body">
                             <p className="card-text">
-                                <span className={typeBadgeClass}>{props.type}</span>
+                                <span className={typeBadgeClass}>{props.knowledge.type}</span>
                                 <small className="text-muted ml-2">
-                                   | &nbsp; &nbsp; {dateFormat(props.createdAt, 'mmm  dd, yyyy' )}
+                                   | &nbsp; &nbsp; {dateFormat(new Date(props.knowledge.createdAt), 'mmm  dd, yyyy' )}
                                 </small>
                             </p>
-                            <h5 className="card-title text-truncate">{props.title}</h5>
+                            <h5 className="card-title text-truncate">{props.knowledge.title}</h5>
                             <p className="card-text lineClamp-four">
-                                {props.description}
+                                {props.knowledge.description}
                             </p>
                         </div>
                         <div className="p-3 d-flex justify-content-between align-items-center">
                             <div>
                                 <img src={userImageUrl} alt="..." className="rounded-circle" style={{height: 28, width: 28}} />
-                                <small className="text-muted ml-1">{props.createdBy.firstName} {props.createdBy.lastName}</small>
+                                <small className="text-muted ml-1">{creatorDetails.firstName} {creatorDetails.lastName}</small>
                             </div>
                             <div>
                                 <span className='text-muted mr-3'>
-                                    <i  className='icons icon-bubbles mr-1'/>{props.noOfComments}
+                                    <i  className='icons icon-bubbles mr-1'/>{props.knowledge.comments.length}
                                 </span>
                                 <span className='text-muted'>
-                                    <i className='icons icon-like mr-1'/>{props.noOfLikes}
+                                    <i className='icons icon-heart mr-1'/>{props.knowledge.likes.length}
                                 </span>
                             </div>
                         </div>
