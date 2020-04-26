@@ -74,7 +74,7 @@ const SingleKnowledge:React.FC<IProps> = (props:IProps) => {
                             props.knowledge.knowledgeFileType === 'image' && (
                                 <img
                                     src={props.knowledge.knowledgeFile}
-                                    className="image-fluid mb-3"
+                                    className="image-fluid mb-3 w-100"
                                     alt="..."
                                 />
                             )
