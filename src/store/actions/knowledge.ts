@@ -85,7 +85,6 @@ export const getAllKnowledge = () => {
                dispatch(getAllKnowledgeFail(err.message));
            } else {
                // console.log(result);
-               dispatch(getAllKnowledgeSuccess(result));
                let userIdList: any = [];
                    for (let i = 0; i < result.knowledge.length; i++) {
                        if (!userIdList.includes(result.knowledge[i].createdBy)) {
@@ -109,6 +108,7 @@ export const getAllKnowledge = () => {
                 // console.log(users);
                 dispatch(loadUserDetailsById(users) as any);
                 // dispatch(loadKnowledgeCreatorDetails(users));
+               dispatch(getAllKnowledgeSuccess(result));
 
            }
         });

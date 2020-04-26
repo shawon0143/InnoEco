@@ -15,6 +15,9 @@ interface IProps {
 
 
 const SingleKnowledge:React.FC<IProps> = (props:IProps) => {
+    const isLoggedIn = useSelector((state: AppState) => {
+        return (state.auth.token !== '' && !state.auth.loading);
+    });
     let allUserDetails = useSelector((state: AppState) => state.auth.userDetailsById);
     let userId = useSelector((state: AppState) => state.auth.id);
     let history = useHistory();
@@ -22,6 +25,9 @@ const SingleKnowledge:React.FC<IProps> = (props:IProps) => {
     let [comment, setComment] = useState('');
     const addComment = (event: any) => {
         event.preventDefault();
+        if (!isLoggedIn) {
+            return;
+        }
         let newComment = {
             details: comment,
             userId: userId,
@@ -31,9 +37,7 @@ const SingleKnowledge:React.FC<IProps> = (props:IProps) => {
         setComment('');
     };
 
-    const isLoggedIn = useSelector((state: AppState) => {
-        return (state.auth.token !== '' && !state.auth.loading);
-    });
+
     let avatar = require("../../../src/assets/images/avatar.png");
     let userImageUrl = avatar;
     if (allUserDetails[props.knowledge.createdBy].imageUrl) {
