@@ -26,9 +26,13 @@ dateFormat.i18n = {
 };
 
 const NewsCard: React.FC<IProps> = (props: IProps) => {
-    let creatorDetails = useSelector((state: AppState) => state.auth.userDetailsById[props.knowledge.createdBy]);
+    let creatorDetails = useSelector((state: AppState) => {
+        if (state.auth.userDetailsById) {
+            return state.auth.userDetailsById[props.knowledge.createdBy];
+        }
+    });
     let userImageUrl = require("../../../assets/images/avatar.png");
-    if (creatorDetails.imageUrl) {
+    if (creatorDetails && creatorDetails.imageUrl) {
         userImageUrl = creatorDetails.imageUrl;
     }
 
@@ -98,7 +102,7 @@ const NewsCard: React.FC<IProps> = (props: IProps) => {
                         <div className="p-3 d-flex justify-content-between align-items-center">
                             <div>
                                 <img src={userImageUrl} alt="..." className="rounded-circle" style={{height: 28, width: 28}} />
-                                <small className="text-muted ml-1">{creatorDetails.firstName} {creatorDetails.lastName}</small>
+                                <small className="text-muted ml-1">{creatorDetails ? creatorDetails.firstName : undefined} {creatorDetails ? creatorDetails.lastName : undefined}</small>
                             </div>
                             <div>
                                 <span className='text-muted mr-3'>
