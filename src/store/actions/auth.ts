@@ -93,15 +93,15 @@ export const getUserDetailsFail = (err: string):AuthActions => {
     }
 };
 
-export const getUserByEmail = () => {
+export const getUserByEmail = (email: string) => {
     return (dispatch: Dispatch<AuthActions>) => {
         dispatch(getUserDetailsStart());
-        callApi('getUserDetails', null, {email: store.getState().auth.email},(err: any, result: any) => {
+        callApi('getUserDetails', null, {email: email},(err: any, result: any) => {
             if (err) {
                 console.log(err);
                 dispatch(getUserDetailsFail(err));
             } else {
-                // console.log(result);
+                console.log(result);
                 dispatch(getUserDetailsSuccess(result.user));
             }
         })
