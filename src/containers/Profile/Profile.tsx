@@ -16,9 +16,9 @@ import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 interface IProps {}
 const Profile: React.FC<IProps> = (props: IProps) => {
     const dispatch = useDispatch();
+    dispatch(actions.getUserByEmail());
     useEffect(() => {
         window.scrollTo(0,0);
-        dispatch(actions.getUserByEmail());
     }, [dispatch]);
     const userProfile = useSelector((state: AppState) => {
         return {
