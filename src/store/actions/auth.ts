@@ -101,7 +101,7 @@ export const getUserByEmail = (email: string) => {
                 console.log(err);
                 dispatch(getUserDetailsFail(err));
             } else {
-                console.log(result);
+                // console.log(result);
                 dispatch(getUserDetailsSuccess(result.user));
             }
         })
