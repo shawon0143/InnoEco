@@ -11,6 +11,26 @@
     white-space: -o-pre-wrap;
     text-align: justify;
   }
+  .voteContainer {
+    div {
+      cursor: pointer;
+    }
+    div:hover {
+      background-color: #00c9a7;
+      i {
+        color: #ffffff;
+      }
+    }
+    i {
+      font-size: 20px;
+    }
+  }
+  .voted {
+    background-color: #00c9a7;
+    i {
+      color: #ffffff;
+    }
+  }
   .authorDetailsContainer {
     padding-bottom: 5.14286rem;
     //padding-top: 2.28571rem;

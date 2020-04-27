@@ -36,6 +36,23 @@ const SingleKnowledge:React.FC<IProps> = (props:IProps) => {
         dispatch(actions.addNewComment(newComment, props.knowledge._id));
         setComment('');
     };
+    let isUserLiked: boolean = false;
+    for (let i = 0; i < props.knowledge.likes.length; i++) {
+        if (props.knowledge.likes[i].userId === userId) {
+            isUserLiked = true;
+            break;
+        }
+    }
+    console.log(isUserLiked);
+    const addLike = () => {
+        if (!isUserLiked) {
+            let newLike = {
+                userId: userId,
+                likedOn: new Date()
+            };
+            dispatch(actions.addNewLike(newLike, props.knowledge._id));
+        }
+    };
 
 
     let avatar = require("../../../src/assets/images/avatar.png");
@@ -102,6 +119,19 @@ const SingleKnowledge:React.FC<IProps> = (props:IProps) => {
                         <h2>{props.knowledge.title}</h2>
                     </div>
                     <hr/>
+                    {
+                        isLoggedIn && (
+                            <div className='voteContainer d-flex flex-column justify-content-center align-items-center'>
+                                <div
+                                    className={`p-2 border d-flex flex-column justify-content-center rounded align-items-center ${isUserLiked ? 'voted' : null}`}
+                                    onClick={addLike}
+                                >
+                                    <i  className='icons icon-heart' />
+                                </div>
+                            </div>
+                        )
+                    }
+
                     <div className="p-2 mb-2 d-flex justify-content-center align-items-center">
                         <div>
                             <small className="text-muted ml-2">{allUserDetails[props.knowledge.createdBy].firstName} {allUserDetails[props.knowledge.createdBy].lastName}
@@ -112,6 +142,40 @@ const SingleKnowledge:React.FC<IProps> = (props:IProps) => {
                     </div>
                     {/* ====== Description =========== */}
                     <p className='knowledgeDescription mb-5'>{props.knowledge.description}</p>
+                    {/* ====== Affiliation =========== */}
+                    <div className='mb-4'>
+                        <h5 className='border-bottom'>Affiliations</h5>
+
+                        {
+                            props.knowledge.affiliation.map((item: string, index: number) => (
+                                <h6 className='mr-2' key={index}><span className="badge badge-secondary">{item}</span></h6>
+                            ))
+                        }
+                    </div>
+
+                    {/* ====== Members ============== */}
+                    <div className='mb-4'>
+                        <h5 className='border-bottom'>Members</h5>
+                        <div className='d-flex'>
+                            {
+                                props.knowledge.members.map((item: string, index: number) => (
+                                    <h6 className='mr-2' key={index}><span className="badge badge-warning">{item}</span></h6>
+                                ))
+                            }
+                        </div>
+                    </div>
+                    {/* ======= Looking for =========== */}
+                    <div className='mb-4'>
+                        <h5 className='border-bottom'>Looking for</h5>
+                        <div className='d-flex'>
+                            {
+                                props.knowledge.lookingFor.map((item: string, index: number) => (
+                                    <h6 className='mr-2' key={index}><span className="badge badge-info">{item}</span></h6>
+                                ))
+                            }
+                        </div>
+                    </div>
+
                     {/* ===== For PDF file download option ======= */}
                     {
                         props.knowledge.knowledgeFileType === 'other' && (
@@ -169,7 +233,7 @@ const SingleKnowledge:React.FC<IProps> = (props:IProps) => {
                     </div>
                     {/* ======= Author details ======= */}
                     <div className='authorDetailsContainer'>
-                        <h5 className='py-3 mb-5 border-bottom'>Author details</h5>
+                        <h5 className='py-3 mb-5 border-bottom'>Contributor details</h5>
                         <div className="row justify-content-between">
                             <div className="col">
                                 <div className="media">

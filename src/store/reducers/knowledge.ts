@@ -1,4 +1,4 @@
-import {Knowledge, TComment, TKnowledge} from "../types/knowledge";
+import {Knowledge, TComment, TKnowledge, TLike} from "../types/knowledge";
 import {KnowledgeActions} from '../types/knowledgeActionTypes';
 import * as actionTypes from '../actions/actionTypes';
 import {updateObject} from "../../shared/utility";
@@ -79,6 +79,25 @@ const addCommentToKnowledge = (state: Knowledge, action: any) => {
     }
 };
 
+const addLikeToKnowledge = (state: Knowledge, action: any) => {
+    let like: TLike = action.like;
+    let knowledgeId = action.knowledgeId;
+    let updatedKnowledgeArray = {...state.allKnowledge};
+    let selectedKnowledge = {...updatedKnowledgeArray[knowledgeId]};
+    let likes = [...selectedKnowledge.likes];
+    likes = [...likes, like];
+    return {
+        ...state,
+        allKnowledge: {
+            ...state.allKnowledge,
+            [knowledgeId]: {
+                ...state.allKnowledge[knowledgeId],
+                likes: likes
+            }
+        }
+    }
+};
+
 const resetKnowledgeFlags = (state: Knowledge, action: any) => {
     return updateObject(state, {error: '', loading: false, successFeedback: ''});
 };
@@ -97,6 +116,7 @@ const reducer = (state = initialState, action: KnowledgeActions): Knowledge => {
         case actionTypes.UPDATE_KNOWLEDGE_FAIL: return updateKnowledgeFail(state, action);
         case actionTypes.UPDATE_KNOWLEDGE_SUCCESS: return updateKnowledgeSuccess(state, action);
         case actionTypes.ADD_COMMENT_TO_KNOWLEDGE: return addCommentToKnowledge(state, action);
+        case actionTypes.ADD_LIKE_TO_KNOWLEDGE: return addLikeToKnowledge(state, action);
         default:
             return state;
     }

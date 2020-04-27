@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import {TComment, TUserDetails, TKnowledge} from "./knowledge";
+import {TComment, TUserDetails, TKnowledge, TLike} from "./knowledge";
 
 export interface CreateKnowledgeStart {
     type: typeof actionTypes.CREATE_KNOWLEDGE_START;
@@ -53,6 +53,12 @@ export interface AddCommentToKnowledge {
     knowledgeId: string;
 }
 
+export interface AddLikeToKnowledge {
+    type: typeof actionTypes.ADD_LIKE_TO_KNOWLEDGE;
+    like: TLike;
+    knowledgeId: string;
+}
+
 export interface ResetKnowledgeFlags {
     type: typeof actionTypes.RESET_KNOWLEDGE_FLAGS
 }
@@ -69,7 +75,8 @@ export type KnowledgeActionTypes =
     | UpdateKnowledgeStart
     | UpdateKnowledgeFail
     | UpdateKnowledgeSuccess
-    | AddCommentToKnowledge;
+    | AddCommentToKnowledge
+    | AddLikeToKnowledge;
 
 
 export type KnowledgeActions = KnowledgeActionTypes;

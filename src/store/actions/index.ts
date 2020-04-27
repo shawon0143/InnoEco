@@ -20,5 +20,6 @@ export {
     getAllKnowledge,
     resetKnowledgeFlags,
     addNewComment,
+    addNewLike,
     saveKnowledge
 } from './knowledge';

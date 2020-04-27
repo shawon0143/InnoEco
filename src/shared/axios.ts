@@ -37,6 +37,7 @@ commands['getKnowledge'] = { url: `/knowledge`, method: 'GET', responseType: 'js
 commands['getKnowledgeById'] = { url: `/knowledge/:knowledgeId`, method: 'GET', responseType: 'json' };
 commands['deleteKnowledge'] = { url: `/knowledge/:knowledgeId`, method: 'DELETE', responseType: 'json' };
 commands['addComment'] = { url: `/knowledge/comment/:knowledgeId`, method: 'POST', responseType: 'json' };
+commands['addLike'] = { url: `/knowledge/like/:knowledgeId`, method: 'POST', responseType: 'json' };
 
 
 

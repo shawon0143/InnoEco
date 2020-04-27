@@ -3,7 +3,7 @@ import {KnowledgeActions} from "../types/knowledgeActionTypes";
 import {callApi} from "../../shared/axios";
 import {Dispatch} from "redux";
 import {getUserById, loadUserDetailsById} from "./auth";
-import {TComment, TKnowledge} from "../types/knowledge";
+import {TComment, TKnowledge, TLike} from "../types/knowledge";
 
 // =====================================
 // ======= Create new knowledge ========
@@ -147,11 +147,9 @@ export const saveKnowledge = (knowledge: any) => {
 // ======= add new comment ==========
 export const addNewComment = (comment: any, knowledgeId: string) => {
     return (dispatch: Dispatch<KnowledgeActions>) => {
-        dispatch(updateKnowledgeStart());
         callApi('addComment', comment, {knowledgeId: knowledgeId}, (err: any, result: any) => {
             if (err) {
                 console.log(err);
-                dispatch(updateKnowledgeFail(err));
             } else {
                 // console.log(result);
                 dispatch(addCommentToKnowledge(result.data.comments[result.data.comments.length - 1], result.data._id));
@@ -163,6 +161,26 @@ export const addNewComment = (comment: any, knowledgeId: string) => {
 export const addCommentToKnowledge = (comment: TComment, knowledgeId: string): KnowledgeActions => ({
     type: actionTypes.ADD_COMMENT_TO_KNOWLEDGE,
     comment: comment,
+    knowledgeId: knowledgeId
+});
+
+// ======= add new like ============
+export const addNewLike = (like: any, knowledgeId: string) => {
+    return (dispatch: Dispatch<KnowledgeActions>) => {
+        callApi('addLike', like, {knowledgeId: knowledgeId}, (err: any, result: any) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(result);
+                dispatch(addLikeToKnowledge(result.data.likes[result.data.likes.length - 1], result.data._id));
+            }
+        })
+    }
+};
+
+export const addLikeToKnowledge = (like: TLike, knowledgeId: string): KnowledgeActions => ({
+    type: actionTypes.ADD_LIKE_TO_KNOWLEDGE,
+    like: like,
     knowledgeId: knowledgeId
 });
 
