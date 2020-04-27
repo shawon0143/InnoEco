@@ -48,9 +48,16 @@ const SingleKnowledge:React.FC<IProps> = (props:IProps) => {
 
         return (
            <div className="media py-3" key={item._id}>
-               <img src={allUserDetails[item.userId].imageUrl ? allUserDetails[item.userId].imageUrl : avatar} alt="..." className="rounded-circle mr-4" style={{height: 40, width: 40}} />
+               <img src={allUserDetails[item.userId] && allUserDetails[item.userId].imageUrl !== '' ? allUserDetails[item.userId].imageUrl : avatar}
+                    alt="..."
+                    className="rounded-circle mr-4"
+                    style={{height: 40, width: 40}}
+               />
                <div className="media-body">
-                   <h6 className="text-dark mb-0 font-weight-normal">{allUserDetails[item.userId].firstName} {allUserDetails[item.userId].lastName}</h6>
+                   <h6 className="text-dark mb-0 font-weight-normal">
+                       {allUserDetails[item.userId] ? allUserDetails[item.userId].firstName : undefined}
+                       {allUserDetails[item.userId] ? allUserDetails[item.userId].lastName : undefined}
+                   </h6>
                    <small className='text-muted'>{dateFormat(new Date(item.postedOn), 'mmm  dd, yyyy, hh:MM TT' )}</small>
                    <p className="text-secondary my-2">{item.details}</p>
                </div>
