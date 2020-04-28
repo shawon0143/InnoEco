@@ -11,7 +11,8 @@ export {
     getUserByEmail,
     saveUserData,
     deleteFile,
-    loadUserDetailsById
+    loadUserDetailsById,
+    addUserDetailsById
 } from './auth';
 
 export {

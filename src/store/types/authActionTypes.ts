@@ -124,6 +124,11 @@ export interface LoadUserDetailsById {
     allUser: TUserDetails[]
 }
 
+export interface AddUserDetailsById {
+    type: typeof actionTypes.ADD_USER_DETAILS_BY_ID;
+    user: TUserDetails
+}
+
 export type AuthActionTypes =
     AuthStart
     | AuthSuccess
@@ -147,6 +152,7 @@ export type AuthActionTypes =
     | SaveUserDataStart
     | SaveUserDataSuccess
     | SaveUserDataFail
-    | LoadUserDetailsById;
+    | LoadUserDetailsById
+    | AddUserDetailsById;
 
 export type AuthActions = AuthActionTypes;

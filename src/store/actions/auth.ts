@@ -3,6 +3,7 @@ import {AuthActions} from "../types/authActionTypes";
 import {callApi} from "../../shared/axios";
 import {Dispatch} from "redux";
 import configureStore from "../configureStore";
+import {TUserDetails} from "../types/knowledge";
 const { store } = configureStore();
 
 
@@ -376,4 +377,9 @@ export const authCheckState = () => {
 export const loadUserDetailsById = (allUser: any): AuthActions => ({
     type: actionTypes.LOAD_USER_DETAILS_BY_ID,
     allUser: allUser
+});
+
+export const addUserDetailsById = (user: TUserDetails): AuthActions => ({
+    type: actionTypes.ADD_USER_DETAILS_BY_ID,
+    user: user
 });

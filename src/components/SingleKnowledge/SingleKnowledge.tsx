@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TComment, TKnowledge} from "../../store/types/knowledge";
 import "./SingleKnowledge.scss";
 import dateFormat from "dateformat";
@@ -7,21 +7,35 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../../store/configureStore";
 import {useHistory} from "react-router-dom";
 import * as actions from "../../store/actions/index";
+import {getUserById} from "../../store/actions/auth";
 
 
 interface IProps {
     knowledge: TKnowledge
 }
 
+const getMyDetails = async (userId: string) => {
+    let x = [];
+    x.push(userId);
+    return await getUserById(x);
+};
 
 const SingleKnowledge:React.FC<IProps> = (props:IProps) => {
+    let history = useHistory();
+    const dispatch = useDispatch();
     const isLoggedIn = useSelector((state: AppState) => {
         return (state.auth.token !== '' && !state.auth.loading);
     });
     let allUserDetails = useSelector((state: AppState) => state.auth.userDetailsById);
     let userId = useSelector((state: AppState) => state.auth.id);
-    let history = useHistory();
-    const dispatch = useDispatch();
+    useEffect(() => {
+        // we retrieve user details if not available in our allUserDetails list
+        if (allUserDetails[userId] === undefined && isLoggedIn) {
+            getMyDetails(userId).then(r => {
+                dispatch(actions.addUserDetailsById(r.user[0]))
+            });
+        }
+    });
     let [comment, setComment] = useState('');
     const addComment = (event: any) => {
         event.preventDefault();
@@ -43,7 +57,7 @@ const SingleKnowledge:React.FC<IProps> = (props:IProps) => {
             break;
         }
     }
-    console.log(isUserLiked);
+    // console.log(isUserLiked);
     const addLike = () => {
         if (!isUserLiked) {
             let newLike = {

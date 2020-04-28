@@ -52,7 +52,17 @@ const authFail = (state: Auth, action: any) => {
 };
 
 const authLogout = (state: Auth, action: any) => {
-    return updateObject(state, {token: '', firstName: '', lastName: '', role: '', address: []});
+    return updateObject(state, {
+        token: '',
+        firstName: '',
+        lastName: '',
+        role: '',
+        address: [],
+        id: '',
+        imageUrl: '',
+        mobile: '',
+        phone: '',
+        email: ''});
 };
 
 const verifyStart = (state: Auth, action: any) => {
@@ -141,10 +151,18 @@ const saveUserDataFail = (state: Auth, action: any) => {
 const loadUserDetailsById = (state: Auth, action: any) => {
     // console.log(action.allUser);
     let allUserNew: { [id: string]: TUserDetails } = {};
-    for (let i = 0; i < action.allUser.user.length; i++) {
-        allUserNew[action.allUser.user[i]._id] = Object.assign({}, action.allUser.user[i]);
+    for (let i = 0; i < action.allUser.length; i++) {
+        allUserNew[action.allUser[i]._id] = Object.assign({}, action.allUser[i]);
     }
     return updateObject(state, {userDetailsById: allUserNew});
+};
+
+const addUserDetailsById = (state: Auth, action: any) => {
+    let updatedUserDetailsById = {...state.userDetailsById};
+    let user = action.user;
+    updatedUserDetailsById[user._id] = user;
+    return updateObject(state, {userDetailsById: updatedUserDetailsById});
+
 };
 
 const reducer = (state = initialState, action: AuthActions): Auth => {
@@ -171,6 +189,7 @@ const reducer = (state = initialState, action: AuthActions): Auth => {
         case actionTypes.SAVE_USER_DATA_SUCCESS: return saveUserDataSuccess(state, action);
         case actionTypes.SAVE_USER_DATA_FAIL: return saveUserDataFail(state, action);
         case actionTypes.LOAD_USER_DETAILS_BY_ID: return loadUserDetailsById(state, action);
+        case actionTypes.ADD_USER_DETAILS_BY_ID: return addUserDetailsById(state, action);
         default:
             return state;
     }

@@ -106,7 +106,7 @@ export const getAllKnowledge = () => {
                 // console.log(userIdList);
                 let users = await getUserById(userIdList);
                 // console.log(users);
-                dispatch(loadUserDetailsById(users) as any);
+                dispatch(loadUserDetailsById(users.user) as any);
                 // dispatch(loadKnowledgeCreatorDetails(users));
                dispatch(getAllKnowledgeSuccess(result));
 
