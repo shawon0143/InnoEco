@@ -137,14 +137,18 @@ const getUserDetailsSuccess = (state: Auth, action: any) => {
     })
 };
 
-const saveUserDataStart = (state: Auth, action: any) => {
+const saveUserImageStart = (state: Auth, action: any) => {
     return updateObject(state, {saveUserDataError: '', saveUserDataLoading: true});
 };
-const saveUserDataSuccess = (state: Auth, action: any) => {
-    return updateObject(state, {saveUserDataError: '', saveUserDataLoading: false});
+const saveUserImageSuccess = (state: Auth, action: any) => {
+    return updateObject(state, {
+        saveUserDataError: '',
+        saveUserDataLoading: false,
+        imageUrl: action.imageUrl
+    });
 };
 
-const saveUserDataFail = (state: Auth, action: any) => {
+const saveUserImageFail = (state: Auth, action: any) => {
     return updateObject(state, {saveUserDataError: action.saveUserDataError, saveUserDataLoading: false})
 };
 
@@ -185,9 +189,9 @@ const reducer = (state = initialState, action: AuthActions): Auth => {
         case actionTypes.SET_RESET_PASSWORD_STATUS: return setResetPasswordStatus(state, action);
         case actionTypes.GET_USER_DETAILS_START: return getUserDetailsStart(state, action);
         case actionTypes.GET_USER_DETAILS_SUCCESS: return getUserDetailsSuccess(state, action);
-        case actionTypes.SAVE_USER_DATA_START: return saveUserDataStart(state, action);
-        case actionTypes.SAVE_USER_DATA_SUCCESS: return saveUserDataSuccess(state, action);
-        case actionTypes.SAVE_USER_DATA_FAIL: return saveUserDataFail(state, action);
+        case actionTypes.SAVE_USER_IMAGE_START: return saveUserImageStart(state, action);
+        case actionTypes.SAVE_USER_IMAGE_SUCCESS: return saveUserImageSuccess(state, action);
+        case actionTypes.SAVE_USER_IMAGE_FAIL: return saveUserImageFail(state, action);
         case actionTypes.LOAD_USER_DETAILS_BY_ID: return loadUserDetailsById(state, action);
         case actionTypes.ADD_USER_DETAILS_BY_ID: return addUserDetailsById(state, action);
         default:

@@ -9,7 +9,7 @@ export {
     authCheckState,
     authLogout,
     getUserByEmail,
-    saveUserData,
+    saveUserImage,
     deleteFile,
     loadUserDetailsById,
     addUserDetailsById

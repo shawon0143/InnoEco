@@ -52,7 +52,7 @@ const Profile: React.FC<IProps> = (props: IProps) => {
     if (tempPic !== '') {
         profilePic = tempPic;
     }
-
+    console.log(userProfile.imageUrl);
     // save file
     const callBackFromImageEditor = (imageFile: any) => {
         let fileName = imageFile.name +"-profilePic(" + Date.now() + ")";
@@ -67,7 +67,7 @@ const Profile: React.FC<IProps> = (props: IProps) => {
                 let data = {
                     imageUrl: result
                 };
-                dispatch(actions.saveUserData(data));
+                dispatch(actions.saveUserImage(data));
                 setTempPic(result);
             }
         });

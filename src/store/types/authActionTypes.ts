@@ -106,16 +106,17 @@ export interface GetUserDetailsFail {
     userDetailsError: string;
 }
 
-export interface SaveUserDataStart {
-    type: typeof actionTypes.SAVE_USER_DATA_START;
+export interface SaveUserImageStart {
+    type: typeof actionTypes.SAVE_USER_IMAGE_START;
 }
 
-export interface SaveUserDataSuccess {
-    type: typeof actionTypes.SAVE_USER_DATA_SUCCESS;
+export interface SaveUserImageSuccess {
+    type: typeof actionTypes.SAVE_USER_IMAGE_SUCCESS;
+    imageUrl: string;
 }
 
-export interface SaveUserDataFail {
-    type: typeof actionTypes.SAVE_USER_DATA_FAIL;
+export interface SaveUserImageFail {
+    type: typeof actionTypes.SAVE_USER_IMAGE_FAIL;
     saveUserDataError: string;
 }
 
@@ -149,9 +150,9 @@ export type AuthActionTypes =
     | GetUserDetailsStart
     | GetUserDetailsSuccess
     | GetUserDetailsFail
-    | SaveUserDataStart
-    | SaveUserDataSuccess
-    | SaveUserDataFail
+    | SaveUserImageStart
+    | SaveUserImageSuccess
+    | SaveUserImageFail
     | LoadUserDetailsById
     | AddUserDetailsById;
 

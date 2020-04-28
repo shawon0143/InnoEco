@@ -128,35 +128,37 @@ export const getUserById = (idList: string[]) => {
 // ========== Update user data ============
 // ========================================
 
-export const saveUserData = (dataObject: any) => {
+export const saveUserImage = (dataObject: any) => {
     return (dispatch: Dispatch<AuthActions>) => {
-        dispatch(saveUserDataStart());
+        dispatch(saveUserImageStart());
         callApi('updateUser', dataObject, {email: store.getState().auth.email}, (err: any, result: any) => {
             if (err) {
                 console.log(err);
                 dispatch(saveUserDataFail(err.message));
             } else {
-                dispatch(saveUserDataSuccess());
+                dispatch(saveUserImageSuccess(dataObject.imageUrl));
+                // TODO: write specific action for profile picture update.
             }
         });
     };
 };
 
-export const saveUserDataStart = (): AuthActions => {
+export const saveUserImageStart = (): AuthActions => {
     return {
-        type: actionTypes.SAVE_USER_DATA_START
+        type: actionTypes.SAVE_USER_IMAGE_START
     };
 };
 
-export const saveUserDataSuccess = (): AuthActions => {
+export const saveUserImageSuccess = (imageUrl: string): AuthActions => {
     return {
-        type: actionTypes.SAVE_USER_DATA_SUCCESS
+        type: actionTypes.SAVE_USER_IMAGE_SUCCESS,
+        imageUrl: imageUrl
     }
 };
 
 export const saveUserDataFail = (err: any): AuthActions => {
     return {
-        type: actionTypes.SAVE_USER_DATA_FAIL,
+        type: actionTypes.SAVE_USER_IMAGE_FAIL,
         saveUserDataError: err
     }
 };
