@@ -43,7 +43,7 @@ const RecentWiki:React.FC<IProps> = (props: IProps) => {
             <div className="container">
                 <div className="row mb-5">
                     <div className="col text-center">
-                        <h2>Latest wiki</h2>
+                        <h2>New in KnowledgeHub</h2>
                         <p className='text-muted'>Experience a level of quality in both design & customization.</p>
                     </div>
                 </div>

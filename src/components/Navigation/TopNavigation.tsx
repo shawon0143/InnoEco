@@ -36,15 +36,20 @@ const TopNavigation: React.FC = (props) => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setNavExpanded(!navExpanded)} />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto">
-                        {auth.token !== '' && !auth.loading && (
-                            <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>My feed</Link>
-                        )}
-                        <Link to="/wiki" className='navLink' onClick={() => setNavExpanded(false)}>Wiki</Link>
+                        <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>Home</Link>
+                        {/*{auth.token !== '' && !auth.loading && (*/}
+                        {/*    <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>My feed</Link>*/}
+                        {/*)}*/}
+                        <Link to="/wiki" className='navLink' onClick={() => setNavExpanded(false)}>Knowledge Hub</Link>
                         <Link to="/pitchHub" className='navLink' onClick={() => setNavExpanded(false)}>Pitch hub</Link>
                         <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>About</Link>
                         { auth.token !== '' && !auth.loading && (
-                            <Link to="/profile" className='navLink' onClick={() => setNavExpanded(false)}>My profile</Link>
+                            <Link to="/profile" className='navLink' onClick={() => setNavExpanded(false)}>Profile</Link>
                         )}
+                        { auth.token !== '' && !auth.loading && (
+                            <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}><i className='icons icon-bell'></i></Link>
+                        )}
+
                     </Nav>
                     {authButton}
                 </Navbar.Collapse>
