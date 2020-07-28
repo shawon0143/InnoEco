@@ -1,0 +1,43 @@
+.eventCardContainer {
+  background-color: #f0f2f8;
+  padding: 2rem 3rem !important;
+  margin-bottom: 1.5rem!important;
+  border-radius: .25rem!important;
+  box-sizing: border-box;
+
+  .eventTitle {
+    font-family: "Barlow", sans-serif;
+    font-weight: 600;
+  }
+  .eventDescription {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #3f4d5d;
+  }
+  .dateDay {
+    line-height: 1;
+    font-weight: 600;
+    font-size: 3.07143rem;
+  }
+}
+
+.eventCardContainer:hover {
+  cursor: pointer;
+  background-color: #fff !important;
+  -webkit-box-shadow: 0 13px 25px 0 rgba(235, 237, 242, 0.7);
+  box-shadow: 0 13px 25px 0 rgba(235, 237, 242, 0.7);
+  -webkit-transition-duration: .2s;
+  -o-transition-duration: .2s;
+  transition-duration: .2s;
+  -webkit-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  transition: all .3s ease;
+  position: relative;
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}

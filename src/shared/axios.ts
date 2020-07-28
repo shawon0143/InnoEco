@@ -38,6 +38,11 @@ commands['getKnowledgeById'] = { url: `/knowledge/:knowledgeId`, method: 'GET', 
 commands['deleteKnowledge'] = { url: `/knowledge/:knowledgeId`, method: 'DELETE', responseType: 'json' };
 commands['addComment'] = { url: `/knowledge/comment/:knowledgeId`, method: 'POST', responseType: 'json' };
 commands['addLike'] = { url: `/knowledge/like/:knowledgeId`, method: 'POST', responseType: 'json' };
+// events
+commands['addEvent'] = { url: `/event/createEvent`, method: 'POST', responseType: 'json' };
+commands['registerEvent'] = { url: `/event/register/:eventId`, method: 'POST', responseType: 'json' };
+commands['getEventById'] = { url: `/event/:eventId`, method: 'GET', responseType: 'json' };
+commands['getAllEvents'] = { url: `/event`, method: 'GET', responseType: 'json' };
 
 
 
@@ -163,5 +168,6 @@ export const sessionInfo = () => {
         firstName: localStorage.getItem('firstName'),
         lastName: localStorage.getItem('lastName'),
         role: localStorage.getItem('role'),
+        email: localStorage.getItem('email'),
     };
 };

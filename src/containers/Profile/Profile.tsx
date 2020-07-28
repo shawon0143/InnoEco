@@ -4,6 +4,7 @@ import './Profile.scss';
 import { AppState } from '../../store/configureStore';
 import ProfileInfo from "../../components/Profile/ProfileInfo/ProfileInfo";
 import MyContributions from "../../components/Profile/MyContributions/MyContributions";
+import MyEvents from "../../components/Profile/MyEvents/MyEvents";
 import * as actions from "../../store/actions/index";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import ImageCropper from "../../components/UI/ImageCropper/ImageCropper";
@@ -52,7 +53,7 @@ const Profile: React.FC<IProps> = (props: IProps) => {
     if (tempPic !== '') {
         profilePic = tempPic;
     }
-    console.log(userProfile.imageUrl);
+    // console.log(userProfile.imageUrl);
     // save file
     const callBackFromImageEditor = (imageFile: any) => {
         let fileName = imageFile.name +"-profilePic(" + Date.now() + ")";
@@ -143,11 +144,24 @@ const Profile: React.FC<IProps> = (props: IProps) => {
                             }`}
                         >
                             <span>
-                                <i className="icons icon-layers" /> My
-                                Contributions
+                                <i className="icons icon-layers" /> Create Contribution
                             </span>
                         </button>
                         {/* ==== END My contribution ==== */}
+                        {/* ==== Events ======== */}
+                        <button
+                            onClick={() => setSelectedOption('events')}
+                            className={`navBtn list-group-item list-group-item-action justify-content-between rounded-0 ${
+                                selectedOption === 'events'
+                                    ? 'navButtonSelected'
+                                    : ''
+                            }`}
+                        >
+                            <span>
+                                <i className="icons icon-calendar"/> Create Event
+                            </span>
+                        </button>
+                        {/* ======= End of events ======= */}
                         {/* ==== Settings ======= */}
                         <button
                             onClick={() => setSelectedOption('settings')}
@@ -174,6 +188,10 @@ const Profile: React.FC<IProps> = (props: IProps) => {
                     {/* ======= My Contribution view ========   */}
                     {selectedOption === 'contribution' && (
                         <MyContributions />
+                    )}
+                    {/* ======= My Events view ========   */}
+                    {selectedOption === 'events' && (
+                        <MyEvents />
                     )}
                 </div>
             </div>

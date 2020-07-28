@@ -24,3 +24,9 @@ export {
     addNewLike,
     saveKnowledge
 } from './knowledge';
+
+export {
+    createNewEvent,
+    getAllEvents,
+    registerEvent
+} from './event';

@@ -83,14 +83,22 @@ export const formatDateForMiniChart = (d: Date) => {
     return `${date}.${month}`;
 };
 
-export const formatDateForChart = (d: Date) => {
-    let year = `${d.getFullYear()}`.substring(2),
-        month =
-            d.getMonth() + 1 > 9 ? d.getMonth() + 1 : '0' + (d.getMonth() + 1),
+export const formatDateForEventCard = (d: Date) => {
+    let monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    let year = `${d.getFullYear()}`,
+        month = d.getMonth() + 1 > 9 ? d.getMonth() + 1 : '0' + (d.getMonth() + 1),
         date = d.getDate() > 9 ? d.getDate() : '0' + d.getDate(),
         hours = d.getHours(),
-        minutes = d.getMinutes();
+        minutes = d.getMinutes() > 9 ? d.getMinutes() : '0'+d.getMinutes();
+    // return `${date}.${month}.${year} ${hours}:${minutes}`;
 
-    return `${date}.${month}.${year} ${hours}:${minutes}`;
+    return  {
+        day: date,
+        month: monthNames[Number(month)],
+        year: year,
+        hours: hours,
+        minutes: minutes
+    }
     // return `${date}.${month}.${year}`;
 };

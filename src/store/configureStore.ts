@@ -5,9 +5,12 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 // reducers import
 import authReducer from './reducers/auth';
 import knowledgeReducer from './reducers/knowledge';
+import eventReducer from './reducers/event';
+
 export const rootReducer = combineReducers({
     auth: authReducer,
-    knowledge: knowledgeReducer
+    knowledge: knowledgeReducer,
+    event: eventReducer
 });
 const persistConfig = {
     key: 'root',
