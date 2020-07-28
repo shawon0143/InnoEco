@@ -1,6 +1,15 @@
 {
     "name": "inno-eco",
     "version": "0.1.0",
+    "author": "Mohammad Nizam Uddin",
+    "keywords": [
+        "innovation",
+        "ecosystem",
+        "React",
+        "Redux",
+        "Typescript",
+        "Digital Platform"
+    ],
     "private": true,
     "dependencies": {
         "@testing-library/jest-dom": "^4.2.4",

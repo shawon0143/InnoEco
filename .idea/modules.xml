@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/InnoEco.iml" filepath="$PROJECT_DIR$/.idea/InnoEco.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/innoEco.iml" filepath="$PROJECT_DIR$/.idea/innoEco.iml" />
     </modules>
   </component>
 </project>
