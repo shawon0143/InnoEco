@@ -67,7 +67,7 @@ const Wiki:React.FC<IProps> = (props:IProps) => {
 
     return (
             <div className="container topNavMargin py-5">
-                {!id && (<h2 className='border-bottom mb-4'>Wiki</h2>)}
+                {!id && (<h2 className='border-bottom mb-4'>Knowledge Hub</h2>)}
                 {!id && (<div className="row">{loading ? <Spinner /> : newsCardArray}</div>)}
                 { id ? <SingleKnowledge knowledge={selectedKnowledge}/> : undefined }
             </div>

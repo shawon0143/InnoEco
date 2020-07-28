@@ -38,7 +38,7 @@ export const getAllEvents = ()  => {
                 console.log(err);
                 dispatch(getAllEventFail('get all events fail'));
             } else {
-                console.log(result);
+                // console.log(result);
                 dispatch(getAllEventSuccess(result.events));
             }
         })

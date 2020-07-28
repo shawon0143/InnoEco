@@ -162,6 +162,20 @@ const Profile: React.FC<IProps> = (props: IProps) => {
                             </span>
                         </button>
                         {/* ======= End of events ======= */}
+                        {/* ==== Groups ======== */}
+                        <button
+                            onClick={() => setSelectedOption('groups')}
+                            className={`navBtn list-group-item list-group-item-action justify-content-between rounded-0 ${
+                                selectedOption === 'groups'
+                                    ? 'navButtonSelected'
+                                    : ''
+                            }`}
+                        >
+                            <span>
+                                <i className="icons icon-people"/> Create Group
+                            </span>
+                        </button>
+                        {/* ======= End of Groups ======= */}
                         {/* ==== Settings ======= */}
                         <button
                             onClick={() => setSelectedOption('settings')}
@@ -193,6 +207,22 @@ const Profile: React.FC<IProps> = (props: IProps) => {
                     {selectedOption === 'events' && (
                         <MyEvents />
                     )}
+                    {/* ======= Group view ========   */}
+                    {selectedOption === 'groups' && (
+                        <div>
+                            <h5>Groups management</h5>
+                            <p className='text-muted'>User will be able to create groups.</p>
+                        </div>
+                    )}
+                    {/* ======= Settings view ========   */}
+                    {selectedOption === 'settings' && (
+                        <div>
+                            <h5>Account Settings</h5>
+                            <p className='text-muted'>User will be able to update profile information here.</p>
+                        </div>
+
+                    )}
+
                 </div>
             </div>
         {/*  ============  MODAL Image cropper ============ */}

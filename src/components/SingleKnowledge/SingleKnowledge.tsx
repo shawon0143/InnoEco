@@ -152,6 +152,8 @@ const SingleKnowledge:React.FC<IProps> = (props:IProps) => {
                                 <span className="font-weight-light mx-3">·</span>
                                 {dateFormat(new Date(props.knowledge.createdAt), 'mmm  dd, yyyy' )}
                             </small>
+                            <h6 className='text-center text-light text-uppercase bg-secondary p-2 mt-2'>{props.knowledge.status}</h6>
+
                         </div>
                     </div>
                     {/* ====== Description =========== */}

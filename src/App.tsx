@@ -14,6 +14,7 @@ import ResetPassword from "./containers/ResetPassword/ResetPassword";
 import Profile from "./containers/Profile/Profile";
 import Wiki from "./containers/Wiki/Wiki";
 import PitchHub from "./containers/PitchHub/PitchHub";
+import About from "./components/About/About";
 import {AppState} from "./store/configureStore";
 
 const App: React.FC = (props) => {
@@ -30,6 +31,7 @@ const App: React.FC = (props) => {
             <Route path='/resetPassword/:token' component={ResetPassword}/>
             <Route path="/" exact component={Home}/>
             <Route path="/auth" exact component={Auth}/>
+            <Route path="/about" exact component={About}/>
             <Route path="/wiki" exact component={Wiki} />
             <Route path="/wiki/:id" exact component={Wiki} />
             <Route path="/pitchHub" exact component={PitchHub} />
@@ -45,6 +47,7 @@ const App: React.FC = (props) => {
             <Switch>
                 <Route path="/" exact component={Home}/>
                 <Route path="/profile" exact component={Profile} />
+                <Route path="/about" exact component={About}/>
                 <Route path="/wiki" exact component={Wiki} />
                 <Route path="/wiki/:id" exact component={Wiki} />
                 <Route path="/pitchHub" exact component={PitchHub} />

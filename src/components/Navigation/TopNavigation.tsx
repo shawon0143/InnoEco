@@ -40,14 +40,14 @@ const TopNavigation: React.FC = (props) => {
                         {/*{auth.token !== '' && !auth.loading && (*/}
                         {/*    <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>My feed</Link>*/}
                         {/*)}*/}
-                        <Link to="/wiki" className='navLink' onClick={() => setNavExpanded(false)}>Knowledge Hub</Link>
+                        <Link to="/wiki" className='navLink' onClick={() => setNavExpanded(false)}>Resources</Link>
                         <Link to="/pitchHub" className='navLink' onClick={() => setNavExpanded(false)}>Pitch hub</Link>
-                        <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}>About</Link>
+                        <Link to="/about" className='navLink' onClick={() => setNavExpanded(false)}>About</Link>
                         { auth.token !== '' && !auth.loading && (
                             <Link to="/profile" className='navLink' onClick={() => setNavExpanded(false)}>Profile</Link>
                         )}
                         { auth.token !== '' && !auth.loading && (
-                            <Link to="/" className='navLink' onClick={() => setNavExpanded(false)}><i className='icons icon-bell'></i></Link>
+                            <Link to="#" className='navLink' onClick={() => setNavExpanded(false)}><i className='icons icon-bell'></i></Link>
                         )}
 
                     </Nav>
