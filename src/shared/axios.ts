@@ -169,5 +169,6 @@ export const sessionInfo = () => {
         lastName: localStorage.getItem('lastName'),
         role: localStorage.getItem('role'),
         email: localStorage.getItem('email'),
+        id: localStorage.getItem('id')
     };
 };

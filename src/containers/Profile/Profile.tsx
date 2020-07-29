@@ -4,6 +4,7 @@ import './Profile.scss';
 import { AppState } from '../../store/configureStore';
 import ProfileInfo from "../../components/Profile/ProfileInfo/ProfileInfo";
 import MyContributions from "../../components/Profile/MyContributions/MyContributions";
+import AddEventForm from "../../components/Profile/AddEventForm/AddEventForm";
 import MyEvents from "../../components/Profile/MyEvents/MyEvents";
 import * as actions from "../../store/actions/index";
 import Spinner from "../../components/UI/Spinner/Spinner";
@@ -162,6 +163,20 @@ const Profile: React.FC<IProps> = (props: IProps) => {
                             </span>
                         </button>
                         {/* ======= End of events ======= */}
+                        {/* ==== All Events ======== */}
+                        <button
+                            onClick={() => setSelectedOption('allEvents')}
+                            className={`navBtn list-group-item list-group-item-action justify-content-between rounded-0 ${
+                                selectedOption === 'allEvents'
+                                    ? 'navButtonSelected'
+                                    : ''
+                            }`}
+                        >
+                            <span>
+                                <i className="icons icon-calendar"/> All Events
+                            </span>
+                        </button>
+                        {/* ======= End of All events ======= */}
                         {/* ==== Groups ======== */}
                         <button
                             onClick={() => setSelectedOption('groups')}
@@ -205,6 +220,10 @@ const Profile: React.FC<IProps> = (props: IProps) => {
                     )}
                     {/* ======= My Events view ========   */}
                     {selectedOption === 'events' && (
+                        <AddEventForm />
+                    )}
+                    {/* ======= All events ========== */}
+                    {selectedOption === 'allEvents' && (
                         <MyEvents />
                     )}
                     {/* ======= Group view ========   */}
