@@ -140,7 +140,7 @@ const Footer: React.FC = () => {
 
                 {/* ======= Temporary alert message ======= */}
                 <div className="alert alert-warning text-center" role="alert">
-                    This is a study project and it is under construction.
+                    This study project is under construction.
                 </div>
             </div>
         </div>

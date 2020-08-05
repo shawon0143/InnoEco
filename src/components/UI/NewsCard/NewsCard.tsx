@@ -102,7 +102,7 @@ const NewsCard: React.FC<IProps> = (props: IProps) => {
                         <div className="p-3 d-flex justify-content-between align-items-center">
                             <div>
                                 <img src={userImageUrl} alt="..." className="rounded-circle" style={{height: 28, width: 28}} />
-                                <small className="text-muted ml-1">{creatorDetails ? creatorDetails.firstName : undefined} {creatorDetails ? creatorDetails.lastName : undefined}</small>
+                                <small className="text-muted ml-1 text-nowrap">{creatorDetails ? creatorDetails.firstName : undefined} {creatorDetails ? creatorDetails.lastName : undefined}</small>
                             </div>
                             <div>
                                 <span className='text-muted mr-3'>

@@ -16,6 +16,7 @@ import Wiki from "./containers/Wiki/Wiki";
 import PitchHub from "./containers/PitchHub/PitchHub";
 import About from "./components/About/About";
 import {AppState} from "./store/configureStore";
+import CreateKnowledgeForm from "./components/Knowledge/CreateKnowledgeForm/CreateKnowledgeForm";
 
 const App: React.FC = (props) => {
     const auth = useSelector((state: AppState) => {
@@ -52,6 +53,7 @@ const App: React.FC = (props) => {
                 <Route path="/wiki/:id" exact component={Wiki} />
                 <Route path="/pitchHub" exact component={PitchHub} />
                 <Route path="/pitchHub/:id" exact component={PitchHub} />
+                <Route path="/knowledge" exact component={CreateKnowledgeForm} />
                 <Redirect to='/' />
             </Switch>
         );
